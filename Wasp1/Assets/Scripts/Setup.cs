@@ -76,9 +76,9 @@ public class Setup : MonoBehaviour {
 	void Update(){
 
 		if(victoryCondition){
-			Debug.Log("Victory");
+
 		}else if(failureCondition){
-			Debug.Log ("Failure");
+
 		}else{
 			if(waspsSpawnedThisWave>=maxWasps){
 				spawnPhase = false;

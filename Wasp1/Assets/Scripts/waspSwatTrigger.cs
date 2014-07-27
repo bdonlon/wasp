@@ -12,10 +12,10 @@ public class waspSwatTrigger : MonoBehaviour {
 			//do nothing
 		}else if(col.gameObject.tag == "swatter"){
 			//subtract health
-
+			waspParent.GetComponent<waspBehaviour>().takeDamage(50);
 			//then if health <=0
-				gameObject.SendMessageUpwards("kill");
-				Destroy(this.gameObject,0);
+				//gameObject.SendMessageUpwards("kill");
+				//Destroy(this.gameObject,0);
 		}
 	}
 }

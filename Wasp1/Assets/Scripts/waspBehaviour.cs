@@ -13,6 +13,7 @@ public class waspBehaviour : MonoBehaviour {
 	private bool up,down,left,right = false;
 	public int destroyDelay = 7;
 	public int stingDamage = 10;
+	public int health = 100;
 
 	public BoxCollider2D swatTrigger;
 	public BoxCollider2D passthrough;
@@ -137,6 +138,19 @@ public class waspBehaviour : MonoBehaviour {
 
 	public bool isDead(){
 		return dead;
+	}
+
+	public void takeDamage(int damage){
+		knockback();
+		health = health - damage;
+		if(health <=0)
+		{
+			kill();
+		}
+	}
+
+	private void knockback(){
+		rigidbody2D.AddForce(-travelDirection.normalized * speed * 35);
 	}
 	
 	public void kill(){
