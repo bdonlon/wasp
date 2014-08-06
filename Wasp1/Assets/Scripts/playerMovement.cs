@@ -10,12 +10,17 @@ public class playerMovement : MonoBehaviour {
 	public int score = 0;
 	public GameObject _GM;
 
+	public GameObject hitSound;
+	public GameObject deathSound;
+
 	public bool dead = false;
 
 	public void injure(int damage){
 		if(!dead){	//may still recieve injure instructions after death
 			health = health-damage;
+			hitSound.GetComponent<playSound>().play();
 			if(health<=0){
+				deathSound.GetComponent<playSound>().play();
 				kill();
 				_GM.GetComponent<Setup>().failureCondition=true;
 			}

@@ -14,6 +14,8 @@ public class waspBehaviour : MonoBehaviour {
 	public int destroyDelay = 7;
 	public int stingDamage = 10;
 	public int health = 100;
+	public GameObject hitSound;
+	public GameObject killSound;
 
 	public BoxCollider2D swatTrigger;
 	public BoxCollider2D passthrough;
@@ -143,9 +145,11 @@ public class waspBehaviour : MonoBehaviour {
 	public void takeDamage(int damage){
 		knockback();
 		health = health - damage;
-		if(health <=0)
-		{
+		if (health <= 0) {
+			killSound.GetComponent<playSound>().play();
 			kill();
+		} else {
+			hitSound.GetComponent<playSound>().play();
 		}
 	}
 
