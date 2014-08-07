@@ -6,8 +6,6 @@
 
 *.sln
 
-*.userprefs
-
 *.meta
 
 Wasp1/Library/*
