@@ -1,14 +1,20 @@
-# =============== #
+# ================ #
+# Unity build generated #
+# ================ #
+OMGWASPS_Data
+*.exe
+
+# ============ #
 # Unity generated #
-# =============== #
+# ============#
 Temp/
 Obj/
 UnityGenerated/
 Library/
 
-# ===================================== #
+# ============================== #
 # Visual Studio / MonoDevelop generated #
-# ===================================== #
+# ============================== #
 ExportedObj/
 *.svd
 *.userprefs
@@ -20,9 +26,9 @@ ExportedObj/
 *.unityproj
 *.booproj
 
-# ============ #
+# ========== #
 # OS generated #
-# ============ #
+# ========== #
 .DS_Store
 .DS_Store?
 ._*
