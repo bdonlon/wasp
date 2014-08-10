@@ -23,6 +23,7 @@ public class playerMovement : MonoBehaviour {
 				deathSound.GetComponent<playSound>().play();
 				kill();
 				_GM.GetComponent<Setup>().failureCondition=true;
+				Screen.showCursor = true;
 			}
 		}
 	}

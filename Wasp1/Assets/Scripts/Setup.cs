@@ -11,6 +11,8 @@ public class Setup : MonoBehaviour {
 	public GameObject spawnerTop,spawnerBottom,spawnerLeft,spawnerRight;
 	private Vector3 spawnerPosition = new Vector3(0,0,0);
 	public GameObject player;
+	public GameObject picnic_food;
+	public Animator picnicAnim;
 
 	public int numWasps;
 	public int maxWasps;
@@ -20,6 +22,7 @@ public class Setup : MonoBehaviour {
 	public int waspsSpawnedThisWave;
 	
 	public bool spawnPhase = false;
+	//public bool setupPhase = false;
 
 	public float width,height;
 
@@ -27,8 +30,6 @@ public class Setup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
-		spawnPhase = true;
 		numWasps=1;
 		maxWasps=5;
 		waspsSpawnedThisWave=0;
@@ -71,6 +72,18 @@ public class Setup : MonoBehaviour {
 		spawnerRight.transform.position = spawnerPosition;
 
 		Physics2D.IgnoreLayerCollision(12, 08, true); //Disable collisions between wasps (layer 12) and borders (layer 8)
+
+		StartCoroutine(setupPhase());
+	}
+
+	public IEnumerator setupPhase(){
+		//animate rustlling in hamper
+
+		yield return new WaitForSeconds(3.0f);
+
+		//place new picnic food on platter
+		picnicAnim.SetTrigger("nextFood");
+		spawnPhase=true;
 	}
 
 	void Update(){
@@ -88,8 +101,9 @@ public class Setup : MonoBehaviour {
 					waspsSpawnedThisWave=0;
 					if(currentWave==maxWaves && spawnPhase==false){
 						victoryCondition = true;
+						Screen.showCursor = true;
 					}else{
-						spawnPhase = true;
+						StartCoroutine(setupPhase());
 					}
 				}
 			}

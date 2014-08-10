@@ -5,6 +5,12 @@ public class waspBehaviour : MonoBehaviour {
 
 	public bool dead = false;
 	private Vector3 playerLocation;
+	private Vector3 foodLocation;
+	private Vector3 spouseLocation;
+	private Vector3 targetLocation;
+
+	public string target = "food";
+
 	private Vector2 travelDirection;
 	public Vector3 spawnLocation;
 	private float xDiff,yDiff;
@@ -21,14 +27,16 @@ public class waspBehaviour : MonoBehaviour {
 	public BoxCollider2D passthrough;
 
 	public GameObject _GM;
-
 	public GameObject player;
+	public GameObject food;
+	public GameObject spouse;
 
 	Animator anim;
 	Animator shadowAnim;
 	public GameObject shadow;
 
 	void Start () {
+		target = "food";
 		left = true;
 		//set up wasp colliders
 		swatTrigger.size = new Vector2(0.71f,0.44f);
@@ -43,24 +51,39 @@ public class waspBehaviour : MonoBehaviour {
 
 		player = GameObject.Find("player");
 		_GM = GameObject.Find("_GM");
+		food = GameObject.Find("picnic_food");
+		spouse = GameObject.Find("picnic_spouse");
 
 		anim = GetComponent<Animator>();
 		shadowAnim = shadow.GetComponent<Animator>();
 	}
 	
 	void Update () {
-		playerLocation= GameObject.Find("player").transform.position;
-		if(!player.GetComponent<playerMovement>().isDead())
-		{
-			//player is ALIVE
-			travel(transform.position,playerLocation);
+		playerLocation= player.transform.position;
+		foodLocation= food.transform.position;
+		spouseLocation= spouse.transform.position;
+
+		if(target.Equals("food")){
+			travel(transform.position,foodLocation);
+		}else if(target.Equals("spouse")){
+			travel(transform.position,spouseLocation);
+		}else if(target.Equals("player")){
+			if(!player.GetComponent<playerMovement>().isDead())
+			{
+				//player is ALIVE
+				travel(transform.position,playerLocation);
+			}
+			else
+			{
+				//player is DEAD
+				speed = 7.5f;
+				travel(transform.position,spawnLocation);
+			}
 		}
-		else
-		{
-			//player is DEAD
-			speed = 7.5f;
-			travel(transform.position,spawnLocation);
-		}
+	}
+
+	void changeTarget(string newTarget){
+		target = newTarget;
 	}
 
 	public IEnumerator attack(){
@@ -144,6 +167,7 @@ public class waspBehaviour : MonoBehaviour {
 
 	public void takeDamage(int damage){
 		knockback();
+		changeTarget("player");
 		health = health - damage;
 		if (health <= 0) {
 			killSound.GetComponent<playSound>().play();
