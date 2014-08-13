@@ -4,6 +4,8 @@ using System.Collections;
 public class waspBehaviour : MonoBehaviour {
 
 	public bool dead = false;
+	private bool encounteredPlayer = false;
+	private bool encounteredSpouse = false;
 	private Vector3 playerLocation;
 	private Vector3 foodLocation;
 	private Vector3 spouseLocation;
@@ -36,6 +38,7 @@ public class waspBehaviour : MonoBehaviour {
 	public GameObject shadow;
 
 	void Start () {
+		speed = 40;
 		target = "food";
 		left = true;
 		//set up wasp colliders
@@ -62,6 +65,24 @@ public class waspBehaviour : MonoBehaviour {
 		playerLocation= player.transform.position;
 		foodLocation= food.transform.position;
 		spouseLocation= spouse.transform.position;
+	
+		if(!encounteredPlayer && distanceBetween(playerLocation,transform.position)<2.5f){
+			int rand = Random.Range(1,100);
+			//Debug.Log(rand);
+			if(rand>50){
+				changeTarget("player");
+			}
+			encounteredPlayer=true;
+		}
+
+		if(!encounteredSpouse && distanceBetween(spouseLocation,transform.position)<1.9f){
+			int rand = Random.Range(1,100);
+			//Debug.Log(rand);
+			if(rand>75){
+				changeTarget("spouse");
+			}
+			encounteredSpouse=true;
+		}
 
 		if(target.Equals("food")){
 			travel(transform.position,foodLocation);
@@ -80,6 +101,16 @@ public class waspBehaviour : MonoBehaviour {
 				travel(transform.position,spawnLocation);
 			}
 		}
+	}
+
+	public float distanceBetween(Vector3 pos1, Vector3 pos2){
+
+		float vx = pos1.x - pos2.x;	//x vector between origin (static) and mouse position
+		float vy = pos1.y - pos2.y;	//y vector between origin (static) and mouse position
+		
+		float mag = Mathf.Sqrt(vx*vx + vy*vy);	//length between origin and mouse position
+
+		return mag;
 	}
 
 	void changeTarget(string newTarget){
@@ -151,13 +182,13 @@ public class waspBehaviour : MonoBehaviour {
 			travelDirection = new Vector2(xDiff,yDiff);
 			rigidbody2D.AddForce(travelDirection.normalized * speed);
 			
-			xDiff = spawnLocation.x - transform.position.x;
-			yDiff = spawnLocation.y - transform.position.y;
+			//xDiff = spawnLocation.x - transform.position.x;
+			//yDiff = spawnLocation.y - transform.position.y;
 			
-			xDiffPos=Mathf.Abs(xDiff);
-			yDiffPos=Mathf.Abs(yDiff);
+			//xDiffPos=Mathf.Abs(xDiff);
+			//yDiffPos=Mathf.Abs(yDiff);
 			
-			rigidbody2D.AddForce(travelDirection.normalized * speed);
+			//rigidbody2D.AddForce(travelDirection.normalized * speed);
 		}
 	}
 
