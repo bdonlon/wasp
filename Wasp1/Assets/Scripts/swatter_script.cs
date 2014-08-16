@@ -39,7 +39,6 @@ public class swatter_script : MonoBehaviour {
 			transform.RotateAround(rotatePoint, Vector3.back, wobble);
 			timer++;
 		}else if (swinging){
-			Debug.Log("swinging");
 			gameObject.GetComponent<BoxCollider2D>().enabled = true;
 			Vector3 newPosition = crosshair.transform.position;
 			transform.position = newPosition;

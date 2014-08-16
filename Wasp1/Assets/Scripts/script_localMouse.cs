@@ -13,6 +13,9 @@ public class script_localMouse : MonoBehaviour {
 	public Vector3 worldMouseCurrentPosition;
 
 	public GameObject player;
+	public GameObject crosshair;
+
+	public bool dragging;
 
 	float deltaX;
 	float deltaY;
@@ -24,14 +27,9 @@ public class script_localMouse : MonoBehaviour {
 		localMousePreviousPosition= new Vector2(0,0);
 		localMouseCurrentPosition=new Vector2(0,0);
 		transform.position = player.transform.position;
-
-
-
-//		localMousePreviousPosition = transform.parent.position;
-//		worldMousePreviousPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		dragging = false;
 	}
-
-	// Update is called once per frame
+	
 	void Update () {
 
 		worldMousePreviousPosition = worldMouseCurrentPosition;
@@ -44,23 +42,39 @@ public class script_localMouse : MonoBehaviour {
 
 		if(deltaX!=0 || deltaY!=0)
 		{
+			dragging = true;
 			localMouseNewPosition = new Vector2(playerPosition.x+localMouseCurrentPosition.x+deltaX, playerPosition.y+localMouseCurrentPosition.y+deltaY);
 
-			if(distanceBetween(localMouseNewPosition, playerPosition)<1.5){
-				transform.position = new Vector3 (localMouseNewPosition.x,localMouseNewPosition.y,-5);
-				localMousePreviousPosition = new Vector2(localMouseCurrentPosition.x+deltaX, localMouseCurrentPosition.y+deltaY);
-				localMouseCurrentPosition = new Vector2(localMouseCurrentPosition.x+deltaX, localMouseCurrentPosition.y+deltaY);
-			}
+			transform.position = new Vector3 (localMouseNewPosition.x,localMouseNewPosition.y,-5);
+			localMousePreviousPosition = new Vector2(localMouseCurrentPosition.x+deltaX, localMouseCurrentPosition.y+deltaY);
+			localMouseCurrentPosition = new Vector2(localMouseCurrentPosition.x+deltaX, localMouseCurrentPosition.y+deltaY);
+		}else{
+			dragging = false;
+		}
+
+		if(!dragging && distanceBetween(new Vector2(playerPosition.x+localMouseCurrentPosition.x,playerPosition.y+localMouseCurrentPosition.y),playerPosition)>1.5f){
+			reelIn();
 		}
 	}
 
+	public void reelIn()
+	{		
+		deltaX = playerPosition.x - crosshair.transform.position.x;
+		deltaY = playerPosition.y - crosshair.transform.position.y;
+
+		localMouseNewPosition = new Vector2(playerPosition.x-deltaX, playerPosition.y-deltaY);
+
+		transform.position = new Vector3 (localMouseNewPosition.x,localMouseNewPosition.y,-5);
+		localMousePreviousPosition = new Vector2(0-deltaX, 0-deltaY);
+		localMouseCurrentPosition = new Vector2(0-deltaX, 0-deltaY);
+	}
+
 	public float distanceBetween(Vector2 pos1, Vector2 pos2){
-		
+
 		float vx = pos1.x - pos2.x;	//x vector between origin (static) and mouse position
 		float vy = pos1.y - pos2.y;	//y vector between origin (static) and mouse position
 		
 		float mag = Mathf.Sqrt(vx*vx + vy*vy);	//length between origin and mouse position
-
 		return mag;
 	}
 }
