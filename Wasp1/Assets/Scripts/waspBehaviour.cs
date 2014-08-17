@@ -68,7 +68,6 @@ public class waspBehaviour : MonoBehaviour {
 	
 		if(!encounteredPlayer && distanceBetween(playerLocation,transform.position)<2.5f){
 			int rand = Random.Range(1,100);
-			//Debug.Log(rand);
 			if(rand>50){
 				changeTarget("player");
 			}
@@ -77,7 +76,6 @@ public class waspBehaviour : MonoBehaviour {
 
 		if(!encounteredSpouse && distanceBetween(spouseLocation,transform.position)<1.9f){
 			int rand = Random.Range(1,100);
-			//Debug.Log(rand);
 			if(rand>75){
 				changeTarget("spouse");
 			}
@@ -113,13 +111,23 @@ public class waspBehaviour : MonoBehaviour {
 		return mag;
 	}
 
+	public string getTarget(){
+		return target;
+	}
+
 	void changeTarget(string newTarget){
 		target = newTarget;
 	}
 
 	public IEnumerator attack(){
 		anim.SetTrigger("wasp_attacking_start");
-		player.GetComponent<playerMovement>().injure(stingDamage);
+		if(target.Equals("player")){
+			player.GetComponent<playerMovement>().injure(stingDamage);
+		}else if (target.Equals("spouse")){
+			spouse.GetComponent<spouse_behavior>().injure(stingDamage);
+		}else if (target.Equals("food")){
+			//food.GetComponent<picnic_script>().injure(stingDamage);
+		}
 		yield return new WaitForSeconds(0.2f);
 		anim.SetTrigger("wasp_attacking_end");
 	}
@@ -172,11 +180,9 @@ public class waspBehaviour : MonoBehaviour {
 			
 			
 			if((up||down)&&(yDiffPos>1.5)){
-				//Debug.Log ("jitter up/down");
 				xDiff = xDiff+jitter;
 			}
 			if((left||right)&&(xDiffPos>1.5)){
-				//Debug.Log ("jitter left/right");
 				yDiff = yDiff+jitter;
 			}
 			travelDirection = new Vector2(xDiff,yDiff);
