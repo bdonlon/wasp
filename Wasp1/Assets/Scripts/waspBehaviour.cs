@@ -126,7 +126,8 @@ public class waspBehaviour : MonoBehaviour {
 		}else if (target.Equals("spouse")){
 			spouse.GetComponent<spouse_behavior>().injure(stingDamage);
 		}else if (target.Equals("food")){
-			//food.GetComponent<picnic_script>().injure(stingDamage);
+			//eating animation
+			food.GetComponent<food_behavior>().injure(stingDamage);
 		}
 		yield return new WaitForSeconds(0.2f);
 		anim.SetTrigger("wasp_attacking_end");

@@ -7,7 +7,6 @@ public class waspPassthrough : MonoBehaviour {
 	
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		Debug.Log(col.gameObject.tag);
 		if(waspParent.GetComponent<waspBehaviour>().isDead()){
 			//do nothing
 		}else if(col.gameObject.tag.Equals(waspParent.GetComponent<waspBehaviour>().getTarget())){

@@ -11,9 +11,12 @@ public class spouse_behavior : MonoBehaviour {
 	public GameObject hitSound;
 	public GameObject deathSound;
 
+	public GameObject picnic;
+
 	public void injure(int damage){
 		if(!dead){	//may still recieve injure instructions after death
 			health = health-damage;
+			picnic.GetComponent<picnic_health_script>().damagePicnicIntegrity(damage);
 			hitSound.GetComponent<playSound>().play();
 			if(health<=0){
 				deathSound.GetComponent<playSound>().play();
@@ -27,13 +30,17 @@ public class spouse_behavior : MonoBehaviour {
 	public void kill(){
 		dead=true;
 		Destroy(GetComponent<BoxCollider2D>());
-		Vector3 theScale;
-		theScale = transform.localScale;
-		theScale.y *= -1;
-		transform.localScale=theScale;
+//		Vector3 theScale;
+//		theScale = transform.localScale;
+//		theScale.y *= -1;
+//		transform.localScale=theScale;
 	}
 	
 	public bool isDead(){
 		return dead;
+	}
+
+	public int getHealth(){
+		return health;
 	}
 }
