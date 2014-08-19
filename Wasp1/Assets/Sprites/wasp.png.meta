@@ -1,11 +1,6 @@
 fileFormatVersion: 2
 guid: a59856b369fd94941982e891270edad2
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: wasp_0
-    21300002: wasp_2
-    21300004: wasp_1
-    21300006: wasp_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -40,7 +35,6 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
@@ -56,7 +50,6 @@ TextureImporter:
         height: 59
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: wasp_2
       rect:
         serializedVersion: 2
@@ -66,7 +59,6 @@ TextureImporter:
         height: 59
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: wasp_1
       rect:
         serializedVersion: 2
@@ -76,7 +68,6 @@ TextureImporter:
         height: 59
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: wasp_3
       rect:
         serializedVersion: 2
@@ -86,6 +77,23 @@ TextureImporter:
         height: 85
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: wasp_4
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 2
+        width: 56
+        height: 85
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: wasp_5
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 2
+        width: 56
+        height: 85
+      alignment: 0
+      pivot: {x: .5, y: .5}
   spritePackingTag: 
   userData: 

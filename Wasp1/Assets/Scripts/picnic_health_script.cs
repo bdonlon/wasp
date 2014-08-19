@@ -8,10 +8,11 @@ public class picnic_health_script : MonoBehaviour {
 	public int picnicHealthTotal;
 	public GameObject spouse;
 	public GameObject food;
+	public GameObject _GM;
 
 	// Use this for initialization
 	void Start () {
-		picnicHealthCurrent = spouse.GetComponent<spouse_behavior>().getHealth()+food.GetComponent<food_behavior>().getHealth();
+		picnicHealthCurrent = 200;
 		picnicHealthTotal = picnicHealthCurrent;
 	}
 	
@@ -21,7 +22,13 @@ public class picnic_health_script : MonoBehaviour {
 //	}
 
 	public void damagePicnicIntegrity(int damage){
-		picnicHealthCurrent = picnicHealthCurrent - damage;
+		if((picnicHealthCurrent-damage)>=0){
+			picnicHealthCurrent = picnicHealthCurrent - damage;
+
+			if(picnicHealthCurrent <= 0){
+				_GM.GetComponent<Setup>().failureCondition=true;
+			}
+		}
 	}
 
 	public float getPercentage(){

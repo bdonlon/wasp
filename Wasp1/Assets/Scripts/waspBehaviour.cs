@@ -19,6 +19,8 @@ public class waspBehaviour : MonoBehaviour {
 	private float xDiffPos,yDiffPos;
 	public float speed = 20;
 	private bool up,down,left,right = false;
+	public bool eating = false;
+	public bool attacking = false;
 	public int destroyDelay = 7;
 	public int stingDamage = 10;
 	public int health = 100;
@@ -116,21 +118,53 @@ public class waspBehaviour : MonoBehaviour {
 	}
 
 	void changeTarget(string newTarget){
+		stopEatingFood();
+		stopAttacking();
+
 		target = newTarget;
 	}
 
 	public IEnumerator attack(){
-		anim.SetTrigger("wasp_attacking_start");
-		if(target.Equals("player")){
-			player.GetComponent<playerMovement>().injure(stingDamage);
-		}else if (target.Equals("spouse")){
-			spouse.GetComponent<spouse_behavior>().injure(stingDamage);
-		}else if (target.Equals("food")){
-			//eating animation
-			food.GetComponent<food_behavior>().injure(stingDamage);
+		attacking = true;
+
+		while(attacking)
+		{
+			anim.SetTrigger("wasp_attacking_start");
+			if(target.Equals("player")){
+				player.GetComponent<playerMovement>().injure(stingDamage);
+			}else if (target.Equals("spouse")){
+				spouse.GetComponent<spouse_behavior>().injure(stingDamage);
+			}else if (target.Equals("food")){
+				//eating animation
+
+			}
+			yield return new WaitForSeconds(0.2f);
+			anim.SetTrigger("wasp_attacking_end");
+
+			yield return new WaitForSeconds(1.2f);
 		}
-		yield return new WaitForSeconds(0.2f);
-		anim.SetTrigger("wasp_attacking_end");
+	}
+
+	public IEnumerator eatFood(){
+		eating=true;
+		anim.SetTrigger("wasp_eating_start");
+		while(eating)
+		{
+			food.GetComponent<food_behavior>().injure(1);
+			yield return new WaitForSeconds(0.5f);
+		}
+		anim.SetTrigger("wasp_eating_end");
+
+	}
+
+	public void stopEatingFood(){
+		eating = false;
+		anim.SetTrigger("wasp_eating_end");
+	}
+
+	public void stopAttacking(){
+		attacking = false;
+		//anim.SetTrigger("wasp_attacking_end");
 	}
 
 	public void giveScore(){

@@ -10,7 +10,11 @@ public class GUI_picnic : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		healthInt = picnic.GetComponent<picnic_health_script>().getPercentage();
-		healthString = "Picnic Integrity: "+healthInt.ToString()+"%";
+		if(healthInt>0){
+			healthString = "Picnic Integrity: "+healthInt.ToString()+"%";
+		}else{
+			healthString = "Picnic Ruined!";
+		}
 		guiText.text = healthString;
 	}
 }
