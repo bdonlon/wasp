@@ -13,6 +13,8 @@ public class Setup : MonoBehaviour {
 	public GameObject player;
 	public GameObject picnic_food;
 	public Animator picnicAnim;
+	public Animator spouseAnim;
+	public Animator picnicBasketAnim;
 
 	public int numWasps;
 	public int maxWasps;
@@ -78,11 +80,15 @@ public class Setup : MonoBehaviour {
 
 	public IEnumerator setupPhase(){
 		//animate rustlling in hamper
+		spouseAnim.SetTrigger("spouse_basket_start");
+		picnicBasketAnim.SetTrigger ("picnic_basket_open");
 
 		yield return new WaitForSeconds(3.0f);
 
 		//place new picnic food on platter
 		picnicAnim.SetTrigger("nextFood");
+		spouseAnim.SetTrigger("spouse_basket_end");
+		picnicBasketAnim.SetTrigger ("picnic_basket_close");
 		spawnPhase=true;
 	}
 
@@ -91,7 +97,7 @@ public class Setup : MonoBehaviour {
 		if(victoryCondition){
 
 		}else if(failureCondition){
-
+			spouseAnim.SetTrigger("spouse_cry_start");
 		}else{
 			if(waspsSpawnedThisWave>=maxWasps){
 				spawnPhase = false;

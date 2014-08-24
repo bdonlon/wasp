@@ -12,10 +12,19 @@ public class spouse_behavior : MonoBehaviour {
 
 	public GameObject picnic;
 
+
+	Animator anim;
+
+	void Start(){
+		anim = GetComponent<Animator>();
+	}
+
 	public void injure(int damage)
 	{
+			anim.SetTrigger("spouse_hurt_start");
 			picnic.GetComponent<picnic_health_script>().damagePicnicIntegrity(damage);
 			hitSound.GetComponent<playSound>().play();
+			//anim.SetTrigger("spouse_hurt_end");
 //			if(health<=0){
 //				deathSound.GetComponent<playSound>().play();
 //				_GM.GetComponent<Setup>().failureCondition=true;
@@ -34,6 +43,10 @@ public class spouse_behavior : MonoBehaviour {
 	
 	public bool isDead(){
 		return dead;
+	}
+
+	public void cry(){
+		anim.SetTrigger("spouse_cry_start");
 	}
 
 //	public int getHealth(){
