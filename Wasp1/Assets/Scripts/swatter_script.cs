@@ -15,7 +15,7 @@ public class swatter_script : MonoBehaviour {
 	public GameObject player;
 	public bool setStartSwingPositionOnce;
 
-	private float swingDuration = 0.2f;
+	private float swingDuration = 0.15f;
 	private float swingSpeed = 0.22f;
 	
 	private float swingTimer = 0f;
@@ -70,9 +70,10 @@ public class swatter_script : MonoBehaviour {
 				swingTimer = 0f;
 				swinging = false;
 				setStartSwingPositionOnce = true;
-				transform.rotation = Quaternion.Euler(0,0,defaultZRot);
+
 				transform.position = new Vector3(transform.parent.position.x+defaultX,transform.parent.position.y+defaultY,transform.position.z);
 				gameObject.GetComponent<BoxCollider2D>().enabled = false;
+				transform.rotation = Quaternion.Euler(0,0,defaultZRot);
 			}
 		}
 	}
@@ -82,23 +83,24 @@ public class swatter_script : MonoBehaviour {
 		if(Key.Equals("up")){
 			idle=false;
 			swinging=true;
-			startSwingPosition = new Vector3(player.transform.position.x+1,player.transform.position.y+1,0);
+			startSwingPosition = new Vector3(player.transform.position.x-0.86f,player.transform.position.y+0.86f,0);
 
 		}
 		if(Key.Equals("down")){
 			idle=false;
 			swinging=true;
+			startSwingPosition = new Vector3(player.transform.position.x+0.86f,player.transform.position.y-0.86f,0);
 
 		}
 		if(Key.Equals("left")){
 			idle=false;
 			swinging=true;
-
+			startSwingPosition = new Vector3(player.transform.position.x-0.86f,player.transform.position.y-0.86f,0);
 		}
 		if(Key.Equals("right")){
 			idle=false;
 			swinging=true;
-
+			startSwingPosition = new Vector3(player.transform.position.x+0.86f,player.transform.position.y+0.86f,0);
 		}
 	}
 
