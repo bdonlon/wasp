@@ -20,26 +20,41 @@ public class crosshair : MonoBehaviour {
 
 
 		//*****probably wrong place for this Key grabbing code
-		if(Input.GetKey(KeyCode.UpArrow))
+		if(Input.GetKeyDown(KeyCode.UpArrow))
 		{
 			//StartCoroutine(swatter.GetComponent<swatter_script>().swingKey("up"));
 			swatter.GetComponent<swatter_script>().swingKey ("up");
 			mousePosition = new Vector3(playerPosition.x-0.86f,playerPosition.y+0.86f,0);
 		}
-		if(Input.GetKey(KeyCode.DownArrow))
+		if(Input.GetKeyUp (KeyCode.UpArrow)){
+			swatter.GetComponent<swatter_script>().keyUp();
+		}
+
+		if(Input.GetKeyDown(KeyCode.DownArrow))
 		{
 			swatter.GetComponent<swatter_script>().swingKey ("down");
 			mousePosition = new Vector3(playerPosition.x+0.86f,playerPosition.y-0.86f,0);
 		}
-		if(Input.GetKey(KeyCode.LeftArrow))
+		if(Input.GetKeyUp (KeyCode.DownArrow)){
+			swatter.GetComponent<swatter_script>().keyUp();
+		}
+
+		if(Input.GetKeyDown(KeyCode.LeftArrow))
 		{
 			swatter.GetComponent<swatter_script>().swingKey ("left");
 			mousePosition = new Vector3(playerPosition.x-0.86f,playerPosition.y-0.86f,0);
 		}
-		if(Input.GetKey(KeyCode.RightArrow))
+		if(Input.GetKeyUp (KeyCode.LeftArrow)){
+			swatter.GetComponent<swatter_script>().keyUp();
+		}
+
+		if(Input.GetKeyDown(KeyCode.RightArrow))
 		{
 			swatter.GetComponent<swatter_script>().swingKey ("right");
 			mousePosition = new Vector3(playerPosition.x+0.86f,playerPosition.y+0.86f,0);
+		}
+		if(Input.GetKeyUp (KeyCode.RightArrow)){
+			swatter.GetComponent<swatter_script>().keyUp();
 		}
 		//*******************************************************
 
