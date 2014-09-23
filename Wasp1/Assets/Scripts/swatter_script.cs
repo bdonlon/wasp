@@ -6,6 +6,7 @@ public class swatter_script : MonoBehaviour {
 	public GameObject crosshair;
 	public bool idle;
 
+	public float angle;
 	public float wobble;
 	public int timer;
 	public float defaultX;
@@ -18,6 +19,8 @@ public class swatter_script : MonoBehaviour {
 	public bool interrupt=false;
 	public Quaternion quat;
 
+	public bool up,down,left,right = false;
+
 	private float swingDuration = 0.15f;
 	private float swingSpeed = 10;
 	
@@ -28,6 +31,7 @@ public class swatter_script : MonoBehaviour {
 	private Vector3 startRot;
 
 	private Vector3 startSwingPosition;
+	public Vector3 playerPosition;
 
 	// Use this for initialization
 	void Start () {
@@ -45,6 +49,23 @@ public class swatter_script : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		playerPosition = transform.parent.position;
+
+		//Keyboard handler
+		if(Input.GetKeyDown(KeyCode.UpArrow)){	swingKey("up");	}
+		if(Input.GetKeyUp (KeyCode.UpArrow)){	keyUp();	}
+		if(Input.GetKeyDown(KeyCode.DownArrow)){	swingKey("down");	}
+		if(Input.GetKeyUp (KeyCode.DownArrow)){	keyUp();	}
+		if(Input.GetKeyDown(KeyCode.LeftArrow)){	swingKey("left");	}
+		if(Input.GetKeyUp (KeyCode.LeftArrow)){	keyUp();	}
+		if(Input.GetKeyDown(KeyCode.RightArrow)){	swingKey("right");	}
+		if(Input.GetKeyUp (KeyCode.RightArrow)){	keyUp();	}
+
+		if(up){startSwingPosition = new Vector3(player.transform.position.x-0.86f,player.transform.position.y+0.86f,0);};
+		if(down){startSwingPosition = new Vector3(player.transform.position.x+0.86f,player.transform.position.y-0.86f,0);};
+		if(left){startSwingPosition = new Vector3(player.transform.position.x-0.86f,player.transform.position.y-0.86f,0);};
+		if(right){startSwingPosition = new Vector3(player.transform.position.x+0.86f,player.transform.position.y+0.86f,0);};
+
 
 		//weapon idle wobble
 		if(idle){
@@ -61,15 +82,20 @@ public class swatter_script : MonoBehaviour {
 		}else if (swinging){
 			gameObject.GetComponent<BoxCollider2D>().enabled = true;
 			swingTimer += Time.deltaTime;
+
 			if(setStartSwingPositionOnce){
 				setStartSwingPositionOnce=false;
-				transform.position = startSwingPosition;	//moves to crosshair position
-				if(setQuatOnce){
-					setQuatOnce=false;
-					quat = Quaternion.AngleAxis(crosshair.GetComponent<crosshair>().angle+90, Vector3.forward);
-				}
-				transform.rotation = Quaternion.RotateTowards(transform.rotation, quat, Time.deltaTime * 10000);
+				transform.position = startSwingPosition;
 			}
+			setQuatOnce=false;
+
+			Vector3 vectorToTarget = playerPosition - transform.position;
+			angle = (Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg) + 90;
+			quat = Quaternion.AngleAxis(angle+90, Vector3.forward);
+
+			//rotate swatter to point away from player
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, quat, Time.deltaTime * 10000);
+
 			rotatePoint = new Vector3(player.transform.position.x,player.transform.position.y,0);
 			transform.RotateAround(rotatePoint, Vector3.back, swingSpeed);
 
@@ -102,44 +128,46 @@ public class swatter_script : MonoBehaviour {
 	}
 
 	public void swingKey(string Key){
+		up=false;
+		down=false;
+		left=false;
+		right=false;
 
 		if(Key.Equals("up")){
+			up=true;
 			interrupt=false;
 			idle=false;
 			swinging=true;
 			startSwingPosition = new Vector3(player.transform.position.x-0.86f,player.transform.position.y+0.86f,0);
 			setQuatOnce=true;
 			swungOnce=false;
-			//setStartSwingPositionOnce = true;
-
 		}
 		if(Key.Equals("down")){
+			down=true;
 			interrupt=false;
 			idle=false;
 			swinging=true;
 			startSwingPosition = new Vector3(player.transform.position.x+0.86f,player.transform.position.y-0.86f,0);
 			setQuatOnce=true;
 			swungOnce=false;
-			//setStartSwingPositionOnce = true;
-
 		}
 		if(Key.Equals("left")){
+			left=true;
 			interrupt=false;
 			idle=false;
 			swinging=true;
 			startSwingPosition = new Vector3(player.transform.position.x-0.86f,player.transform.position.y-0.86f,0);
 			setQuatOnce=true;
 			swungOnce=false;
-			//setStartSwingPositionOnce = true;
 		}
 		if(Key.Equals("right")){
+			right=true;
 			interrupt=false;
 			idle=false;
 			swinging=true;
 			startSwingPosition = new Vector3(player.transform.position.x+0.86f,player.transform.position.y+0.86f,0);
 			setQuatOnce=true;
 			swungOnce=false;
-			//setStartSwingPositionOnce = true;
 		}
 	}
 
