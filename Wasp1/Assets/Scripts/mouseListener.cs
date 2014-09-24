@@ -34,7 +34,7 @@ public class mouseListener : MonoBehaviour {
 		if(Input.GetMouseButtonDown(1)){
 			//swatter.GetComponent<swat>().enable();
 
-			StartCoroutine(swatter.GetComponent<swatter_script>().swingMouse());
+			//StartCoroutine(swatter.GetComponent<swatter_script>().swingMouse());
 
 			//swatter.GetComponent<swat>().disable();
 		}

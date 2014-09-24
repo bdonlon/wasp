@@ -20,13 +20,14 @@ public class swatter_script : MonoBehaviour {
 	public Quaternion quat;
 
 	public bool up,down,left,right = false;
+	public bool preUp,preDown,preLeft,preRight = false;
 
 	private float swingDuration = 0.15f;
 	private float swingSpeed = 10;
 	
 	private float swingTimer = 0f;
-	private bool swinging = false;
-	private bool swungOnce=false;
+	public bool swinging = false;
+	public bool swungOnce=false;
 
 	private Vector3 startRot;
 
@@ -46,26 +47,29 @@ public class swatter_script : MonoBehaviour {
 
 		startRot = transform.eulerAngles;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		playerPosition = transform.parent.position;
 
+		savePreviousInputState();
+
 		//Keyboard handler
-		if(Input.GetKeyDown(KeyCode.UpArrow)){	swingKey("up");	}
-		if(Input.GetKeyUp (KeyCode.UpArrow)){	keyUp();	}
-		if(Input.GetKeyDown(KeyCode.DownArrow)){	swingKey("down");	}
-		if(Input.GetKeyUp (KeyCode.DownArrow)){	keyUp();	}
-		if(Input.GetKeyDown(KeyCode.LeftArrow)){	swingKey("left");	}
-		if(Input.GetKeyUp (KeyCode.LeftArrow)){	keyUp();	}
-		if(Input.GetKeyDown(KeyCode.RightArrow)){	swingKey("right");	}
-		if(Input.GetKeyUp (KeyCode.RightArrow)){	keyUp();	}
+		if(Input.GetKeyDown(KeyCode.UpArrow))   {	up=true;		}
+		if(Input.GetKeyUp  (KeyCode.UpArrow))   {	up=false;		}
+		if(Input.GetKeyDown(KeyCode.DownArrow)) {	down=true;		}
+		if(Input.GetKeyUp  (KeyCode.DownArrow)) {	down=false;		}
+		if(Input.GetKeyDown(KeyCode.LeftArrow)) {	left=true;		}
+		if(Input.GetKeyUp  (KeyCode.LeftArrow)) {	left=false;		}
+		if(Input.GetKeyDown(KeyCode.RightArrow)){	right=true;		}
+		if(Input.GetKeyUp  (KeyCode.RightArrow)){	right=false; 	}
 
-		if(up){startSwingPosition = new Vector3(player.transform.position.x-0.86f,player.transform.position.y+0.86f,0);};
-		if(down){startSwingPosition = new Vector3(player.transform.position.x+0.86f,player.transform.position.y-0.86f,0);};
-		if(left){startSwingPosition = new Vector3(player.transform.position.x-0.86f,player.transform.position.y-0.86f,0);};
-		if(right){startSwingPosition = new Vector3(player.transform.position.x+0.86f,player.transform.position.y+0.86f,0);};
+		//decide which direction to swing (for changes midswing)
+		analyseInput();
 
+		//weapon swing checks
+		checkSwinging();
+		setStartSwingPosition();
 
 		//weapon idle wobble
 		if(idle){
@@ -73,9 +77,6 @@ public class swatter_script : MonoBehaviour {
 				wobble = wobble*-1;
 				timer=0;
 			}
-
-			//transform.Rotate(0,0,wobble);
-			//transform.RotateAround (Vector3.zero, Vector3.up, wobble);
 			Vector3 rotatePoint = new Vector3(transform.parent.position.x+defaultX-0.45f,transform.parent.position.y+defaultY-0.2f,0);
 			transform.RotateAround(rotatePoint, Vector3.back, wobble);
 			timer++;
@@ -87,7 +88,6 @@ public class swatter_script : MonoBehaviour {
 				setStartSwingPositionOnce=false;
 				transform.position = startSwingPosition;
 			}
-			setQuatOnce=false;
 
 			Vector3 vectorToTarget = playerPosition - transform.position;
 			angle = (Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg) + 90;
@@ -97,6 +97,7 @@ public class swatter_script : MonoBehaviour {
 			transform.rotation = Quaternion.RotateTowards(transform.rotation, quat, Time.deltaTime * 10000);
 
 			rotatePoint = new Vector3(player.transform.position.x,player.transform.position.y,0);
+			//rotate swatter as a swing
 			transform.RotateAround(rotatePoint, Vector3.back, swingSpeed);
 
 			if (swingTimer > swingDuration){
@@ -123,64 +124,74 @@ public class swatter_script : MonoBehaviour {
 		}
 	}
 
-	public void keyUp(){
-		interrupt=true;
+	public void savePreviousInputState(){
+		preUp=up;
+		preDown=down;
+		preLeft=left;
+		preRight=right;
 	}
 
-	public void swingKey(string Key){
-		up=false;
-		down=false;
-		left=false;
-		right=false;
+	public void setStartSwingPosition(){
+		float dx=0;
+		float dy=0;
+		if(up){
+			dx=-0.86f;
+			dy=0.86f;
+		}
+		if(down){
+			dx=0.86f;
+			dy=-0.86f;
+		}
+		if(left){
+			dx=-0.86f;
+			dy=-0.86f;
+		}
+		if(right){
+			dx=0.86f;
+			dy=0.86f;
+		}
 
-		if(Key.Equals("up")){
-			up=true;
-			interrupt=false;
-			idle=false;
+		startSwingPosition = new Vector3(player.transform.position.x+dx,player.transform.position.y+dy,0);
+	}
+	
+	public void checkSwinging()
+	{
+		if(up||down||left||right)
+		{
 			swinging=true;
-			startSwingPosition = new Vector3(player.transform.position.x-0.86f,player.transform.position.y+0.86f,0);
-			setQuatOnce=true;
-			swungOnce=false;
-		}
-		if(Key.Equals("down")){
-			down=true;
-			interrupt=false;
 			idle=false;
-			swinging=true;
-			startSwingPosition = new Vector3(player.transform.position.x+0.86f,player.transform.position.y-0.86f,0);
-			setQuatOnce=true;
-			swungOnce=false;
-		}
-		if(Key.Equals("left")){
-			left=true;
 			interrupt=false;
-			idle=false;
-			swinging=true;
-			startSwingPosition = new Vector3(player.transform.position.x-0.86f,player.transform.position.y-0.86f,0);
-			setQuatOnce=true;
-			swungOnce=false;
-		}
-		if(Key.Equals("right")){
-			right=true;
-			interrupt=false;
-			idle=false;
-			swinging=true;
-			startSwingPosition = new Vector3(player.transform.position.x+0.86f,player.transform.position.y+0.86f,0);
-			setQuatOnce=true;
-			swungOnce=false;
+		}else{
+			interrupt=true;
 		}
 	}
 
-	public IEnumerator swingMouse(){
-		idle=false;
-		swinging=true;
-		yield return new WaitForSeconds(0.2f);
+	public void analyseInput(){
+		int test=0;
+		if(up){test++;};
+		if(down){test++;};
+		if(left){test++;};
+		if(right){test++;};
 
-		gameObject.GetComponent<BoxCollider2D>().enabled = false;
-		transform.rotation = Quaternion.Euler(0,0,defaultZRot);
-		transform.position = new Vector3(transform.parent.position.x+defaultX,transform.parent.position.y+defaultY,transform.position.z);
+		if(test>1){	//multiple inputs
+			interrupt=true;
+			setStartSwingPositionOnce=true;	//allow in progress swing to break
+			setLatest();	//set most recent key input as swing direction and negate previous in progress swing
+		}
+	}
 
-		swinging=false;
-		idle=true;
+	public void setLatest(){
+		if(up&&preUp){
+			up=false;
+		}
+		if(down&&preDown){
+			down=false;
+		}
+		if(left&&preLeft){
+			left=false;
+		}
+		if(right&&preRight){
+			right=false;
+		}
 	}
 }
