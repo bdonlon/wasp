@@ -120,8 +120,17 @@ public class waspBehaviour : MonoBehaviour {
 	void changeTarget(string newTarget){
 		stopEatingFood();
 		stopAttacking();
-
 		target = newTarget;
+		adjustColliders();
+	}
+
+	void adjustColliders(){
+		if(getTarget().Equals("player")){
+			gameObject.layer= 13;
+
+			//shouldn't need this
+			//Physics2D.IgnoreLayerCollision(13, 09, true); //Disable collisions between wasps targeting the player (layer 13) and picnic objects (layer 9)
+		}
 	}
 
 	public IEnumerator attack(){
