@@ -21,4 +21,16 @@ public class playSound : MonoBehaviour {
 			audioSource.clip = sound;
 		audioSource.Play();
 	}
+
+	public void playLooped(){
+		audioSource.loop=true;
+//		if (sound)
+//			audioSource.clip = sound;
+//		audioSource.Play();
+		play();
+	}
+
+	public void stop(){
+		audioSource.Stop();
+	}
 }

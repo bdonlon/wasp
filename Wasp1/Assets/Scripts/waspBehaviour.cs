@@ -26,6 +26,7 @@ public class waspBehaviour : MonoBehaviour {
 	public int health = 100;
 	public GameObject hitSound;
 	public GameObject killSound;
+	public GameObject flySound;
 
 	public BoxCollider2D swatTrigger;
 	public BoxCollider2D passthrough;
@@ -61,6 +62,8 @@ public class waspBehaviour : MonoBehaviour {
 
 		anim = GetComponent<Animator>();
 		shadowAnim = shadow.GetComponent<Animator>();
+
+		flySound.GetComponent<playSound>().playLooped();
 	}
 	
 	void Update () {
@@ -153,6 +156,7 @@ public class waspBehaviour : MonoBehaviour {
 	}
 
 	public IEnumerator eatFood(){
+		flySound.GetComponent<playSound>().stop();
 		eating=true;
 		anim.SetTrigger("wasp_eating_start");
 		while(eating)
@@ -167,11 +171,11 @@ public class waspBehaviour : MonoBehaviour {
 	public void stopEatingFood(){
 		eating = false;
 		anim.SetTrigger("wasp_eating_end");
+		flySound.GetComponent<playSound>().playLooped();
 	}
 
 	public void stopAttacking(){
 		attacking = false;
-		//anim.SetTrigger("wasp_attacking_end");
 	}
 
 	public void giveScore(){
@@ -229,14 +233,6 @@ public class waspBehaviour : MonoBehaviour {
 			}
 			travelDirection = new Vector2(xDiff,yDiff);
 			rigidbody2D.AddForce(travelDirection.normalized * speed);
-			
-			//xDiff = spawnLocation.x - transform.position.x;
-			//yDiff = spawnLocation.y - transform.position.y;
-			
-			//xDiffPos=Mathf.Abs(xDiff);
-			//yDiffPos=Mathf.Abs(yDiff);
-			
-			//rigidbody2D.AddForce(travelDirection.normalized * speed);
 		}
 	}
 
@@ -261,6 +257,7 @@ public class waspBehaviour : MonoBehaviour {
 	}
 	
 	public void kill(){
+		flySound.GetComponent<playSound>().stop();
 		dead=true;
 		giveScore();
 		anim.SetTrigger("wasp_death");
@@ -270,12 +267,10 @@ public class waspBehaviour : MonoBehaviour {
 		shadow.transform.localScale = new Vector3(shadow.transform.localScale.x+0.15f,shadow.transform.localScale.y+0.15f,shadow.transform.localScale.z);
 		destroyWasp();
 		_GM.GetComponent<Setup>().numWasps--;
-		//_GM.GetComponent<Setup>().maxWasps++;
 	}
 
 	public void destroyWasp(){
 		Destroy(transform.Find("passthrough").gameObject);
-		//Destroy(transform.Find("waspSwatTrigger").gameObject);	//Causing game crash
 		Destroy(this.gameObject,Random.Range(destroyDelay-1,destroyDelay+1));
 	}
 

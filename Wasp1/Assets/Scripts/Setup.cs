@@ -3,9 +3,6 @@ using System.Collections;
 
 public class Setup : MonoBehaviour {
 
-	//private Camera mainCam = new Camera();
-	//public Camera MainCamera = GameObject.Find("MainCamera").camera;
-
 	public Camera mainCam;
 	public BoxCollider2D borderTop,borderBottom,borderLeft,borderRight;
 	public GameObject spawnerTop,spawnerBottom,spawnerLeft,spawnerRight;
@@ -24,7 +21,6 @@ public class Setup : MonoBehaviour {
 	public int waspsSpawnedThisWave;
 	
 	public bool spawnPhase = false;
-	//public bool setupPhase = false;
 
 	public float width,height;
 
