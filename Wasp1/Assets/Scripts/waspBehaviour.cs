@@ -126,10 +126,8 @@ public class waspBehaviour : MonoBehaviour {
 
 	void adjustColliders(){
 		if(getTarget().Equals("player")){
-			gameObject.layer= 13;
-
-			//shouldn't need this
-			//Physics2D.IgnoreLayerCollision(13, 09, true); //Disable collisions between wasps targeting the player (layer 13) and picnic objects (layer 9)
+			Physics2D.IgnoreCollision(passthrough,food.collider2D);	//Targeting player, therefore ignore collisions with food
+			Physics2D.IgnoreCollision(passthrough,spouse.collider2D);	//Targeting player, therefore ignore collisions with spouse
 		}
 	}
 

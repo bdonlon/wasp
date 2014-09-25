@@ -74,8 +74,6 @@ public class Setup : MonoBehaviour {
 		spawnerRight.transform.position = spawnerPosition;
 
 		Physics2D.IgnoreLayerCollision(12, 08, true); //Disable collisions between wasps (layer 12) and borders (layer 8)
-		Physics2D.IgnoreLayerCollision(13, 09, true); //Disable collisions between wasps targeting the player (layer 13) and picnic objects (layer 9)
-
 
 		StartCoroutine(setupPhase());
 	}
