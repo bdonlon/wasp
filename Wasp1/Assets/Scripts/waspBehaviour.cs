@@ -42,7 +42,6 @@ public class waspBehaviour : MonoBehaviour {
 
 	void Start () {
 		speed = 40;
-		target = "food";
 		left = true;
 		//set up wasp colliders
 		swatTrigger.size = new Vector2(0.71f,0.44f);
@@ -60,10 +59,15 @@ public class waspBehaviour : MonoBehaviour {
 		food = GameObject.Find("picnic_food");
 		spouse = GameObject.Find("picnic_spouse");
 
+
+
 		anim = GetComponent<Animator>();
 		shadowAnim = shadow.GetComponent<Animator>();
 
 		flySound.GetComponent<playSound>().playLooped();
+
+		changeTarget("food");
+		//target="food";
 	}
 	
 	void Update () {
@@ -71,37 +75,64 @@ public class waspBehaviour : MonoBehaviour {
 		foodLocation= food.transform.position;
 		spouseLocation= spouse.transform.position;
 	
-		if(!encounteredPlayer && distanceBetween(playerLocation,transform.position)<2.5f){
-			int rand = Random.Range(1,100);
-			if(rand>50){
-				changeTarget("player");
+		if(!_GM.GetComponent<Setup>().failureCondition){	//failure condition not met
+			if(!encounteredPlayer && distanceBetween(playerLocation,transform.position)<2.5f){
+				int rand = Random.Range(1,100);
+				if(rand>50){
+					changeTarget("player");
+				}
+				encounteredPlayer=true;
 			}
-			encounteredPlayer=true;
-		}
 
-		if(!encounteredSpouse && distanceBetween(spouseLocation,transform.position)<1.9f){
-			int rand = Random.Range(1,100);
-			if(rand>75){
-				changeTarget("spouse");
+			if(!encounteredSpouse && distanceBetween(spouseLocation,transform.position)<1.9f){
+				int rand = Random.Range(1,100);
+				if(rand>75){
+					changeTarget("spouse");
+				}
+				encounteredSpouse=true;
 			}
-			encounteredSpouse=true;
-		}
 
-		if(target.Equals("food")){
-			travel(transform.position,foodLocation);
-		}else if(target.Equals("spouse")){
-			travel(transform.position,spouseLocation);
-		}else if(target.Equals("player")){
-			if(!player.GetComponent<playerMovement>().isDead())
-			{
-				//player is ALIVE
-				travel(transform.position,playerLocation);
+			if(target.Equals("food")){
+				travel(transform.position,foodLocation);
+			}else if(target.Equals("spouse")){
+				travel(transform.position,spouseLocation);
+			}else if(target.Equals("player")){
+				if(!player.GetComponent<playerMovement>().isDead())
+				{
+					//player is ALIVE
+					travel(transform.position,playerLocation);
+				}
 			}
-			else
-			{
-				//player is DEAD
-				speed = 7.5f;
+		}else{	//failure condition met
+			if(target.Equals("food")){
+				travel(transform.position,foodLocation);
+			}else if(target.Equals("spouse")){	//if failure condition true, ROLL and change target from spouse to food (50%) or return to spawn (50%)
+				int rand = Random.Range(1,100);
+				if(rand>50){
+					changeTarget("food");
+
+				}else{
+					speed = 7.5f;
+					changeTarget ("spawn");
+				}
+			}else if(target.Equals ("spawn")){
 				travel(transform.position,spawnLocation);
+			}else if(target.Equals("player")){
+				if(!player.GetComponent<playerMovement>().isDead()) //if failure condition true, but player is still alive (picnic ruined), and current target is player, continue targeting player
+				{
+					//player is ALIVE
+					travel(transform.position,playerLocation);
+				}
+				else //if failure condition true, current target is player, and player is dead - ROLL and change target from player to food (50%) or return to spawn (50%)
+				{
+					int rand = Random.Range(1,100);
+					if(rand>50){
+						changeTarget("food");
+					}else{
+						speed = 7.5f;
+						changeTarget("spawn");
+					}
+				}
 			}
 		}
 	}
@@ -121,16 +152,43 @@ public class waspBehaviour : MonoBehaviour {
 	}
 
 	void changeTarget(string newTarget){
-		stopEatingFood();
-		stopAttacking();
+		if(eating){		stopEatingFood();}
+		if(attacking){	stopAttacking();}
 		target = newTarget;
 		adjustColliders();
 	}
 
 	void adjustColliders(){
+
+		x
+		//Work on preventing clustering around food/spouse.
+
+		//reset all colliders
+		Physics2D.IgnoreCollision(passthrough,food.collider2D,false);
+		Physics2D.IgnoreCollision(passthrough,spouse.collider2D,false);
+		Physics2D.IgnoreCollision(passthrough,player.collider2D,false);
+
+		//then disable colliders depending on current target
 		if(getTarget().Equals("player")){
+			gameObject.layer = 12;
 			Physics2D.IgnoreCollision(passthrough,food.collider2D);	//Targeting player, therefore ignore collisions with food
 			Physics2D.IgnoreCollision(passthrough,spouse.collider2D);	//Targeting player, therefore ignore collisions with spouse
+		}
+		else if(getTarget().Equals("spouse")){
+			Physics2D.IgnoreCollision(passthrough,food.collider2D);
+			Physics2D.IgnoreCollision(passthrough,player.collider2D);
+			gameObject.layer = 14;
+		}
+		else if(getTarget().Equals("food")){
+			gameObject.layer = 14;
+			Physics2D.IgnoreCollision(passthrough,player.collider2D);
+			Physics2D.IgnoreCollision(passthrough,spouse.collider2D);
+		}
+		else if(getTarget().Equals("spawn")){
+			gameObject.layer = 14;
+			Physics2D.IgnoreCollision(passthrough,food.collider2D);
+			Physics2D.IgnoreCollision(passthrough,spouse.collider2D);
+			Physics2D.IgnoreCollision(passthrough,player.collider2D);
 		}
 	}
 
@@ -164,8 +222,6 @@ public class waspBehaviour : MonoBehaviour {
 			food.GetComponent<food_behavior>().injure(1);
 			yield return new WaitForSeconds(0.5f);
 		}
-		anim.SetTrigger("wasp_eating_end");
-
 	}
 
 	public void stopEatingFood(){
