@@ -20,7 +20,8 @@ public class Setup : MonoBehaviour {
 	public int currentWave;
 	public int waspsSpawnedThisWave;
 	
-	public bool spawnPhase = false;
+	public bool spawnPhase;
+	public bool pauseGame;
 
 	public float width,height;
 
@@ -28,6 +29,11 @@ public class Setup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		pauseGame=false;
+		Time.timeScale = 1.0f;
+		AudioListener.pause = false;
+
+		spawnPhase=false;
 		numWasps=1;
 		maxWasps=5;
 		waspsSpawnedThisWave=0;
@@ -90,7 +96,26 @@ public class Setup : MonoBehaviour {
 		spawnPhase=true;
 	}
 
+	public void unPause(){	//To be triggered from pause menu button
+		pauseGame=false;
+		Time.timeScale = 1.0f;
+		AudioListener.pause = false;
+	}
+
 	void Update(){
+
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			pauseGame = !pauseGame;
+			if(pauseGame){
+				Time.timeScale = 0.0f;
+				AudioListener.pause = true;
+			}else if(!pauseGame){
+				Time.timeScale = 1.0f;
+				AudioListener.pause = false;
+			}
+		}
+
+
 
 		if(victoryCondition){
 

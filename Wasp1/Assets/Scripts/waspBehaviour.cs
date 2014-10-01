@@ -74,66 +74,72 @@ public class waspBehaviour : MonoBehaviour {
 	}
 	
 	void Update () {
-		playerLocation= player.transform.position;
-		foodLocation= new Vector3(food.transform.position.x+foodOffset.x,food.transform.position.y+foodOffset.y,food.transform.position.z);
-		spouseLocation= spouse.transform.position;
-	
-		if(!_GM.GetComponent<Setup>().failureCondition){	//failure condition not met
-			if(!encounteredPlayer && distanceBetween(playerLocation,transform.position)<2.5f){
-				int rand = Random.Range(1,100);
-				if(rand>50){
-					changeTarget("player");
-				}
-				encounteredPlayer=true;
-			}
 
-			if(!encounteredSpouse && distanceBetween(spouseLocation,transform.position)<1.9f){
-				int rand = Random.Range(1,100);
-				if(rand>75){
-					changeTarget("spouse");
-				}
-				encounteredSpouse=true;
-			}
+		if(_GM.GetComponent<Setup>().pauseGame){
+			//Game paused - Do nothing!
+		}else{
 
-			if(target.Equals("food")){
-				travel(transform.position,foodLocation);
-			}else if(target.Equals("spouse")){
-				travel(transform.position,spouseLocation);
-			}else if(target.Equals("player")){
-				if(!player.GetComponent<playerMovement>().isDead())
-				{
-					//player is ALIVE
-					travel(transform.position,playerLocation);
+			playerLocation= player.transform.position;
+			foodLocation= new Vector3(food.transform.position.x+foodOffset.x,food.transform.position.y+foodOffset.y,food.transform.position.z);
+			spouseLocation= spouse.transform.position;
+		
+			if(!_GM.GetComponent<Setup>().failureCondition){	//failure condition not met
+				if(!encounteredPlayer && distanceBetween(playerLocation,transform.position)<2.5f){
+					int rand = Random.Range(1,100);
+					if(rand>50){
+						changeTarget("player");
+					}
+					encounteredPlayer=true;
 				}
-			}
-		}else{	//failure condition met
-			if(target.Equals("food")){
-				travel(transform.position,foodLocation);
-			}else if(target.Equals("spouse")){	//if failure condition true, ROLL and change target from spouse to food (50%) or return to spawn (50%)
-				int rand = Random.Range(1,100);
-				if(rand>50){
-					changeTarget("food");
 
-				}else{
-					speed = 7.5f;
-					changeTarget ("spawn");
+				if(!encounteredSpouse && distanceBetween(spouseLocation,transform.position)<1.9f){
+					int rand = Random.Range(1,100);
+					if(rand>75){
+						changeTarget("spouse");
+					}
+					encounteredSpouse=true;
 				}
-			}else if(target.Equals ("spawn")){
-				travel(transform.position,spawnLocation);
-			}else if(target.Equals("player")){
-				if(!player.GetComponent<playerMovement>().isDead()) //if failure condition true, but player is still alive (picnic ruined), and current target is player, continue targeting player
-				{
-					//player is ALIVE
-					travel(transform.position,playerLocation);
+
+				if(target.Equals("food")){
+					travel(transform.position,foodLocation);
+				}else if(target.Equals("spouse")){
+					travel(transform.position,spouseLocation);
+				}else if(target.Equals("player")){
+					if(!player.GetComponent<playerMovement>().isDead())
+					{
+						//player is ALIVE
+						travel(transform.position,playerLocation);
+					}
 				}
-				else //if failure condition true, current target is player, and player is dead - ROLL and change target from player to food (50%) or return to spawn (50%)
-				{
+			}else{	//failure condition met
+				if(target.Equals("food")){
+					travel(transform.position,foodLocation);
+				}else if(target.Equals("spouse")){	//if failure condition true, ROLL and change target from spouse to food (50%) or return to spawn (50%)
 					int rand = Random.Range(1,100);
 					if(rand>50){
 						changeTarget("food");
+
 					}else{
 						speed = 7.5f;
-						changeTarget("spawn");
+						changeTarget ("spawn");
+					}
+				}else if(target.Equals ("spawn")){
+					travel(transform.position,spawnLocation);
+				}else if(target.Equals("player")){
+					if(!player.GetComponent<playerMovement>().isDead()) //if failure condition true, but player is still alive (picnic ruined), and current target is player, continue targeting player
+					{
+						//player is ALIVE
+						travel(transform.position,playerLocation);
+					}
+					else //if failure condition true, current target is player, and player is dead - ROLL and change target from player to food (50%) or return to spawn (50%)
+					{
+						int rand = Random.Range(1,100);
+						if(rand>50){
+							changeTarget("food");
+						}else{
+							speed = 7.5f;
+							changeTarget("spawn");
+						}
 					}
 				}
 			}
@@ -173,13 +179,6 @@ public class waspBehaviour : MonoBehaviour {
 	}
 
 	void adjustColliders(){
-//**************************************************************************************************************************************************************************************************
-//**************************************************************************************************************************************************************************************************
-//**************************************************************************************************************************************************************************************************
-//**************************************************************************************************************************************************************************************************
-//**************************************************************************************************************************************************************************************************
-		//Work on preventing clustering around food/spouse.
-
 		//reset all colliders
 		Physics2D.IgnoreCollision(passthrough,food.collider2D,false);
 		Physics2D.IgnoreCollision(passthrough,spouse.collider2D,false);
