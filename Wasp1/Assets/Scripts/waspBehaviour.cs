@@ -7,7 +7,8 @@ public class waspBehaviour : MonoBehaviour {
 	private bool encounteredPlayer = false;
 	private bool encounteredSpouse = false;
 	private Vector3 playerLocation;
-	private Vector3 foodLocation;
+	public Vector3 foodLocation;
+	public Vector2 foodOffset;
 	private Vector3 spouseLocation;
 	private Vector3 targetLocation;
 
@@ -66,13 +67,15 @@ public class waspBehaviour : MonoBehaviour {
 
 		flySound.GetComponent<playSound>().playLooped();
 
+		foodOffset.x=0;
+		foodOffset.y=0;
 		changeTarget("food");
 		//target="food";
 	}
 	
 	void Update () {
 		playerLocation= player.transform.position;
-		foodLocation= food.transform.position;
+		foodLocation= new Vector3(food.transform.position.x+foodOffset.x,food.transform.position.y+foodOffset.y,food.transform.position.z);
 		spouseLocation= spouse.transform.position;
 	
 		if(!_GM.GetComponent<Setup>().failureCondition){	//failure condition not met
@@ -151,7 +154,18 @@ public class waspBehaviour : MonoBehaviour {
 		return target;
 	}
 
+	public void setFoodOffset(){
+		// Create an food location offset per wasp to pervent them gathering on the same xy coordinate (as wasps do not collide with eachother or the food itself)
+		float rand = Random.Range(-0.2f,0.2f);
+		foodOffset.x=rand;
+		//rand = Random.Range(-0.2f,0.2f);
+		//foodOffset.y=rand;
+	}
+
 	void changeTarget(string newTarget){
+		if(newTarget.Equals("food")){
+			setFoodOffset();
+		}
 		if(eating){		stopEatingFood();}
 		if(attacking){	stopAttacking();}
 		target = newTarget;
