@@ -13,6 +13,9 @@ public class playerMovement : MonoBehaviour {
 	public GameObject hitSound;
 	public GameObject deathSound;
 
+	public SpriteRenderer spriteRenderer;
+	public SpriteRenderer swatterSpriteRenderer;
+
 	public bool dead = false;
 
 	public void injure(int damage){
@@ -46,6 +49,9 @@ public class playerMovement : MonoBehaviour {
 	}
 	
 	void Update () {
+
+		spriteRenderer.sortingOrder = (int)Camera.main.WorldToScreenPoint (spriteRenderer.bounds.min).y * -1;
+		swatterSpriteRenderer.sortingOrder = spriteRenderer.sortingOrder;
 
 		if(!dead){
 			if(

@@ -32,7 +32,7 @@ public class swatter_script : MonoBehaviour {
 
 	private Vector3 startRot;
 
-	private Vector3 startSwingPosition;
+	public Vector3 startSwingPosition;
 	public Vector3 playerPosition;
 
 	// Use this for initialization
@@ -122,7 +122,7 @@ public class swatter_script : MonoBehaviour {
 					setStartSwingPositionOnce = true;
 					swungOnce=false;
 					
-					transform.position = new Vector3(transform.parent.position.x+defaultX,transform.parent.position.y+defaultY,transform.position.z);
+					transform.position = new Vector3(transform.parent.position.x+defaultX,transform.parent.position.y+defaultY,-1);
 					gameObject.GetComponent<BoxCollider2D>().enabled = false;
 					transform.rotation = Quaternion.Euler(0,0,defaultZRot);
 					idle=true;

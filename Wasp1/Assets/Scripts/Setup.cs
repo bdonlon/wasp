@@ -9,6 +9,7 @@ public class Setup : MonoBehaviour {
 	private Vector3 spawnerPosition = new Vector3(0,0,0);
 	public GameObject player;
 	public GameObject picnic_food;
+	public GameObject grass;
 	public Animator picnicAnim;
 	public Animator spouseAnim;
 	public Animator picnicBasketAnim;
@@ -78,7 +79,8 @@ public class Setup : MonoBehaviour {
 		Physics2D.IgnoreLayerCollision(12, 08, true); //Disable collisions between wasps (layer 12) and borders (layer 8)
 		//Physics2D.IgnoreLayerCollision(14, 14, true); //Doesn't work //Disable collisions for objects in layer 14 (wasps, when they are not tracking the player, so that they don't block eachother around picnic)
 		Physics2D.IgnoreLayerCollision(12, 12, true); //Disable collisions between wasps
-
+		Physics2D.IgnoreLayerCollision(10, 09, true); //Disable collisions between player and picnic
+	
 		StartCoroutine(setupPhase());
 	}
 
