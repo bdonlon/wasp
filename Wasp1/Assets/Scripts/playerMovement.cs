@@ -4,11 +4,13 @@ using System.Collections;
 public class playerMovement : MonoBehaviour {
 		
 	private float speed = 10;
-	//private bool movingUp,movingDown,movingLeft,movingRight = false;
 	private Vector3 velocity;
 	public int health = 200;
 	public int score = 0;
 	public GameObject _GM;
+
+	public bool up,down,left,right = false;
+	public bool upPrev,downPrev,leftPrev,rightPrev = false;
 
 	public GameObject hitSound;
 	public GameObject deathSound;
@@ -17,6 +19,16 @@ public class playerMovement : MonoBehaviour {
 	public SpriteRenderer swatterSpriteRenderer;
 
 	public bool dead = false;
+	public bool moving;
+	public bool movingPrevious;
+
+	Animator anim;
+
+	void Start(){
+		moving = false;
+		movingPrevious=false;
+		anim = GetComponent<Animator>();
+	}
 
 	public void injure(int damage){
 		if(!dead){	//may still recieve injure instructions after death
@@ -47,97 +59,160 @@ public class playerMovement : MonoBehaviour {
 	public int getScore(){
 		return score;
 	}
+
+	public void flip(){
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
+	}
+
+	public void setAnimationTrigger(){
+
+		if(left&&right){
+			//moving=false;
+		}else{
+
+			if(left){	anim.SetTrigger("running_left");	}
+
+			if(right){	anim.SetTrigger("running_right");	}
+		}
+
+		if(!up && !down && !left && !right){	anim.SetTrigger("stop_running");	}
+
+		if(movingPrevious && !moving){	anim.SetTrigger("stop_running");	}
+
+	}
+
+//	public void storePreviousDirection(){
+//		upPrev = up;
+//		downPrev = down;
+//		leftPrev = left;
+//		rightPrev = right;
+//	}
 	
 	void Update () {
-
+		movingPrevious=moving;
+		
 		spriteRenderer.sortingOrder = (int)Camera.main.WorldToScreenPoint (spriteRenderer.bounds.min).y * -1;
 		swatterSpriteRenderer.sortingOrder = spriteRenderer.sortingOrder;
-
+		
 		if(!dead){
-			if(
-			   (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)) ||
-			   (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)) ||
-			   (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) ||
-			   (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
-			 {
-				speed=8;
+			// not dead, therefore capture keystrokes and move
+			
+			if(Input.GetKey(KeyCode.W) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKeyUp(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKeyUp(KeyCode.D))
+			{
+				//storePreviousDirection ();
+				moving=true;
+				
+				if(
+					(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)) ||
+					(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)) ||
+					(Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) ||
+					(Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)))
+				{
+					speed=8;
+				}else{
+					speed=10;
+				}
+				if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)){
+					moving=false;
+					if (Input.GetKey(KeyCode.A)){
+						left=true;
+						moving=true;
+						//Debug.Log("W&S&A");
+						velocity.x=0;
+						velocity.y=0;
+						velocity.x=speed;
+						rigidbody2D.velocity=velocity;
+					}
+					if (Input.GetKey(KeyCode.D)){
+						right=true;
+						moving=true;
+						//Debug.Log("W&S&D");
+						velocity.x=0;
+						velocity.y=0;
+						velocity.x=speed*-1;
+						rigidbody2D.velocity=velocity;
+					}
+				}
+				else{
+					if(Input.GetKey(KeyCode.W)){
+						up=true;
+						velocity.y = speed;
+						rigidbody2D.velocity=velocity;
+					}
+					if(Input.GetKeyUp(KeyCode.W)){
+						up=false;
+						velocity.y = 0;
+						rigidbody2D.AddForce(Vector2.up * speed * 10);
+					}
+					
+					if (Input.GetKey(KeyCode.S)){
+						down=true;
+						velocity.y=speed*-1;
+						rigidbody2D.velocity=velocity;
+					}
+					if(Input.GetKeyUp(KeyCode.S)){
+						down=false;
+						velocity.y = 0;
+						rigidbody2D.AddForce(-Vector2.up * speed * 10);
+					}
+				}
+				
+				if(Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A)){
+					moving=false;
+					left=true;
+					right=true;
+					if (Input.GetKey(KeyCode.W)){
+						up=true;
+						moving=true;
+						//Debug.Log("A&D&W");
+						velocity.x=0;
+						velocity.y=0;
+						velocity.y=speed;
+						rigidbody2D.velocity=velocity;
+					}
+					if (Input.GetKey(KeyCode.S)){
+						down=true;
+						moving=true;
+						//Debug.Log("A&D&W");
+						velocity.x=0;
+						velocity.y=0;
+						velocity.y=speed*-1;
+						rigidbody2D.velocity=velocity;
+					}
+				}
+				else{
+					if (Input.GetKey(KeyCode.D)){
+						right=true;
+						velocity.x=speed;
+						rigidbody2D.velocity=velocity;
+					}
+					if(Input.GetKeyUp(KeyCode.D)){
+						right=false;
+						velocity.x=0;
+						rigidbody2D.AddForce(Vector2.right * speed * 10);
+					}
+					
+					if (Input.GetKey(KeyCode.A)){
+						left=true;
+						velocity.x=speed*-1;
+						rigidbody2D.velocity=velocity;
+					}
+					if(Input.GetKeyUp(KeyCode.A)){
+						left=false;
+						velocity.x=0;
+						rigidbody2D.AddForce(-Vector2.right * speed * 10);
+					}
+				}
+				setAnimationTrigger();
 			}else{
-				speed=10;
-			}
-			if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)){
-
-
-				if (Input.GetKey(KeyCode.A)){
-					//Debug.Log("W&S&A");
-					velocity.x=0;
-					velocity.y=0;
-					velocity.x=speed;
-					rigidbody2D.velocity=velocity;
-				}
-				if (Input.GetKey(KeyCode.D)){
-					//Debug.Log("W&S&D");
-					velocity.x=0;
-					velocity.y=0;
-					velocity.x=speed*-1;
-					rigidbody2D.velocity=velocity;
-				}
-			}
-			else{
-				if(Input.GetKey(KeyCode.W)){
-					velocity.y = speed;
-					rigidbody2D.velocity=velocity;
-				}
-				if(Input.GetKeyUp(KeyCode.W)){
-					velocity.y = 0;
-					rigidbody2D.AddForce(Vector2.up * speed * 10);
-				}
-				
-				if (Input.GetKey(KeyCode.S)){
-					velocity.y=speed*-1;
-					rigidbody2D.velocity=velocity;
-				}
-				if(Input.GetKeyUp(KeyCode.S)){
-					velocity.y = 0;
-					rigidbody2D.AddForce(-Vector2.up * speed * 10);
+				moving=false;
+				if(movingPrevious && !moving){
+					setAnimationTrigger();
 				}
 			}
 
-			if(Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A)){
-				//Debug.Log("A&D");
-				if (Input.GetKey(KeyCode.W)){
-					//Debug.Log("A&D&W");
-					velocity.x=0;
-					velocity.y=0;
-					velocity.y=speed;
-					rigidbody2D.velocity=velocity;
-				}
-				if (Input.GetKey(KeyCode.S)){
-					//Debug.Log("A&D&W");
-					velocity.x=0;
-					velocity.y=0;
-					velocity.y=speed*-1;
-					rigidbody2D.velocity=velocity;
-				}
-			}
-			else{
-				if (Input.GetKey(KeyCode.D)){
-					velocity.x=speed;
-					rigidbody2D.velocity=velocity;
-				}
-				if(Input.GetKeyUp(KeyCode.D)){
-					velocity.x=0;
-					rigidbody2D.AddForce(Vector2.right * speed * 10);
-				}
-				
-				if (Input.GetKey(KeyCode.A)){
-					velocity.x=speed*-1;
-					rigidbody2D.velocity=velocity;
-				}
-				if(Input.GetKeyUp(KeyCode.A)){
-					velocity.x=0;
-					rigidbody2D.AddForce(-Vector2.right * speed * 10);
-				}
-			}
 		}else{
 			//player dead, no movement
 		}

@@ -3,6 +3,20 @@ guid: b66e1fa0358d6604380a61553b7e7f94
 TextureImporter:
   fileIDToRecycleName:
     21300000: Man
+    21300002: Man_0
+    21300004: Man_1
+    21300006: Man_2
+    21300008: Man_3
+    21300010: Man_4
+    21300012: Man_5
+    21300014: Man_6
+    21300016: Man_7
+    21300018: Man_8
+    21300020: Man_9
+    21300022: Man_10
+    21300024: Man_11
+    21300026: Man_12
+    21300028: Man_13
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -32,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -43,6 +57,146 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Man_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 1355
+        width: 77
+        height: 157
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_1
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 1355
+        width: 77
+        height: 157
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_2
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 1190
+        width: 58
+        height: 154
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_3
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 1201
+        width: 97
+        height: 143
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_4
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 1186
+        width: 54
+        height: 157
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_5
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 1189
+        width: 62
+        height: 154
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_6
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 1197
+        width: 98
+        height: 146
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_7
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 1186
+        width: 55
+        height: 157
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_8
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 1011
+        width: 54
+        height: 159
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_9
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 1023
+        width: 97
+        height: 147
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_10
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 1015
+        width: 61
+        height: 154
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_11
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 1011
+        width: 54
+        height: 158
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_12
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 1026
+        width: 97
+        height: 143
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_13
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 1016
+        width: 57
+        height: 154
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
