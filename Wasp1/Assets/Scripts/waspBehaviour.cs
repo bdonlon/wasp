@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class waspBehaviour : MonoBehaviour {
@@ -25,6 +25,7 @@ public class waspBehaviour : MonoBehaviour {
 	public int destroyDelay = 7;
 	public int stingDamage = 10;
 	public int health = 100;
+	public int defaultSortingOrder;
 	public GameObject hitSound;
 	public GameObject killSound;
 	public GameObject flySound;
@@ -41,8 +42,11 @@ public class waspBehaviour : MonoBehaviour {
 	Animator shadowAnim;
 	public GameObject shadow;
 	public SpriteRenderer spriteRenderer;
+	public SpriteRenderer spouseSpriteRenderer;
+	public SpriteRenderer foodSpriteRenderer;
 
 	void Start () {
+		defaultSortingOrder = spriteRenderer.sortingOrder;
 		speed = 40;
 		left = true;
 		//set up wasp colliders
@@ -61,7 +65,8 @@ public class waspBehaviour : MonoBehaviour {
 		food = GameObject.Find("picnic_food");
 		spouse = GameObject.Find("picnic_spouse");
 
-
+		foodSpriteRenderer = food.GetComponent<SpriteRenderer>();
+		spouseSpriteRenderer = spouse.GetComponent<SpriteRenderer>();
 
 		anim = GetComponent<Animator>();
 		shadowAnim = shadow.GetComponent<Animator>();
@@ -218,14 +223,16 @@ public class waspBehaviour : MonoBehaviour {
 		while(attacking)
 		{
 			anim.SetTrigger("wasp_attacking_start");
+																						
 			if(target.Equals("player")){
 				player.GetComponent<playerMovement>().injure(stingDamage);
 			}else if (target.Equals("spouse")){
 				spouse.GetComponent<spouse_behavior>().injure(stingDamage);
-			}else if (target.Equals("food")){
+				spriteRenderer.sortingOrder = spouseSpriteRenderer.sortingOrder;
+			}//else if (target.Equals("food")){
 				//eating animation
 
-			}
+			//}
 			yield return new WaitForSeconds(0.2f);
 			anim.SetTrigger("wasp_attacking_end");
 
@@ -237,6 +244,7 @@ public class waspBehaviour : MonoBehaviour {
 		flySound.GetComponent<playSound>().stop();
 		eating=true;
 		anim.SetTrigger("wasp_eating_start");
+		spriteRenderer.sortingOrder = foodSpriteRenderer.sortingOrder;
 		while(eating)
 		{
 			food.GetComponent<food_behavior>().injure(1);
@@ -247,11 +255,13 @@ public class waspBehaviour : MonoBehaviour {
 	public void stopEatingFood(){
 		eating = false;
 		anim.SetTrigger("wasp_eating_end");
+		spriteRenderer.sortingOrder = defaultSortingOrder;
 		flySound.GetComponent<playSound>().playLooped();
 	}
 
 	public void stopAttacking(){
 		attacking = false;
+		spriteRenderer.sortingOrder = defaultSortingOrder;
 	}
 
 	public void giveScore(){
