@@ -8,6 +8,7 @@ public class playerMovement : MonoBehaviour {
 	public int health = 200;
 	public int score = 0;
 	public GameObject _GM;
+	public GameObject swatter;
 
 	public bool keyUp,keyDown,keyLeft,keyRight = false;
 	public bool up,down,left,right = false;
@@ -52,7 +53,6 @@ public class playerMovement : MonoBehaviour {
 			calculateMoveDirection();
 			move();
 			setAnimationTrigger();
-			
 		}else{
 			//player dead, no movement
 		}
@@ -70,7 +70,7 @@ public class playerMovement : MonoBehaviour {
 		}
 		if(left&&right){
 			left=false;
-			down=false;
+			right=false;
 		}
 
 		if(up||down||left||right){	moving = true;	}else{	moving = false;	}
@@ -106,13 +106,14 @@ public class playerMovement : MonoBehaviour {
 	}
 
 	public void setAnimationTrigger(){
-		
-		if(up)		{	anim.SetTrigger("running_up");		}
-		if(down)	{	anim.SetTrigger("running_down");	}
-		if(left)	{	anim.SetTrigger("running_left");	}
-		if(right)	{	anim.SetTrigger("running_right");	}
-		
-		if(!moving){	anim.SetTrigger("stop_running");	}
+
+		if(left)				{	anim.SetTrigger("running_left");	}
+		if(right)				{	anim.SetTrigger("running_right");	}
+		if(up&&!left&&!right)	{	anim.SetTrigger("running_up");		}
+		if(down&&!left&&!right)	{	anim.SetTrigger("running_down");	}
+
+		if(!moving)				{	anim.SetTrigger("stop_running");	}
+
 	}
 
 	public void injure(int damage){
@@ -130,11 +131,17 @@ public class playerMovement : MonoBehaviour {
 	
 	public void kill(){
 		dead=true;
+
+		anim.SetBool("stop_running", false);
+		anim.SetBool("running_left", false);
+		anim.SetBool("running_right", false);
+		anim.SetBool("running_up", false);
+		anim.SetBool("running_down", false);
+		anim.SetTrigger("dead");
+
+		StartCoroutine(swatter.GetComponent<swatter_script>().setDead());	//Disable swatter swings, and make it fall off the player
+
 		Destroy(GetComponent<BoxCollider2D>());
-		Vector3 theScale;
-		theScale = transform.localScale;
-		theScale.y *= -1;
-		transform.localScale=theScale;
 	}
 	
 	public bool isDead(){

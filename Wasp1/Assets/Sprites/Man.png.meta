@@ -17,6 +17,21 @@ TextureImporter:
     21300024: Man_11
     21300026: Man_12
     21300028: Man_13
+    21300030: Man_14
+    21300032: Man_15
+    21300034: Man_16
+    21300036: Man_17
+    21300038: Man_18
+    21300040: Man_19
+    21300042: Man_20
+    21300044: Man_21
+    21300046: Man_22
+    21300048: Man_23
+    21300050: Man_24
+    21300052: Man_25
+    21300054: Man_26
+    21300056: Man_27
+    21300058: Man_28
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -39,7 +54,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 1024
   textureSettings:
-    filterMode: -1
+    filterMode: 1
     aniso: 1
     mipBias: -1
     wrapMode: 1
@@ -62,7 +77,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 1355
+        y: 720
         width: 77
         height: 157
       alignment: 0
@@ -72,7 +87,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 93
-        y: 1355
+        y: 720
         width: 77
         height: 157
       alignment: 0
@@ -81,9 +96,9 @@ TextureImporter:
     - name: Man_2
       rect:
         serializedVersion: 2
-        x: 8
-        y: 1190
-        width: 75
+        x: 0
+        y: 554
+        width: 83
         height: 154
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -91,19 +106,19 @@ TextureImporter:
     - name: Man_3
       rect:
         serializedVersion: 2
-        x: 85
-        y: 1201
-        width: 97
-        height: 143
+        x: 86
+        y: 566
+        width: 96
+        height: 142
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Man_4
       rect:
         serializedVersion: 2
-        x: 202
-        y: 1186
-        width: 61
+        x: 200
+        y: 551
+        width: 63
         height: 157
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -111,9 +126,9 @@ TextureImporter:
     - name: Man_5
       rect:
         serializedVersion: 2
-        x: 277
-        y: 1189
-        width: 71
+        x: 276
+        y: 554
+        width: 72
         height: 154
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -122,9 +137,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 361
-        y: 1197
-        width: 96
-        height: 146
+        y: 563
+        width: 97
+        height: 145
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,8 +147,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 479
-        y: 1186
-        width: 60
+        y: 551
+        width: 61
         height: 157
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -142,19 +157,19 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 10
-        y: 1011
+        y: 376
         width: 61
-        height: 159
+        height: 158
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Man_9
       rect:
         serializedVersion: 2
-        x: 91
-        y: 1023
+        x: 92
+        y: 389
         width: 97
-        height: 147
+        height: 145
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,7 +177,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 202
-        y: 1015
+        y: 380
         width: 72
         height: 154
       alignment: 0
@@ -172,7 +187,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 287
-        y: 1011
+        y: 376
         width: 63
         height: 158
       alignment: 0
@@ -181,10 +196,10 @@ TextureImporter:
     - name: Man_12
       rect:
         serializedVersion: 2
-        x: 367
-        y: 1026
-        width: 97
-        height: 143
+        x: 368
+        y: 392
+        width: 96
+        height: 142
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,11 +207,161 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 467
-        y: 1016
+        y: 380
         width: 74
         height: 154
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_14
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 194
+        width: 62
+        height: 161
+      alignment: 9
+      pivot: {x: .550000012, y: .529999971}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_15
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 189
+        width: 63
+        height: 166
+      alignment: 9
+      pivot: {x: .550000012, y: .529999971}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_16
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 194
+        width: 61
+        height: 161
+      alignment: 9
+      pivot: {x: .550000012, y: .529999971}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_17
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 194
+        width: 62
+        height: 161
+      alignment: 9
+      pivot: {x: .550000012, y: .529999971}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_18
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 189
+        width: 63
+        height: 166
+      alignment: 9
+      pivot: {x: .550000012, y: .529999971}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_19
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 195
+        width: 61
+        height: 160
+      alignment: 9
+      pivot: {x: .550000012, y: .529999971}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_20
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 12
+        width: 62
+        height: 161
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_21
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 13
+        width: 63
+        height: 160
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_22
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 12
+        width: 61
+        height: 161
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_23
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 12
+        width: 62
+        height: 161
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_24
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 13
+        width: 63
+        height: 160
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_25
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 13
+        width: 61
+        height: 160
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_26
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 720
+        width: 79
+        height: 126
+      alignment: 9
+      pivot: {x: .550000012, y: .600000024}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_27
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 720
+        width: 95
+        height: 127
+      alignment: 9
+      pivot: {x: .605000019, y: .600000024}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Man_28
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 720
+        width: 97
+        height: 127
+      alignment: 9
+      pivot: {x: .592000008, y: .600000024}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

@@ -22,7 +22,7 @@ public class waspBehaviour : MonoBehaviour {
 	private bool up,down,left,right = false;
 	public bool eating = false;
 	public bool attacking = false;
-	public int destroyDelay = 7;
+	public int destroyDelay;
 	public int stingDamage = 10;
 	public int health = 100;
 	public int defaultSortingOrder;
@@ -49,6 +49,8 @@ public class waspBehaviour : MonoBehaviour {
 		defaultSortingOrder = spriteRenderer.sortingOrder;
 		speed = 40;
 		left = true;
+		destroyDelay=4;
+
 		//set up wasp colliders
 		swatTrigger.size = new Vector2(0.71f,0.44f);
 		swatTrigger.transform.localPosition = Vector2.zero;

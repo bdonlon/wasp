@@ -5,6 +5,7 @@ public class swatter_script : MonoBehaviour {
 
 	//public GameObject crosshair;
 	public GameObject _GM;
+	public GameObject swatter;
 	public bool idle;
 
 	public float angle;
@@ -15,6 +16,7 @@ public class swatter_script : MonoBehaviour {
 	public float defaultZRot;
 	public Vector3 rotatePoint;
 	public GameObject player;
+	public GameObject swingSound;
 	public bool setStartSwingPositionOnce;
 	public bool setQuatOnce = true;
 	public bool interrupt=false;
@@ -29,6 +31,7 @@ public class swatter_script : MonoBehaviour {
 	private float swingTimer = 0f;
 	public bool swinging = false;
 	public bool swungOnce=false;
+	public bool dead;
 
 	private Vector3 startRot;
 
@@ -41,6 +44,7 @@ public class swatter_script : MonoBehaviour {
 		timer = 0;
 		idle = true;
 		setStartSwingPositionOnce = true;
+		dead=false;
 
 		defaultX = Mathf.Abs(transform.parent.position.x - transform.position.x);
 		defaultY = Mathf.Abs(transform.parent.position.y - transform.position.y);
@@ -49,11 +53,23 @@ public class swatter_script : MonoBehaviour {
 		startRot = transform.eulerAngles;
 	}
 
+	public IEnumerator setDead(){
+		dead=true;
+		swatter.GetComponent<swatter_script>().rigidbody2D.isKinematic=false;
+
+		if(down)	{yield return new WaitForSeconds(0.2f);}
+		else if(up)	{yield return new WaitForSeconds(0.5f);}
+		else 		{yield return new WaitForSeconds(0.4f);}
+		swatter.GetComponent<swatter_script>().rigidbody2D.isKinematic=true;
+	}
+
 	// Update is called once per frame
 	void Update () {
 
 		if(_GM.GetComponent<Setup>().pauseGame){
 			//Game paused - Do nothing!
+		}else if (dead){
+			//dead, no swinging or idle wobling
 		}else{
 
 			playerPosition = transform.parent.position;
@@ -61,7 +77,10 @@ public class swatter_script : MonoBehaviour {
 			savePreviousInputState();
 
 			//Keyboard handler
-			if(Input.GetKeyDown(KeyCode.UpArrow))   {	up=true;		}
+			if(Input.GetKeyDown(KeyCode.UpArrow))   {
+				up=true;
+				swingSound.GetComponent<playSound>().play();
+			}
 			if(Input.GetKeyUp  (KeyCode.UpArrow))   {	up=false;		}
 			if(Input.GetKeyDown(KeyCode.DownArrow)) {	down=true;		}
 			if(Input.GetKeyUp  (KeyCode.DownArrow)) {	down=false;		}
