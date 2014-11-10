@@ -77,10 +77,7 @@ public class swatter_script : MonoBehaviour {
 			savePreviousInputState();
 
 			//Keyboard handler
-			if(Input.GetKeyDown(KeyCode.UpArrow))   {
-				up=true;
-				swingSound.GetComponent<playSound>().play();
-			}
+			if(Input.GetKeyDown(KeyCode.UpArrow))   {	up=true;		}
 			if(Input.GetKeyUp  (KeyCode.UpArrow))   {	up=false;		}
 			if(Input.GetKeyDown(KeyCode.DownArrow)) {	down=true;		}
 			if(Input.GetKeyUp  (KeyCode.DownArrow)) {	down=false;		}
@@ -110,6 +107,7 @@ public class swatter_script : MonoBehaviour {
 				swingTimer += Time.deltaTime;
 
 				if(setStartSwingPositionOnce){
+					swingSound.GetComponent<playSound>().play();	//start of swing, play sound.
 					setStartSwingPositionOnce=false;
 					transform.position = startSwingPosition;
 				}
@@ -136,6 +134,7 @@ public class swatter_script : MonoBehaviour {
 				
 				if (swungOnce && interrupt) {
 					//reset swatter to idle position
+					swingSound.GetComponent<playSound>().stop();	//interrupting swing, so stop swing sound.
 					swingTimer = 0f;
 					swinging = false;
 					setStartSwingPositionOnce = true;
