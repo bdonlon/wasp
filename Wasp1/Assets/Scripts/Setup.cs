@@ -35,7 +35,7 @@ public class Setup : MonoBehaviour {
 		AudioListener.pause = false;
 
 		spawnPhase=false;
-		numWasps=1;
+		numWasps=0;
 		maxWasps=5;
 		waspsSpawnedThisWave=0;
 		currentWave=1;
