@@ -25,6 +25,8 @@ public class GUI_buttons : MonoBehaviour {
 			}
 			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-50,200,20), "Exit to Main Menu")) {
 				GM.GetComponent<Setup>().pauseGame=false;
+				Time.timeScale = 1.0f;
+				AudioListener.pause = false;
 				Application.LoadLevel("menu");
 			}
 			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-10,200,20), "Exit to Desktop")) {

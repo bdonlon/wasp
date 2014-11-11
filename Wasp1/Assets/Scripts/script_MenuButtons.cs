@@ -5,6 +5,8 @@ public class script_MenuButtons : MonoBehaviour {
 
 	public GameObject[] menuOptions;
 	public GameObject cursor;
+	public GameObject killSound;
+	public GameObject hitSound;
 	public Vector3 cursorPosition;
 	public int cursorIndex;
 	public float cursorXposition;
@@ -12,6 +14,8 @@ public class script_MenuButtons : MonoBehaviour {
 	Animator cursorAnimator;
 
 	void Start(){
+		Screen.showCursor = false;
+
 		cursorAnimator = cursor.GetComponent<Animator>();
 		cursorIndex=0;
 		Vector3 theScale = transform.localScale;
@@ -27,9 +31,12 @@ public class script_MenuButtons : MonoBehaviour {
 	void Update(){
 		if(Input.GetKeyDown(KeyCode.UpArrow) && cursorIndex > 0)
 		{	
+			hitSound.GetComponent<playSound>().play();
 			cursorIndex--;
 		}
-		if(Input.GetKeyDown(KeyCode.DownArrow) && cursorIndex<menuOptions.Length){
+		if(Input.GetKeyDown(KeyCode.DownArrow) && cursorIndex<menuOptions.Length -1)
+		{
+			hitSound.GetComponent<playSound>().play();
 			cursorIndex++;
 		}
 
@@ -44,21 +51,20 @@ public class script_MenuButtons : MonoBehaviour {
 
 	public IEnumerator runMenuOption(){
 		cursorAnimator.SetTrigger("wasp_death");
+		killSound.GetComponent<playSound>().play();
+
 		yield return new WaitForSeconds(0.2f);
-		Debug.Log (cursorIndex);
+
 		if(cursorIndex==0)
 		{
-			Debug.Log ("play!");
 			Application.LoadLevel("wasp1");
 		}
 		else if(cursorIndex==1)
 		{
-			Debug.Log ("TODO: Create credits page!");
-			//Application.LoadLevel("credits");
+			Application.LoadLevel("credits");
 		}
 		else if(cursorIndex==2)
 		{
-			Debug.Log ("exit!");
 			Application.Quit();
 		}
 	}

@@ -99,6 +99,7 @@ public class Setup : MonoBehaviour {
 	}
 
 	public void unPause(){	//To be triggered from pause menu button
+		Screen.showCursor = false;
 		pauseGame=false;
 		Time.timeScale = 1.0f;
 		AudioListener.pause = false;
@@ -108,6 +109,7 @@ public class Setup : MonoBehaviour {
 
 		if(Input.GetKeyDown(KeyCode.Escape)){
 			pauseGame = !pauseGame;
+			Screen.showCursor = true;
 			if(pauseGame){
 				Time.timeScale = 0.0f;
 				AudioListener.pause = true;
