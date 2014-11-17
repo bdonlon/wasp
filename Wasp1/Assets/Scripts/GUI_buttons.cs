@@ -5,6 +5,32 @@ public class GUI_buttons : MonoBehaviour {
 
 	//public GameObject player;
 	public GameObject GM;
+	public GameObject pauseMenu;
+	Animator cursorAnimator;
+	public GameObject killSound;
+	public GameObject hitSound;
+	public int cursorIndex;
+
+	void Start(){
+		pauseMenu.SetActive(false);
+	}
+
+	void Update(){
+		if (GM.GetComponent<Setup>().pauseGame) {
+			pauseMenu.SetActive(true);
+
+			if(Input.GetKeyDown(KeyCode.Return))
+			{	
+				//StartCoroutine(
+				runMenuOption();
+					//);
+			}
+		
+		}else{
+			pauseMenu.GetComponent<script_MenuButtons>().cursorIndex=0;
+			pauseMenu.SetActive(false);
+		}
+	}
 
 	void OnGUI () {
 		if (GM.GetComponent<Setup>().victoryCondition) {
@@ -18,23 +44,47 @@ public class GUI_buttons : MonoBehaviour {
 				Application.LoadLevel(0);
 			}
 		}
-
-		if (GM.GetComponent<Setup>().pauseGame) {
-			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-100,200,20), "Resume Game")) {
-				GM.GetComponent<Setup>().unPause();
-			}
-			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-50,200,20), "Exit to Main Menu")) {
-				GM.GetComponent<Setup>().pauseGame=false;
-				Time.timeScale = 1.0f;
-				AudioListener.pause = false;
-				Application.LoadLevel("menu");
-			}
-			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-10,200,20), "Exit to Desktop")) {
-				Application.Quit();
-			}
+	}
+	
+	public void runMenuOption(){
+//		cursorAnimator.SetTrigger("wasp_death");
+//		killSound.GetComponent<playSound>().play();
+		//yield return new WaitForSeconds(0.001f);
+		cursorIndex=pauseMenu.GetComponent<script_MenuButtons>().cursorIndex;
+		if(cursorIndex==0)
+		{
+			GM.GetComponent<Setup>().unPause();
 		}
+		else if(cursorIndex==1)
+		{
+			GM.GetComponent<Setup>().pauseGame=false;
+			Time.timeScale = 1.0f;
+			AudioListener.pause = false;
+			Application.LoadLevel("menu");
+		}
+		else if(cursorIndex==2)
+		{
+			Debug.Log ("Quitting");
+			Application.Quit();
+		}
+	}
+
+//		if (GM.GetComponent<Setup>().pauseGame) {
+//			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-100,200,20), "Resume Game")) {
+//				GM.GetComponent<Setup>().unPause();
+//			}
+//			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-50,200,20), "Exit to Main Menu")) {
+//				GM.GetComponent<Setup>().pauseGame=false;
+//				Time.timeScale = 1.0f;
+//				AudioListener.pause = false;
+//				Application.LoadLevel("menu");
+//			}
+//			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-10,200,20), "Exit to Desktop")) {
+//				Application.Quit();
+//			}
+//		}
 
 
 		//GUI.Box(new Rect(10,10,100,90), "Loader Menu");
-	}
+	//}
 }

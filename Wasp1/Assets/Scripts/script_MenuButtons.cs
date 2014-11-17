@@ -10,6 +10,7 @@ public class script_MenuButtons : MonoBehaviour {
 	public Vector3 cursorPosition;
 	public int cursorIndex;
 	public float cursorXposition;
+	public float cursorXoffset;
 
 	Animator cursorAnimator;
 
@@ -22,7 +23,7 @@ public class script_MenuButtons : MonoBehaviour {
 		theScale.x *= -1;
 		cursor.transform.localScale = theScale;
 
-		cursorXposition = menuOptions[cursorIndex].transform.position.x-1.5f;
+		cursorXposition = menuOptions[cursorIndex].transform.position.x-cursorXoffset;
 
 		cursorPosition = new Vector3(cursorXposition, menuOptions[cursorIndex].transform.position.y, menuOptions[cursorIndex].transform.position.z);
 		cursor.transform.position = cursorPosition;
@@ -45,29 +46,30 @@ public class script_MenuButtons : MonoBehaviour {
 
 		if(Input.GetKeyDown(KeyCode.Return))
 		{	
-			StartCoroutine(runMenuOption());
+			cursorAnimator.SetTrigger("wasp_death");
+			killSound.GetComponent<playSound>().play();
+			//StartCoroutine(runMenuOption());
 		}
 	}
 
-	public IEnumerator runMenuOption(){
-		cursorAnimator.SetTrigger("wasp_death");
-		killSound.GetComponent<playSound>().play();
-
-		yield return new WaitForSeconds(0.2f);
-
-		if(cursorIndex==0)
-		{
-			Application.LoadLevel("wasp1");
-		}
-		else if(cursorIndex==1)
-		{
-			Application.LoadLevel("credits");
-		}
-		else if(cursorIndex==2)
-		{
-			Application.Quit();
-		}
-	}
+//	public IEnumerator runMenuOption(){
+//
+//
+//		yield return new WaitForSeconds(0.2f);
+//
+//		if(cursorIndex==0)
+//		{
+//			Application.LoadLevel("wasp1");
+//		}
+//		else if(cursorIndex==1)
+//		{
+//			Application.LoadLevel("credits");
+//		}
+//		else if(cursorIndex==2)
+//		{
+//			Application.Quit();
+//		}
+//	}
 
 
 
