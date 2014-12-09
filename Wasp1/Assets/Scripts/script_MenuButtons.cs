@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class script_MenuButtons : MonoBehaviour {
-
+	public GameObject GM;
 	public GameObject[] menuOptions;
 	public GameObject cursor;
 	public GameObject killSound;
@@ -12,12 +12,16 @@ public class script_MenuButtons : MonoBehaviour {
 	public float cursorXposition;
 	public float cursorXoffset;
 
+	AudioSource cursorAudioSource;
 	Animator cursorAnimator;
 
 	void Start(){
 		Screen.showCursor = false;
 
 		cursorAnimator = cursor.GetComponent<Animator>();
+		cursorAudioSource = cursor.GetComponent<AudioSource>();
+		cursorAudioSource.ignoreListenerPause = true;
+
 		cursorIndex=0;
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
@@ -30,25 +34,29 @@ public class script_MenuButtons : MonoBehaviour {
 	}
 
 	void Update(){
-		if(Input.GetKeyDown(KeyCode.UpArrow) && cursorIndex > 0)
-		{	
-			hitSound.GetComponent<playSound>().play();
-			cursorIndex--;
-		}
-		if(Input.GetKeyDown(KeyCode.DownArrow) && cursorIndex<menuOptions.Length -1)
+		if(GM.GetComponent<Setup>().pauseGame)
 		{
-			hitSound.GetComponent<playSound>().play();
-			cursorIndex++;
-		}
+			if(Input.GetKeyDown(KeyCode.UpArrow) && cursorIndex > 0)
+			{	
+				//AudioListener.pause = false;
+				hitSound.GetComponent<playSound>().play();
+				cursorIndex--;
+			}
+			if(Input.GetKeyDown(KeyCode.DownArrow) && cursorIndex<menuOptions.Length -1)
+			{
+				hitSound.GetComponent<playSound>().play();
+				cursorIndex++;
+			}
 
-		cursorPosition = new Vector3(cursorXposition, menuOptions[cursorIndex].transform.position.y, menuOptions[cursorIndex].transform.position.z);
-		cursor.transform.position = cursorPosition;
+			cursorPosition = new Vector3(cursorXposition, menuOptions[cursorIndex].transform.position.y, menuOptions[cursorIndex].transform.position.z);
+			cursor.transform.position = cursorPosition;
 
-		if(Input.GetKeyDown(KeyCode.Return))
-		{	
-			cursorAnimator.SetTrigger("wasp_death");
-			killSound.GetComponent<playSound>().play();
-			//StartCoroutine(runMenuOption());
+			if(Input.GetKeyDown(KeyCode.Return))
+			{	
+				cursorAnimator.SetTrigger("wasp_death");
+				killSound.GetComponent<playSound>().play();
+				//StartCoroutine(runMenuOption());
+			}
 		}
 	}
 

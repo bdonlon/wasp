@@ -106,14 +106,14 @@ public class playerMovement : MonoBehaviour {
 	}
 
 	public void setAnimationTrigger(){
+		if(!_GM.GetComponent<Setup>().pauseGame){
+			if(left)				{	anim.SetTrigger("running_left");	}
+			if(right)				{	anim.SetTrigger("running_right");	}
+			if(up&&!left&&!right)	{	anim.SetTrigger("running_up");		}
+			if(down&&!left&&!right)	{	anim.SetTrigger("running_down");	}
 
-		if(left)				{	anim.SetTrigger("running_left");	}
-		if(right)				{	anim.SetTrigger("running_right");	}
-		if(up&&!left&&!right)	{	anim.SetTrigger("running_up");		}
-		if(down&&!left&&!right)	{	anim.SetTrigger("running_down");	}
-
-		if(!moving)				{	anim.SetTrigger("stop_running");	}
-
+			if(!moving)				{	anim.SetTrigger("stop_running");	}
+		}
 	}
 
 	public void injure(int damage){

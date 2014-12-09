@@ -6,18 +6,36 @@ public class GUI_buttons : MonoBehaviour {
 	//public GameObject player;
 	public GameObject GM;
 	public GameObject pauseMenu;
+	public GameObject restartMenu;
+	public GameObject victoryMenu;
 	Animator cursorAnimator;
-	public GameObject killSound;
-	public GameObject hitSound;
+	//public GameObject killSound;
+	//public GameObject hitSound;
+	public GameObject cursor;
 	public int cursorIndex;
 
+	int menuVisible = 20;
+	int menuHidden =-20;
+
 	void Start(){
-		pauseMenu.SetActive(false);
+		cursorAnimator = cursor.GetComponent<Animator>();
 	}
 
 	void Update(){
+		if(GM.GetComponent<Setup>().failureCondition)
+		{
+			restartMenu.transform.position = new Vector3(restartMenu.transform.position.x, restartMenu.transform.position.y, menuVisible);
+		}else if(GM.GetComponent<Setup>().victoryCondition){
+			victoryMenu.transform.position = new Vector3(victoryMenu.transform.position.x, victoryMenu.transform.position.y, menuVisible);
+			restartMenu.transform.position = new Vector3(restartMenu.transform.position.x, restartMenu.transform.position.y, menuVisible);
+		}else{
+			restartMenu.transform.position = new Vector3(restartMenu.transform.position.x, restartMenu.transform.position.y, menuHidden);
+			victoryMenu.transform.position = new Vector3(victoryMenu.transform.position.x, victoryMenu.transform.position.y, menuHidden);
+		}
+
 		if (GM.GetComponent<Setup>().pauseGame) {
-			pauseMenu.SetActive(true);
+			//pauseMenu.SetActive(true);
+			pauseMenu.transform.position = new Vector3(pauseMenu.transform.position.x, pauseMenu.transform.position.y, menuVisible);
 
 			if(Input.GetKeyDown(KeyCode.Return))
 			{	
@@ -28,24 +46,12 @@ public class GUI_buttons : MonoBehaviour {
 		
 		}else{
 			pauseMenu.GetComponent<script_MenuButtons>().cursorIndex=0;
-			pauseMenu.SetActive(false);
+			pauseMenu.transform.position = new Vector3(pauseMenu.transform.position.x, pauseMenu.transform.position.y, menuHidden);
+			cursorAnimator.SetTrigger("wasp_reset");
+			//pauseMenu.SetActive(false);
 		}
 	}
 
-	void OnGUI () {
-		if (GM.GetComponent<Setup>().victoryCondition) {
-			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-10,200,20), "VICTORY!")) {
-				Application.LoadLevel(0);
-			}
-		}
-
-		if (GM.GetComponent<Setup>().failureCondition) {
-			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-10,200,20), "Restart")) {
-				Application.LoadLevel(0);
-			}
-		}
-	}
-	
 	public void runMenuOption(){
 //		cursorAnimator.SetTrigger("wasp_death");
 //		killSound.GetComponent<playSound>().play();
