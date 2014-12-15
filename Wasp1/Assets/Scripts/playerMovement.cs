@@ -23,10 +23,12 @@ public class playerMovement : MonoBehaviour {
 	public bool dead = false;
 	public bool moving;
 	public bool movingPrevious;
+	public bool hurting;
 
 	Animator anim;
 
 	void Start(){
+		hurting=false;
 		moving = false;
 		movingPrevious=false;
 		anim = GetComponent<Animator>();
@@ -106,7 +108,7 @@ public class playerMovement : MonoBehaviour {
 	}
 
 	public void setAnimationTrigger(){
-		if(!_GM.GetComponent<Setup>().pauseGame){
+		if(!_GM.GetComponent<Setup>().pauseGame && !hurting){
 			if(left)				{	anim.SetTrigger("running_left");	}
 			if(right)				{	anim.SetTrigger("running_right");	}
 			if(up&&!left&&!right)	{	anim.SetTrigger("running_up");		}
@@ -117,8 +119,9 @@ public class playerMovement : MonoBehaviour {
 	}
 
 	public void injure(int damage){
-		if(!dead){	//may still recieve injure instructions after death
+		if(!dead && !hurting){	//may still recieve injure instructions after death
 			health = health-damage;
+			StartCoroutine(injureAnimation());	//Play injured animation and start invulnerability timer/period
 			hitSound.GetComponent<playSound>().play();
 			if(health<=0){
 				deathSound.GetComponent<playSound>().play();
@@ -127,6 +130,19 @@ public class playerMovement : MonoBehaviour {
 				Screen.showCursor = true;
 			}
 		}
+	}
+
+	public IEnumerator injureAnimation(){
+		hurting=true;
+		anim.SetBool("stop_running", false);
+		anim.SetBool("running_left", false);
+		anim.SetBool("running_right", false);
+		anim.SetBool("running_up", false);
+		anim.SetBool("running_down", false);
+		anim.SetBool("player_hurt", false);
+		anim.SetTrigger("player_hurt");
+		yield return new WaitForSeconds(0.4f);
+		hurting=false;
 	}
 	
 	public void kill(){
@@ -137,6 +153,7 @@ public class playerMovement : MonoBehaviour {
 		anim.SetBool("running_right", false);
 		anim.SetBool("running_up", false);
 		anim.SetBool("running_down", false);
+		anim.SetBool("player_hurt", false);
 		anim.SetTrigger("dead");
 
 		StartCoroutine(swatter.GetComponent<swatter_script>().setDead());	//Disable swatter swings, and make it fall off the player
