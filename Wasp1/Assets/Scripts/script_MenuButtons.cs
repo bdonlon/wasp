@@ -34,7 +34,7 @@ public class script_MenuButtons : MonoBehaviour {
 	}
 
 	void Update(){
-		if(GM.GetComponent<Setup>().pauseGame)
+		if(Application.loadedLevelName.Equals("menu") || GM.GetComponent<Setup>().pauseGame)	//In game menu needs to be paused (variable via GM object). Title menu has no GM object.
 		{
 			if(Input.GetKeyDown(KeyCode.UpArrow) && cursorIndex > 0)
 			{	
