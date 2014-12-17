@@ -25,9 +25,14 @@ public class playerMovement : MonoBehaviour {
 	public bool movingPrevious;
 	public bool hurting;
 
+	public float timeStung;
+	public float timeCurr;
+	public float elapsedTime;
+
 	Animator anim;
 
 	void Start(){
+		timeStung =  Time.time-100;
 		hurting=false;
 		moving = false;
 		movingPrevious=false;
@@ -35,6 +40,7 @@ public class playerMovement : MonoBehaviour {
 	}
 
 	void Update () {
+		drawHealthBar();
 		movingPrevious=moving;
 		
 		spriteRenderer.sortingOrder = (int)Camera.main.WorldToScreenPoint (spriteRenderer.bounds.min).y * -1;
@@ -120,6 +126,7 @@ public class playerMovement : MonoBehaviour {
 
 	public void injure(int damage){
 		if(!dead && !hurting){	//may still recieve injure instructions after death
+			timeStung =  Time.time;
 			health = health-damage;
 			StartCoroutine(injureAnimation());	//Play injured animation and start invulnerability timer/period
 			hitSound.GetComponent<playSound>().play();
@@ -129,6 +136,15 @@ public class playerMovement : MonoBehaviour {
 				_GM.GetComponent<Setup>().failureCondition=true;
 				Screen.showCursor = true;
 			}
+		}
+	}
+
+	void drawHealthBar(){
+		elapsedTime =  Time.time - timeStung;
+		if(elapsedTime<1.5f){
+			this.transform.Find("healthBar(Clone)").active=true;
+		}else{
+			this.transform.Find("healthBar(Clone)").active=false;
 		}
 	}
 
