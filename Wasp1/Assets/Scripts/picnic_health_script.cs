@@ -10,7 +10,12 @@ public class picnic_health_script : MonoBehaviour {
 	public GameObject food;
 	public GameObject _GM;
 	public GameObject hb;
+	public GameObject rug;
+	public GameObject mainCam;
+	public GameObject AnchorLeft;
+	public GameObject AnchorRight;
 	public float healthBarWidth,healthBarSize;
+	public SpriteRenderer SR;
 
 	public float timeEaten;
 	public float elapsedTime;
@@ -18,18 +23,17 @@ public class picnic_health_script : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		timeEaten =  Time.time-100;
-		healthBarSize=2;
 		picnicHealthCurrent = 200;
 		picnicHealthTotal = picnicHealthCurrent;
+		healthBarSize = Camera.main.WorldToScreenPoint(AnchorRight.transform.position).x - Camera.main.WorldToScreenPoint(AnchorLeft.transform.position).x;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		drawHealthBar();
-
 		float healthPercent = getPercentage();
-		healthBarWidth = healthPercent*healthBarSize;
-		hb.transform.Find("red").guiTexture.pixelInset=new Rect(0,0,100*healthBarSize,5);
+		healthBarWidth = healthPercent*healthBarSize/100;
+		hb.transform.Find("red").guiTexture.pixelInset=new Rect(0,0,healthBarSize,5);
 		hb.transform.Find("green").guiTexture.pixelInset=new Rect(0,0,healthBarWidth,5);
 	}
 
@@ -46,10 +50,6 @@ public class picnic_health_script : MonoBehaviour {
 
 	public float getPercentage(){
 		float value = (100f/picnicHealthTotal)*picnicHealthCurrent;
-//		float x = (100f/picnicHealthTotal)*picnicHealthCurrent;
-//		Debug.Log (x);
-//		Debug.Log (picnicHealthTotal);
-//		Debug.Log (picnicHealthCurrent);
 		return value;
 	}
 
