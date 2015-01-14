@@ -10,6 +10,8 @@ Temp/
 Obj/
 UnityGenerated/
 Library/
+"Playable Build/Win"
+"Playable Build/OSX"
 
 # ============================== #
 # Visual Studio / MonoDevelop generated #
