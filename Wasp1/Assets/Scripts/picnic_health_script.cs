@@ -16,6 +16,8 @@ public class picnic_health_script : MonoBehaviour {
 	public GameObject AnchorRight;
 	public float healthBarWidth,healthBarSize;
 	public SpriteRenderer SR;
+	public float xOffset;
+	public float yOffset;
 
 	public float timeEaten;
 	public float elapsedTime;
@@ -25,7 +27,16 @@ public class picnic_health_script : MonoBehaviour {
 		timeEaten =  Time.time-100;
 		picnicHealthCurrent = 200;
 		picnicHealthTotal = picnicHealthCurrent;
+
+		//how many pixels wide the health bar will need to be drawn
 		healthBarSize = Camera.main.WorldToScreenPoint(AnchorRight.transform.position).x - Camera.main.WorldToScreenPoint(AnchorLeft.transform.position).x;
+
+		//move health bar to center of it's host, then offset it's position
+		hb.transform.position=Camera.main.WorldToViewportPoint(transform.position);
+
+		//xy position to draw player healthbar (it will extend to the right from this point)
+		xOffset = Camera.main.WorldToScreenPoint(AnchorLeft.transform.position).x - Camera.main.WorldToScreenPoint(rug.transform.position).x;
+		yOffset = Camera.main.WorldToScreenPoint(AnchorLeft.transform.position).y - Camera.main.WorldToScreenPoint(rug.transform.position).y;
 	}
 	
 	// Update is called once per frame
@@ -33,8 +44,8 @@ public class picnic_health_script : MonoBehaviour {
 		drawHealthBar();
 		float healthPercent = getPercentage();
 		healthBarWidth = healthPercent*healthBarSize/100;
-		hb.transform.Find("red").guiTexture.pixelInset=new Rect(0,0,healthBarSize,5);
-		hb.transform.Find("green").guiTexture.pixelInset=new Rect(0,0,healthBarWidth,5);
+		hb.transform.Find("red").guiTexture.pixelInset=new Rect(xOffset,yOffset,healthBarSize,5);
+		hb.transform.Find("green").guiTexture.pixelInset=new Rect(xOffset,yOffset,healthBarWidth,5);
 	}
 
 	public void damagePicnicIntegrity(int damage){
