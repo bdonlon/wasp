@@ -5,6 +5,7 @@ public class script_controls_graphic : MonoBehaviour {
 
 	public GameObject graphic_move;
 	public GameObject graphic_swing;
+	public Sprite[] Controls;
 	SpriteRenderer rend1;
 	SpriteRenderer rend2;
 
@@ -13,6 +14,12 @@ public class script_controls_graphic : MonoBehaviour {
 		//StartCoroutine(moveGraphics());
 		rend1=graphic_move.GetComponent<SpriteRenderer>();
 		rend2=graphic_swing.GetComponent<SpriteRenderer>();
+
+		if(Input.GetJoystickNames().Length > 0){
+			//Use controller graphic if controller is connected
+			rend1.sprite=Controls[0];
+			rend2.sprite=Controls[1];
+		}
 		StartCoroutine(fadeOut());
 	}
 	

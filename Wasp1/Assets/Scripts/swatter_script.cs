@@ -77,14 +77,14 @@ public class swatter_script : MonoBehaviour {
 			savePreviousInputState();
 
 			//Keyboard handler
-			if(Input.GetKeyDown(KeyCode.UpArrow))   {	up=true;		}
-			if(Input.GetKeyUp  (KeyCode.UpArrow))   {	up=false;		}
-			if(Input.GetKeyDown(KeyCode.DownArrow)) {	down=true;		}
-			if(Input.GetKeyUp  (KeyCode.DownArrow)) {	down=false;		}
-			if(Input.GetKeyDown(KeyCode.LeftArrow)) {	left=true;		}
-			if(Input.GetKeyUp  (KeyCode.LeftArrow)) {	left=false;		}
-			if(Input.GetKeyDown(KeyCode.RightArrow)){	right=true;		}
-			if(Input.GetKeyUp  (KeyCode.RightArrow)){	right=false; 	}
+			if((Input.GetKeyDown(KeyCode.UpArrow)) 		|| (Input.GetButtonDown("360_Y")))   	{	up=true;		}
+			if((Input.GetKeyUp  (KeyCode.UpArrow)) 		|| (Input.GetButtonUp("360_Y"))) 		{	up=false;		}
+			if((Input.GetKeyDown(KeyCode.DownArrow))	|| (Input.GetButtonDown("360_A"))) 		{	down=true;		}
+			if((Input.GetKeyUp  (KeyCode.DownArrow))	|| (Input.GetButtonUp("360_A"))) 		{	down=false;		}
+			if((Input.GetKeyDown(KeyCode.LeftArrow))	|| (Input.GetButtonDown("360_X"))) 		{	left=true;		}
+			if((Input.GetKeyUp  (KeyCode.LeftArrow))	|| (Input.GetButtonUp("360_X"))) 		{	left=false;		}
+			if((Input.GetKeyDown(KeyCode.RightArrow))	|| (Input.GetButtonDown("360_B")))		{	right=true;		}
+			if((Input.GetKeyUp  (KeyCode.RightArrow))	|| (Input.GetButtonUp("360_B")))		{	right=false; 	}
 
 			//decide which direction to swing (for changes midswing)
 			analyseInput();

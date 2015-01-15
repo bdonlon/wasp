@@ -45,18 +45,17 @@ public class playerMovement : MonoBehaviour {
 		
 		spriteRenderer.sortingOrder = (int)Camera.main.WorldToScreenPoint (spriteRenderer.bounds.min).y * -1;
 		swatterSpriteRenderer.sortingOrder = spriteRenderer.sortingOrder;
-		
+
 		if(!dead){
-			
 			// not dead, therefore capture keystrokes and move
-			if(Input.GetKeyDown(KeyCode.W))	{	keyUp=true;		}
-			if(Input.GetKeyUp(KeyCode.W))	{	keyUp=false;	}
-			if(Input.GetKeyDown(KeyCode.S))	{	keyDown=true;	}
-			if(Input.GetKeyUp(KeyCode.S))	{	keyDown=false;	}
-			if(Input.GetKeyDown(KeyCode.A))	{	keyLeft=true;	}
-			if(Input.GetKeyUp(KeyCode.A))	{	keyLeft=false;	}
-			if(Input.GetKeyDown(KeyCode.D))	{	keyRight=true;	}
-			if(Input.GetKeyUp(KeyCode.D))	{	keyRight=false;	}
+			if((Input.GetKeyDown(KeyCode.W))	||	(Input.GetAxis ("360_LeftStickY")<-0.1))	{	keyUp=true;		}
+			if((Input.GetKeyUp(KeyCode.W))		||	(Input.GetAxis ("360_LeftStickY")>-0.1))	{	keyUp=false;	}
+			if((Input.GetKeyDown(KeyCode.S))	||	(Input.GetAxis ("360_LeftStickY")>0.1))		{	keyDown=true;	}
+			if((Input.GetKeyUp(KeyCode.S))		||	(Input.GetAxis ("360_LeftStickY")<0.1))		{	keyDown=false;	}
+			if((Input.GetKeyDown(KeyCode.A))	||	(Input.GetAxis ("360_LeftStickX")<-0.1))	{	keyLeft=true;	}
+			if((Input.GetKeyUp(KeyCode.A))		||	(Input.GetAxis ("360_LeftStickX")>-0.1))	{	keyLeft=false;	}
+			if((Input.GetKeyDown(KeyCode.D))	||	(Input.GetAxis ("360_LeftStickX")>0.1))		{	keyRight=true;	}
+			if((Input.GetKeyUp(KeyCode.D))		||	(Input.GetAxis ("360_LeftStickX")<0.1))		{	keyRight=false;	}
 			
 			calculateMoveDirection();
 			move();
