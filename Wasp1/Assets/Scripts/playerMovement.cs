@@ -10,7 +10,8 @@ public class playerMovement : MonoBehaviour {
 	public GameObject _GM;
 	public GameObject swatter;
 
-	public bool keyUp,keyDown,keyLeft,keyRight = false;
+	public bool LSUp,keyUp,LSDown,keyDown,LSLeft,keyLeft,LSRight,keyRight,DUp,DDown,DLeft,DRight = false;
+	public bool keykeyup,keykeydown,keykeyleft,keykeyright = false;
 	public bool up,down,left,right = false;
 	public bool diagonal;
 
@@ -29,6 +30,8 @@ public class playerMovement : MonoBehaviour {
 	public float timeCurr;
 	public float elapsedTime;
 
+	public float LSY,LSX,DX,DY;
+
 	Animator anim;
 
 	void Start(){
@@ -46,17 +49,52 @@ public class playerMovement : MonoBehaviour {
 		spriteRenderer.sortingOrder = (int)Camera.main.WorldToScreenPoint (spriteRenderer.bounds.min).y * -1;
 		swatterSpriteRenderer.sortingOrder = spriteRenderer.sortingOrder;
 
+		//print (Input.GetAxis ("360_DUp"));
+		//print (Input.GetAxis ("360_LeftStickY"));
+		//print (Input.GetKeyDown(KeyCode.W));
 		if(!dead){
 			// not dead, therefore capture keystrokes and move
-			if((Input.GetKeyDown(KeyCode.W))	||	(Input.GetAxis ("360_LeftStickY")<-0.1))	{	keyUp=true;		}
-			if((Input.GetKeyUp(KeyCode.W))		||	(Input.GetAxis ("360_LeftStickY")>-0.1))	{	keyUp=false;	}
-			if((Input.GetKeyDown(KeyCode.S))	||	(Input.GetAxis ("360_LeftStickY")>0.1))		{	keyDown=true;	}
-			if((Input.GetKeyUp(KeyCode.S))		||	(Input.GetAxis ("360_LeftStickY")<0.1))		{	keyDown=false;	}
-			if((Input.GetKeyDown(KeyCode.A))	||	(Input.GetAxis ("360_LeftStickX")<-0.1))	{	keyLeft=true;	}
-			if((Input.GetKeyUp(KeyCode.A))		||	(Input.GetAxis ("360_LeftStickX")>-0.1))	{	keyLeft=false;	}
-			if((Input.GetKeyDown(KeyCode.D))	||	(Input.GetAxis ("360_LeftStickX")>0.1))		{	keyRight=true;	}
-			if((Input.GetKeyUp(KeyCode.D))		||	(Input.GetAxis ("360_LeftStickX")<0.1))		{	keyRight=false;	}
-			
+			LSY=Input.GetAxis ("360_LeftStickY");
+			LSX=Input.GetAxis ("360_LeftStickX");
+			DY=Input.GetAxis ("360_DY");
+			DX=Input.GetAxis ("360_DX");
+					
+			if(Input.GetKeyDown(KeyCode.W))			{	keykeyup=true;		}
+			if(Input.GetKeyUp(KeyCode.W))			{	keykeyup=false;		}
+			if(LSY<-0.1)							{	LSUp=true;			}
+			if(LSY>-0.1)							{	LSUp=false;			}
+			if(DY>0)								{	DUp=true;			}
+			if(DY<0.1)								{	DUp=false;			}
+			if(!keykeyup	||	!LSUp	||	!DUp)	{	keyUp=false;		}
+			if(keykeyup		||	LSUp	||	DUp)	{	keyUp=true;			}
+
+			if(Input.GetKeyDown(KeyCode.S))			{	keykeydown=true;	}
+			if(Input.GetKeyUp(KeyCode.S))			{	keykeydown=false;	}
+			if(LSY>0.1)								{	LSDown=true;		}
+			if(LSY<0.1)								{	LSDown=false;		}
+			if(DY<0)								{	DDown=true;			}
+			if(DY>-0.1)								{	DDown=false;		}
+			if(!keykeydown	||	!LSDown	||	!DDown)	{	keyDown=false;		}
+			if(keykeydown	||	LSDown	||	DDown)	{	keyDown=true;		}
+
+			if(Input.GetKeyDown(KeyCode.A))			{	keykeyleft=true;	}
+			if(Input.GetKeyUp(KeyCode.A))			{	keykeyleft=false;	}
+			if(LSX<-0.1)							{	LSLeft=true;		}
+			if(LSX>-0.1)							{	LSLeft=false;		}
+			if(DX<0)								{	DLeft=true;			}
+			if(DX>-0.1)								{	DLeft=false;		}
+			if(!keykeyleft	||	!LSLeft	||	!DLeft)	{	keyLeft=false;		}
+			if(keykeyleft	||	LSLeft	||	DLeft)	{	keyLeft=true;		}
+
+			if(Input.GetKeyDown(KeyCode.D))			{	keykeyright=true;	}
+			if(Input.GetKeyUp(KeyCode.D))			{	keykeyright=false;	}
+			if(LSX>0.1)								{	LSRight=true;		}
+			if(LSX<0.1)								{	LSRight=false;		}
+			if(DX>0)								{	DRight=true;		}
+			if(DX<0.1)								{	DRight=false;		}
+			if(!keykeyright	||	!LSRight||	!DRight){	keyRight=false;		}
+			if(keykeyright	||	LSRight	||	DRight)	{	keyRight=true;		}
+
 			calculateMoveDirection();
 			move();
 			setAnimationTrigger();
@@ -66,11 +104,10 @@ public class playerMovement : MonoBehaviour {
 	}
 
 	public void calculateMoveDirection(){
-		if(keyUp)		{	up=true;	}else{	up=false;		}
+		if(keyUp)		{	up=true; 	}else{	up=false;		}
 		if(keyDown)		{	down=true;	}else{	down=false;		}
 		if(keyLeft)		{	left=true;	}else{	left=false;		}
 		if(keyRight)	{	right=true;	}else{	right=false;	}
-
 		if(up&&down){
 			up = false;
 			down = false;
