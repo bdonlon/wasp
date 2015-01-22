@@ -33,6 +33,8 @@ public class swatter_script : MonoBehaviour {
 	public bool swungOnce=false;
 	public bool dead;
 
+	public bool unpauseBuffer=false;
+
 	private Vector3 startRot;
 
 	public Vector3 startSwingPosition;
@@ -67,7 +69,8 @@ public class swatter_script : MonoBehaviour {
 	void Update () {
 
 		if(_GM.GetComponent<Setup>().pauseGame){
-			//Game paused - Do nothing!
+			//Game paused - Do nothing!{
+			unpauseBuffer=true;
 		}else if (dead){
 			//dead, no swinging or idle wobling
 		}else{
@@ -76,15 +79,22 @@ public class swatter_script : MonoBehaviour {
 
 			savePreviousInputState();
 
-			//Keyboard handler
-			if((Input.GetKeyDown(KeyCode.UpArrow)) 		|| (Input.GetButtonDown("360_Y")))   	{	up=true;		}
-			if((Input.GetKeyUp  (KeyCode.UpArrow)) 		|| (Input.GetButtonUp("360_Y"))) 		{	up=false;		}
-			if((Input.GetKeyDown(KeyCode.DownArrow))	|| (Input.GetButtonDown("360_A"))) 		{	down=true;		}
-			if((Input.GetKeyUp  (KeyCode.DownArrow))	|| (Input.GetButtonUp("360_A"))) 		{	down=false;		}
-			if((Input.GetKeyDown(KeyCode.LeftArrow))	|| (Input.GetButtonDown("360_X"))) 		{	left=true;		}
-			if((Input.GetKeyUp  (KeyCode.LeftArrow))	|| (Input.GetButtonUp("360_X"))) 		{	left=false;		}
-			if((Input.GetKeyDown(KeyCode.RightArrow))	|| (Input.GetButtonDown("360_B")))		{	right=true;		}
-			if((Input.GetKeyUp  (KeyCode.RightArrow))	|| (Input.GetButtonUp("360_B")))		{	right=false; 	}
+			if(unpauseBuffer && ((Input.GetButtonUp("360_A")) || (Input.GetButtonUp("360_B")) || 
+			                     (Input.GetKeyDown(KeyCode.UpArrow)) || (Input.GetKeyDown(KeyCode.DownArrow)) || 
+			                     (Input.GetKeyDown(KeyCode.LeftArrow)) || (Input.GetKeyDown(KeyCode.RightArrow)))){
+				unpauseBuffer = false;
+			}
+			if(!unpauseBuffer){
+				//Keyboard handler
+				if((Input.GetKeyDown(KeyCode.UpArrow)) 		|| (Input.GetButtonDown("360_Y")))   	{	up=true;		}
+				if((Input.GetKeyUp  (KeyCode.UpArrow)) 		|| (Input.GetButtonUp("360_Y"))) 		{	up=false;		}
+				if((Input.GetKeyDown(KeyCode.DownArrow))	|| (Input.GetButtonDown("360_A"))) 		{	down=true;		}
+				if((Input.GetKeyUp  (KeyCode.DownArrow))	|| (Input.GetButtonUp("360_A"))) 		{	down=false;		}
+				if((Input.GetKeyDown(KeyCode.LeftArrow))	|| (Input.GetButtonDown("360_X"))) 		{	left=true;		}
+				if((Input.GetKeyUp  (KeyCode.LeftArrow))	|| (Input.GetButtonUp("360_X"))) 		{	left=false;		}
+				if((Input.GetKeyDown(KeyCode.RightArrow))	|| (Input.GetButtonDown("360_B")))		{	right=true;		}
+				if((Input.GetKeyUp  (KeyCode.RightArrow))	|| (Input.GetButtonUp("360_B")))		{	right=false; 	}
+			}
 
 			//decide which direction to swing (for changes midswing)
 			analyseInput();

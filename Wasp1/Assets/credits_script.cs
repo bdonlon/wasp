@@ -36,7 +36,7 @@ public class credits_script : MonoBehaviour {
 
 		creditsGraphic.rigidbody2D.AddForce(force);
 		
-		if(Input.GetKeyDown(KeyCode.Return))
+		if(Input.GetKeyDown(KeyCode.Return) || (Input.GetButtonDown("360_A")) || (Input.GetButtonDown("360_B")))
 		{	
 			StartCoroutine(runMenuOption());
 		}

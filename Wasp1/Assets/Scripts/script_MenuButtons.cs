@@ -11,6 +11,9 @@ public class script_MenuButtons : MonoBehaviour {
 	public int cursorIndex;
 	public float cursorXposition;
 	public float cursorXoffset;
+	public float LSY,DY;
+	public bool LSUp,LSDown,DUp,DDown,padUp,padDown=false;
+	public bool padCurrentUp, padCurrentDown, padPreviousUp, padPreviousDown;
 
 	AudioSource cursorAudioSource;
 	Animator cursorAnimator;
@@ -36,13 +39,41 @@ public class script_MenuButtons : MonoBehaviour {
 	void Update(){
 		if(Application.loadedLevelName.Equals("menu") || GM.GetComponent<Setup>().pauseGame)	//In game menu needs to be paused (variable via GM object). Title menu has no GM object.
 		{
-			if(Input.GetKeyDown(KeyCode.UpArrow) && cursorIndex > 0)
+			padPreviousUp = padCurrentUp;
+			padPreviousDown = padCurrentDown;
+			padUp = false;
+			padDown = false;
+
+			LSY=Input.GetAxis ("360_LeftStickY");
+			DY=Input.GetAxis ("360_DY");
+
+			if(LSY<-0.1)							{	LSUp=true;			}
+			if(LSY>-0.1)							{	LSUp=false;			}
+			if(DY>0)								{	DUp=true;			}
+			if(DY<0.1)								{	DUp=false;			}
+			if(!LSUp	||	!DUp)					{	padCurrentUp=false;		}
+			if(LSUp		||	DUp)					{	padCurrentUp=true;			}
+
+			if(LSY>0.1)								{	LSDown=true;		}
+			if(LSY<0.1)								{	LSDown=false;		}
+			if(DY<0)								{	DDown=true;			}
+			if(DY>-0.1)								{	DDown=false;		}
+			if(!LSDown	||	!DDown)					{	padCurrentDown=false;		}
+			if(LSDown	||	DDown)					{	padCurrentDown=true;		}
+
+			if(padCurrentDown && !padPreviousDown){	//to prevent multiple down commands being registered for held input
+				padDown = true;
+			}
+			if(padCurrentUp && !padPreviousUp){	//to prevent multiple up commands being registered for held input
+				padUp = true;
+			}
+
+			if((Input.GetKeyDown(KeyCode.UpArrow) || padUp) && cursorIndex > 0)
 			{	
-				//AudioListener.pause = false;
 				hitSound.GetComponent<playSound>().play();
 				cursorIndex--;
 			}
-			if(Input.GetKeyDown(KeyCode.DownArrow) && cursorIndex<menuOptions.Length -1)
+			if((Input.GetKeyDown(KeyCode.DownArrow) || padDown) && cursorIndex<menuOptions.Length -1)
 			{
 				hitSound.GetComponent<playSound>().play();
 				cursorIndex++;
@@ -51,43 +82,11 @@ public class script_MenuButtons : MonoBehaviour {
 			cursorPosition = new Vector3(cursorXposition, menuOptions[cursorIndex].transform.position.y, menuOptions[cursorIndex].transform.position.z);
 			cursor.transform.position = cursorPosition;
 
-			if(Input.GetKeyDown(KeyCode.Return))
+			if((Input.GetKeyDown(KeyCode.Return)) || (Input.GetButtonDown("360_A")))
 			{	
 				cursorAnimator.SetTrigger("wasp_death");
 				killSound.GetComponent<playSound>().play();
-				//StartCoroutine(runMenuOption());
 			}
 		}
 	}
-
-//	public IEnumerator runMenuOption(){
-//
-//
-//		yield return new WaitForSeconds(0.2f);
-//
-//		if(cursorIndex==0)
-//		{
-//			Application.LoadLevel("wasp1");
-//		}
-//		else if(cursorIndex==1)
-//		{
-//			Application.LoadLevel("credits");
-//		}
-//		else if(cursorIndex==2)
-//		{
-//			Application.Quit();
-//		}
-//	}
-
-
-
-//	void OnGUI () {
-//			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-50,200,20), "Start Game")) {
-//				Application.LoadLevel("wasp1");
-//			}
-//
-//			if (GUI.Button (new Rect (((Screen.width)/2)-100,((Screen.height)/2)-10,200,20), "Exit to Desktop")) {
-//				Application.Quit();
-//			}
-//	}
 }

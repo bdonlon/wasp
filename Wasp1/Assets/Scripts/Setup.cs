@@ -107,7 +107,7 @@ public class Setup : MonoBehaviour {
 
 	void Update(){
 
-		if(Input.GetKeyDown(KeyCode.Escape)){
+		if((Input.GetKeyDown(KeyCode.Escape)) || (Input.GetButtonDown("360_Start"))){
 			pauseGame = !pauseGame;
 			Screen.showCursor = true;
 			if(pauseGame){
@@ -118,7 +118,11 @@ public class Setup : MonoBehaviour {
 				AudioListener.pause = false;
 			}
 		}
-
+		if(Input.GetButtonDown("360_B") && pauseGame){
+			pauseGame = false;
+			Time.timeScale = 1.0f;
+			AudioListener.pause = false;
+		}
 
 
 		if(victoryCondition){

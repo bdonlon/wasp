@@ -36,12 +36,10 @@ public class GUI_buttons : MonoBehaviour {
 		if (GM.GetComponent<Setup>().pauseGame) {
 			//pauseMenu.SetActive(true);
 			pauseMenu.transform.position = new Vector3(pauseMenu.transform.position.x, pauseMenu.transform.position.y, menuVisible);
-
-			if(Input.GetKeyDown(KeyCode.Return))
+			 
+			if((Input.GetKeyDown(KeyCode.Return)) || (Input.GetButtonDown("360_A")))
 			{	
-				//StartCoroutine(
 				runMenuOption();
-					//);
 			}
 		
 		}else{
