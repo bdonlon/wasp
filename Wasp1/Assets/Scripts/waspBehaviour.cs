@@ -75,6 +75,8 @@ public class waspBehaviour : MonoBehaviour {
 
 		flySound.GetComponent<playSound>().playLooped();
 
+		StartCoroutine(flySound.GetComponent<playSound>().fadeIn());
+
 		foodOffset.x=0;
 		foodOffset.y=0;
 		changeTarget("food");
