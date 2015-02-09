@@ -6,6 +6,7 @@ public class swatter_script : MonoBehaviour {
 	//public GameObject crosshair;
 	public GameObject _GM;
 	public GameObject swatter;
+	public GameObject trail;
 	public bool idle;
 
 	public float angle;
@@ -53,6 +54,7 @@ public class swatter_script : MonoBehaviour {
 		defaultZRot = gameObject.transform.rotation.eulerAngles.z;
 
 		startRot = transform.eulerAngles;
+		trail.renderer.sortingLayerName="Elevated objects";
 	}
 
 	public IEnumerator setDead(){
@@ -105,6 +107,7 @@ public class swatter_script : MonoBehaviour {
 
 			//weapon idle wobble
 			if(idle){
+				trail.GetComponent<TrailRenderer>().enabled=false;
 				if(timer>20){
 					wobble = wobble*-1;
 					timer=0;
@@ -113,6 +116,8 @@ public class swatter_script : MonoBehaviour {
 				transform.RotateAround(rotatePoint, Vector3.back, wobble);
 				timer++;
 			}else if (swinging){
+				trail.GetComponent<TrailRenderer>().enabled=true;
+
 				gameObject.GetComponent<BoxCollider2D>().enabled = true;
 				swingTimer += Time.deltaTime;
 
@@ -120,6 +125,8 @@ public class swatter_script : MonoBehaviour {
 					swingSound.GetComponent<playSound>().play();	//start of swing, play sound.
 					setStartSwingPositionOnce=false;
 					transform.position = startSwingPosition;
+				//	trail.GetComponent<TrailRenderer>().enabled=false;
+				//	trail.GetComponent<TrailRenderer>().enabled=true;
 				}
 
 				Vector3 vectorToTarget = playerPosition - transform.position;
@@ -135,9 +142,11 @@ public class swatter_script : MonoBehaviour {
 
 				if (swingTimer > swingDuration){
 					swungOnce=true;
+					trail.GetComponent<TrailRenderer>().enabled=false;
 				}
 
 				if(swingTimer>swingDuration){
+					trail.GetComponent<TrailRenderer>().enabled=false;
 					setStartSwingPositionOnce = true;
 					swingTimer = 0f;
 				}
@@ -151,6 +160,7 @@ public class swatter_script : MonoBehaviour {
 					swungOnce=false;
 					
 					transform.position = new Vector3(transform.parent.position.x+defaultX,transform.parent.position.y+defaultY,-1);
+					trail.GetComponent<TrailRenderer>().enabled=false;
 					gameObject.GetComponent<BoxCollider2D>().enabled = false;
 					transform.rotation = Quaternion.Euler(0,0,defaultZRot);
 					idle=true;
