@@ -126,13 +126,13 @@ public class Setup : MonoBehaviour {
 
 
 		if(victoryCondition){
-			if(Input.GetKeyDown(KeyCode.R)){
+			if(Input.GetKeyDown(KeyCode.R) || ((Input.GetButton("360_L1"))&&(Input.GetButton("360_R1")))){
 				Application.LoadLevel("wasp1");
 			}
 		}else if(failureCondition){
 			spouseAnim.SetTrigger("spouse_cry_start");
 
-			if(Input.GetKeyDown(KeyCode.R)){
+			if(Input.GetKeyDown(KeyCode.R) || ((Input.GetButton("360_L1"))&&(Input.GetButton("360_R1")))){
 				Application.LoadLevel("wasp1");
 			}
 
