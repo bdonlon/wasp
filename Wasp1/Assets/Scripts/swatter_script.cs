@@ -55,6 +55,10 @@ public class swatter_script : MonoBehaviour {
 
 		startRot = transform.eulerAngles;
 		trail.renderer.sortingLayerName="Elevated objects";
+		trail.renderer.sortingOrder=0;
+
+		//trail.renderer.sortingLayerName="Ground objects";
+		//trail.renderer.sortingOrder=10;
 	}
 
 	public IEnumerator setDead(){
