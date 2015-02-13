@@ -57,7 +57,7 @@ public class swatter_script : MonoBehaviour {
 		startRot = transform.eulerAngles;
 		trail.renderer.sortingLayerName="Elevated objects";
 		trail.renderer.sortingOrder=0;
-		trailTime = trail.GetComponent<TrailRenderer>().time;
+		trailTime = 1.0f;
 
 		//trail.renderer.sortingLayerName="Ground objects";
 		//trail.renderer.sortingOrder=10;
@@ -128,7 +128,16 @@ public class swatter_script : MonoBehaviour {
 				swingTimer += Time.deltaTime;
 
 				if(setStartSwingPositionOnce){
-					StartCoroutine(resetTrail());
+					Destroy(trail);
+					//trail.GetComponent<TrailRenderer>().enabled=false;
+					trail = (GameObject)Instantiate(trail);
+
+					trail.transform.parent = GameObject.Find("swatter").transform;
+					trail.transform.position = GameObject.Find("swatter").transform.position;
+					trail.GetComponent<TrailRenderer>().time = trailTime;
+
+					//print (trail.transform.position + " " + GameObject.Find("swatter").transform.position);
+					//StartCoroutine(resetTrail());
 					swingSound.GetComponent<playSound>().play();	//start of swing, play sound.
 					setStartSwingPositionOnce=false;
 					transform.position = startSwingPosition;
@@ -176,11 +185,11 @@ public class swatter_script : MonoBehaviour {
 		}
 	}
 
-	IEnumerator resetTrail(){
-		trail.GetComponent<TrailRenderer>().time=-1;
-		yield return new WaitForSeconds(0.01f);
-		trail.GetComponent<TrailRenderer>().time=trailTime;
-	}
+//	IEnumerator resetTrail(){
+//		trail.GetComponent<TrailRenderer>().time=-1;
+//		yield return new WaitForSeconds(0.01f);
+//		trail.GetComponent<TrailRenderer>().time=trailTime;
+//	}
 
 	public void savePreviousInputState(){
 		preUp=up;
@@ -232,7 +241,7 @@ public class swatter_script : MonoBehaviour {
 		if(right){test++;};
 
 		if(test>1){	//multiple inputs
-			StartCoroutine(resetTrail());
+			//StartCoroutine(resetTrail());
 			interrupt=true;
 			setStartSwingPositionOnce=true;	//allow in progress swing to break
 			setLatest();	//set most recent key input as swing direction and negate previous in progress swing
