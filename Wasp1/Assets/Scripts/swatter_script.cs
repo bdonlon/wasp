@@ -65,6 +65,7 @@ public class swatter_script : MonoBehaviour {
 
 	public IEnumerator setDead(){
 		dead=true;
+		Destroy(trail);
 		swatter.GetComponent<swatter_script>().rigidbody2D.isKinematic=false;
 
 		if(down)	{yield return new WaitForSeconds(0.2f);}
