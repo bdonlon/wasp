@@ -26,7 +26,7 @@ public class Setup : MonoBehaviour {
 
 	public float width,height;
 
-	public bool victoryCondition,failureCondition = false;
+	public bool victoryCondition,failureCondition,foodAvailable = false;
 
 	// Use this for initialization
 	void Start () {
@@ -85,6 +85,22 @@ public class Setup : MonoBehaviour {
 	}
 
 	public IEnumerator setupPhase(){
+
+		if(foodAvailable){	//won't trigger on game start, but will between wasp phases
+			for(int i=5; i>0; i--)
+			{
+				if(foodAvailable){
+					print ("food consumable, time remaining: "+i);
+					yield return new WaitForSeconds(1.0f);	//wait 1 second then check again (up to max 5 seconds)
+				}else{
+					print ("foodAvailable detected as false, ending consumable phase early");
+					i=0;	//kill the loop
+				}
+			}
+			print ("consumable phase ends, setting out new food");
+		}
+		foodAvailable=false;
+
 		//animate rustlling in hamper
 		spouseAnim.SetTrigger("spouse_basket_start");
 		picnicBasketAnim.SetTrigger ("picnic_basket_open");
@@ -96,6 +112,10 @@ public class Setup : MonoBehaviour {
 		spouseAnim.SetTrigger("spouse_basket_end");
 		picnicBasketAnim.SetTrigger ("picnic_basket_close");
 		spawnPhase=true;
+	}
+
+	public void foodConsumed(){	//To be called by (player or food?) script when food has been eaten
+		foodAvailable=false;
 	}
 
 	public void unPause(){	//To be triggered from pause menu button
@@ -147,6 +167,7 @@ public class Setup : MonoBehaviour {
 						victoryCondition = true;
 						Screen.showCursor = true;
 					}else{
+						foodAvailable=true;
 						StartCoroutine(setupPhase());
 					}
 				}
