@@ -5,7 +5,8 @@ public class playerMovement : MonoBehaviour {
 		
 	private float speed = 10;
 	private Vector3 velocity;
-	public int health = 200;
+	public int health;
+	private int maxHealth;
 	public int score = 0;
 	public GameObject _GM;
 	public GameObject swatter;
@@ -35,6 +36,7 @@ public class playerMovement : MonoBehaviour {
 	Animator anim;
 
 	void Start(){
+		maxHealth=health;
 		timeStung =  Time.time-100;
 		hurting=false;
 		moving = false;
@@ -173,6 +175,17 @@ public class playerMovement : MonoBehaviour {
 				Screen.showCursor = true;
 			}
 		}
+	}
+
+	public void heal(int healValue){
+		//if(!dead){}
+		if((health+healValue)<maxHealth){
+			health = health+healValue;
+		}else{
+			health = maxHealth;
+		}
+
+		timeStung =  Time.time;	//Will cause healthbar to render
 	}
 
 	void drawHealthBar(){

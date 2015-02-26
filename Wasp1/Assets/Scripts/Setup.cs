@@ -90,14 +90,11 @@ public class Setup : MonoBehaviour {
 			for(int i=5; i>0; i--)
 			{
 				if(foodAvailable){
-					print ("food consumable, time remaining: "+i);
 					yield return new WaitForSeconds(1.0f);	//wait 1 second then check again (up to max 5 seconds)
 				}else{
-					print ("foodAvailable detected as false, ending consumable phase early");
 					i=0;	//kill the loop
 				}
 			}
-			print ("consumable phase ends, setting out new food");
 		}
 		foodAvailable=false;
 
