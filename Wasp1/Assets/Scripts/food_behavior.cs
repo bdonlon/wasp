@@ -12,9 +12,29 @@ public class food_behavior : MonoBehaviour {
 	public GameObject player;
 	public GameObject picnic;
 
-	public void Update(){
-		if(_GM.GetComponent<Setup>().foodAvailable){
-			//Onscreen indication that food is available
+	public int timer;
+	public float scaleRate;
+
+	public Vector3 defaultSize;
+
+	void Start () {
+		defaultSize = transform.localScale;
+		timer = 0;
+		scaleRate = 0.02f;
+	}
+
+	public void Update()
+	{
+		if(_GM.GetComponent<Setup>().foodAvailable)	//Make the food grow/shrink to indicate that it can be interacted with
+		{
+			if(timer>20){
+				scaleRate = scaleRate*-1;
+				timer=0;
+			}
+			transform.localScale = transform.localScale + (Vector3.one * scaleRate);
+			timer++;
+		}else{
+			transform.localScale = defaultSize;
 		}
 	}
 	
@@ -33,7 +53,6 @@ public class food_behavior : MonoBehaviour {
 	}
 
 	public void healPlayer(){
-		int healValue=40;
-		player.GetComponent<playerMovement>().heal(healValue);
+		player.GetComponent<playerMovement>().heal(_GM.GetComponent<Setup>().getPlayerHealValue());
 	}
 }

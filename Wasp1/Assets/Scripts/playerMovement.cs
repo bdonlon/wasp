@@ -18,6 +18,7 @@ public class playerMovement : MonoBehaviour {
 
 	public GameObject hitSound;
 	public GameObject deathSound;
+	public GameObject eatSound;
 
 	public SpriteRenderer spriteRenderer;
 	public SpriteRenderer swatterSpriteRenderer;
@@ -179,6 +180,7 @@ public class playerMovement : MonoBehaviour {
 
 	public void heal(int healValue){
 		//if(!dead){}
+		eatSound.GetComponent<playSound>().play();
 		if((health+healValue)<maxHealth){
 			health = health+healValue;
 		}else{

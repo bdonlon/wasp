@@ -37,7 +37,7 @@ public class swatter_script : MonoBehaviour {
 
 	public bool unpauseBuffer=false;
 
-	private Vector3 startRot;
+	//private Vector3 startRot;
 
 	public Vector3 startSwingPosition;
 	public Vector3 playerPosition;
@@ -54,7 +54,7 @@ public class swatter_script : MonoBehaviour {
 		defaultY = Mathf.Abs(transform.parent.position.y - transform.position.y);
 		defaultZRot = gameObject.transform.rotation.eulerAngles.z;
 
-		startRot = transform.eulerAngles;
+		//startRot = transform.eulerAngles;
 		trail.renderer.sortingLayerName="Elevated objects";
 		trail.renderer.sortingOrder=0;
 		trailTime = 1.0f;

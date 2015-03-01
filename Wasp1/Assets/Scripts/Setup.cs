@@ -28,6 +28,11 @@ public class Setup : MonoBehaviour {
 
 	public bool victoryCondition,failureCondition,foodAvailable = false;
 
+						//waveData rows = {maxWasps, healthFromFood}
+	public int[,] waveData = new int[3,2] { {5, 10},		//wave 1
+											{10, 20},		//wave 2
+											{20, 30} };		//wave 3
+
 	// Use this for initialization
 	void Start () {
 		pauseGame=false;
@@ -35,11 +40,11 @@ public class Setup : MonoBehaviour {
 		AudioListener.pause = false;
 
 		spawnPhase=false;
+		currentWave=0;
 		numWasps=0;
-		maxWasps=5;
+		maxWasps=waveData[currentWave,0];
 		waspsSpawnedThisWave=0;
-		currentWave=1;
-		maxWaves = 4;
+		maxWaves = waveData.GetLength(0);
 
 		Screen.showCursor = false;
 
@@ -112,14 +117,21 @@ public class Setup : MonoBehaviour {
 	}
 
 	public void foodConsumed(){	//To be called by (player or food?) script when food has been eaten
+		picnicAnim.SetTrigger("eatFood");
 		foodAvailable=false;
 	}
 
-	public void unPause(){	//To be triggered from pause menu button
+	public void unPause()
+	{	//To be triggered from pause menu button
 		Screen.showCursor = false;
 		pauseGame=false;
 		Time.timeScale = 1.0f;
 		AudioListener.pause = false;
+	}
+
+	public int getPlayerHealValue()
+	{
+		return waveData[currentWave-1,1];	//currentWave-1 because when player is able to access the food, the game logic has actually already moved into the next wave. so -1 to access the food health value for the previous wave, to which it belongs.
 	}
 
 	void Update(){
@@ -157,13 +169,14 @@ public class Setup : MonoBehaviour {
 			if(waspsSpawnedThisWave>=maxWasps){
 				spawnPhase = false;
 				if(numWasps == 0){
-					maxWasps = maxWasps*2;
-					currentWave++;
-					waspsSpawnedThisWave=0;
-					if(currentWave==maxWaves && spawnPhase==false){
+					if((currentWave+1)==maxWaves){	//currentWave is indexed from 0 (eg 0-2), maxWaves is number of rows in waveData (eg 3)
 						victoryCondition = true;
+						foodAvailable=true;
 						Screen.showCursor = true;
 					}else{
+						currentWave++;
+						maxWasps = waveData[currentWave,0];
+						waspsSpawnedThisWave=0;
 						foodAvailable=true;
 						StartCoroutine(setupPhase());
 					}
