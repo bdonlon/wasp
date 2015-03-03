@@ -8,6 +8,8 @@ TextureImporter:
     21300006: picnic_food_3
     21300008: picnic_food_4
     21300010: picnic_food_5
+    21300012: picnic_food_6
+    21300014: picnic_food_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -106,6 +108,26 @@ TextureImporter:
         y: 7
         width: 34
         height: 22
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: picnic_food_6
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 37
+        width: 32
+        height: 19
+      alignment: 7
+      pivot: {x: .5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: picnic_food_7
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 9
+        width: 32
+        height: 19
       alignment: 7
       pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

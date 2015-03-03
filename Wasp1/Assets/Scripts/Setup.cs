@@ -29,9 +29,10 @@ public class Setup : MonoBehaviour {
 	public bool victoryCondition,failureCondition,foodAvailable = false;
 
 						//waveData rows = {maxWasps, healthFromFood}
-	public int[,] waveData = new int[3,2] { {5, 10},		//wave 1
+	public int[,] waveData = new int[4,2] { {5, 10},		//wave 1
 											{10, 20},		//wave 2
-											{20, 30} };		//wave 3
+											{20, 30},		//wave 3
+											{30, 40} };		//wave 4
 
 	// Use this for initialization
 	void Start () {
