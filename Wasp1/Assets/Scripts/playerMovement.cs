@@ -52,9 +52,6 @@ public class playerMovement : MonoBehaviour {
 		spriteRenderer.sortingOrder = (int)Camera.main.WorldToScreenPoint (spriteRenderer.bounds.min).y * -1;
 		swatterSpriteRenderer.sortingOrder = spriteRenderer.sortingOrder;
 
-		//print (Input.GetAxis ("360_DUp"));
-		//print (Input.GetAxis ("360_LeftStickY"));
-		//print (Input.GetKeyDown(KeyCode.W));
 		if(!dead){
 			// not dead, therefore capture keystrokes and move
 			LSY=Input.GetAxis ("360_LeftStickY");
@@ -126,27 +123,33 @@ public class playerMovement : MonoBehaviour {
 		if((up&&left)||(up&&right)||(down&&left)||(down&&right)){	diagonal=true;	}
 	}
 
-	public void move(){
+	public void move()
+	{
 		velocity.x=0;
 		velocity.y=0;
 
-		if(!diagonal){	
-			speed=10;
-		}else{
-				speed=8;
-		}
+		if(LSY==0 && LSX==0){	//skip if we are receiving L Stick input
+			if(!diagonal){	
+				speed=10;
+			}else{
+					speed=6.8f;
+			}
 
-		if(up){
-			velocity.y = speed;
-		}
-		if(down){
-			velocity.y = speed*-1;
-		}
-		if(left){
-			velocity.x = speed*-1;
-		}
-		if(right){
-			velocity.x = speed;
+			if(up){
+				velocity.y = speed;
+			}
+			if(down){
+				velocity.y = speed*-1;
+			}
+			if(left){
+				velocity.x = speed*-1;
+			}
+			if(right){
+				velocity.x = speed;
+			}
+		}else{
+			velocity.y = -LSY*10;
+			velocity.x = LSX*10;
 		}
 
 		rigidbody2D.velocity=velocity;
