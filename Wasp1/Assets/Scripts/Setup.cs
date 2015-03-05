@@ -30,6 +30,7 @@ public class Setup : MonoBehaviour {
 
 	public bool endless;
 	public int endlessSwitch;
+	public int endlessHealth;
 
 						//waveData rows = {maxWasps, healthFromFood}
 	public int[,] waveData = new int[4,2] { {5, 10},		//wave 1
@@ -93,6 +94,7 @@ public class Setup : MonoBehaviour {
 		Physics2D.IgnoreLayerCollision(10, 09, true); //Disable collisions between player and picnic
 	
 		StartCoroutine(setupPhase());
+		endlessHealth=10;
 	}
 
 	public IEnumerator setupPhase(){
@@ -171,7 +173,7 @@ public class Setup : MonoBehaviour {
 		if(!endless){
 			return waveData[currentWave-1,1];	//currentWave-1 because when player is able to access the food, the game logic has actually already moved into the next wave. so -1 to access the food health value for the previous wave, to which it belongs.
 		}else{
-			return 30;
+			return endlessHealth;
 		}
 	}
 
@@ -236,6 +238,7 @@ public class Setup : MonoBehaviour {
 					{
 						currentWave++;
 						maxWasps = (int)(maxWasps*1.5);	//50% more difficult each wave
+						endlessHealth = (int)(endlessHealth*1.5);	//50% more health available each wave
 						waspsSpawnedThisWave=0;
 						foodAvailable=true;
 						StartCoroutine(setupPhase());
