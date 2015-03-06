@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class script_mainMenuButtons : MonoBehaviour {
-
+public class script_gameModeButtons : MonoBehaviour {
+	
 	public GameObject buttons;
 	public GameObject _GM;
 	int cursorIndex;
-
+	
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
@@ -19,7 +19,7 @@ public class script_mainMenuButtons : MonoBehaviour {
 			StartCoroutine(runMenuOption());
 		}
 	}
-
+	
 	public IEnumerator runMenuOption(){
 		//		cursorAnimator.SetTrigger("wasp_death");
 		//		killSound.GetComponent<playSound>().play();
@@ -27,16 +27,15 @@ public class script_mainMenuButtons : MonoBehaviour {
 		cursorIndex=buttons.GetComponent<script_MenuButtons>().cursorIndex;
 		if(cursorIndex==0)
 		{
-			_GM.GetComponent<script_Main_Menu_GM>().changeScreen(1);
 			//Application.LoadLevel("wasp1");
 		}
 		else if(cursorIndex==1)
 		{
-			Application.LoadLevel("credits");
+			//Application.LoadLevel("wasp1");
 		}
 		else if(cursorIndex==2)
 		{
-			Application.Quit();
+			_GM.GetComponent<script_Main_Menu_GM>().changeScreen(0);
 		}
 	}
 }
