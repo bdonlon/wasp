@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class script_MenuButtons : MonoBehaviour {
-	public GameObject GM;
+	public GameObject _GM;
 	public GameObject[] menuOptions;
 	public GameObject cursor;
 	public GameObject killSound;
@@ -22,7 +22,7 @@ public class script_MenuButtons : MonoBehaviour {
 		Screen.showCursor = false;
 
 		cursorAnimator = cursor.GetComponent<Animator>();
-		cursorAudioSource = cursor.GetComponent<AudioSource>();
+		cursorAudioSource = _GM.GetComponent<AudioSource>();
 		cursorAudioSource.ignoreListenerPause = true;
 
 		cursorIndex=0;
@@ -37,7 +37,7 @@ public class script_MenuButtons : MonoBehaviour {
 	}
 
 	void Update(){
-		if(Application.loadedLevelName.Equals("menu") || GM.GetComponent<Setup>().pauseGame)	//In game menu needs to be paused (variable via GM object). Title menu has no GM object.
+		if(Application.loadedLevelName.Equals("menu") || _GM.GetComponent<Setup>().pauseGame)	//In game menu needs to be paused (variable via GM object). Title menu has no GM object.
 		{
 			padPreviousUp = padCurrentUp;
 			padPreviousDown = padCurrentDown;
