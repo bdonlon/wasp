@@ -40,7 +40,7 @@ public class Setup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		endless=true;
+		endless=ApplicationModel.endless;
 		endlessSwitch=0;
 		pauseGame=false;
 		Time.timeScale = 1.0f;

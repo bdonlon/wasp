@@ -22,14 +22,9 @@ public class script_MenuButtons : MonoBehaviour {
 		Screen.showCursor = false;
 
 		cursorAnimator = cursor.GetComponent<Animator>();
-		cursorAudioSource = _GM.GetComponent<AudioSource>();
+		cursorAudioSource = cursor.GetComponent<AudioSource>();
 		cursorAudioSource.ignoreListenerPause = true;
-
 		cursorIndex=0;
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		cursor.transform.localScale = theScale;
-
 		cursorXposition = menuOptions[cursorIndex].transform.position.x-cursorXoffset;
 
 		cursorPosition = new Vector3(cursorXposition, menuOptions[cursorIndex].transform.position.y, menuOptions[cursorIndex].transform.position.z);

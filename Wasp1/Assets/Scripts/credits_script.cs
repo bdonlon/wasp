@@ -20,12 +20,7 @@ public class credits_script : MonoBehaviour {
 
 		cursorAnimator = cursor.GetComponent<Animator>();
 		cursorIndex=0;
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		cursor.transform.localScale = theScale;
-
 		cursorXposition = menuOptions[cursorIndex].transform.position.x-1.5f;
-		
 		cursorPosition = new Vector3(cursorXposition, menuOptions[cursorIndex].transform.position.y, menuOptions[cursorIndex].transform.position.z);
 		cursor.transform.position = cursorPosition;
 	}
