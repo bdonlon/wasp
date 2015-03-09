@@ -24,6 +24,9 @@ public class script_Main_Menu_GM : MonoBehaviour {
 	public float LSY,DY;
 	public float cursorXposition;
 	public Vector3 cursorPosition;
+	public Vector3 creditsForce = new Vector3(0,1,0);
+	private Vector3 creditsInitialPosition;
+	public GameObject creditsGraphic;
 
 	[System.Serializable]
 	public class ButtonBankMatrix
@@ -32,19 +35,17 @@ public class script_Main_Menu_GM : MonoBehaviour {
 	}
 
 	void Start () {
-		//Flip cursor orientation (I know, I should just fix the prefab...)
-//		Vector3 theScale = transform.localScale;
-//		theScale.x *= -1;
-//		cursors[0].transform.localScale = theScale;
-//		cursors[1].transform.localScale = theScale;
-
-
 		cursorIndex=0;
 		currentCamera=0;
 		changeScreen(currentCamera);
+		creditsInitialPosition = creditsGraphic.transform.position;
 	}
 
 	void Update () {
+
+		if(currentCamera==2){
+			creditsGraphic.rigidbody2D.AddForce(creditsForce);
+		}
 
 		if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("360_A"))
 		{	
@@ -110,7 +111,7 @@ public class script_Main_Menu_GM : MonoBehaviour {
 			}
 			else if(cursorIndex==1)
 			{
-				Application.LoadLevel("credits");
+				changeScreen(2);
 			}
 			else if(cursorIndex==2)
 			{
@@ -133,6 +134,14 @@ public class script_Main_Menu_GM : MonoBehaviour {
 			else if(cursorIndex==2)
 			{
 				changeScreen(0);
+			}
+			break;
+		case 2:
+			if(cursorIndex==0)
+			{
+				changeScreen(0);
+				creditsGraphic.rigidbody2D.velocity = Vector3.zero;
+				creditsGraphic.transform.position=creditsInitialPosition;
 			}
 			break;
 		}
