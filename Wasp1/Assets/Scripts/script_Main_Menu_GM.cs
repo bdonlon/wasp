@@ -27,6 +27,12 @@ public class script_Main_Menu_GM : MonoBehaviour {
 	public Vector3 creditsForce = new Vector3(0,1,0);
 	private Vector3 creditsInitialPosition;
 	public GameObject creditsGraphic;
+	public GameObject gamepadText;
+	public Sprite[] gamepadDetected;
+	public GameObject controllerGraphic;
+	SpriteRenderer gamepadDetectedRenderer;
+	private int timer;
+	private float scaleRate;
 
 	[System.Serializable]
 	public class ButtonBankMatrix
@@ -35,13 +41,20 @@ public class script_Main_Menu_GM : MonoBehaviour {
 	}
 
 	void Start () {
+		scaleRate = 0.004f;
+		timer = 0;
 		cursorIndex=0;
 		currentCamera=0;
 		changeScreen(currentCamera);
 		creditsInitialPosition = creditsGraphic.transform.position;
+
+		gamepadDetectedRenderer=gamepadText.GetComponent<SpriteRenderer>();
+
 	}
 
 	void Update () {
+
+		animateControllerGraphic();
 
 		if(currentCamera==2){
 			creditsGraphic.rigidbody2D.AddForce(creditsForce);
@@ -51,7 +64,11 @@ public class script_Main_Menu_GM : MonoBehaviour {
 		{	
 			cursors[currentCamera].gameObject.GetComponent<Animator>().SetTrigger("wasp_death");
 			killSound.GetComponent<playSound>().play();
-			StartCoroutine(runMenuOption());
+			StartCoroutine(runMenuOption(currentCamera));
+		}else if(Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("360_B")){	// 'Back' in menu
+			cursors[currentCamera].gameObject.GetComponent<Animator>().SetTrigger("wasp_death");
+			killSound.GetComponent<playSound>().play();
+			StartCoroutine(runMenuOption(-1));
 		}
 
 		padPreviousUp = padCurrentUp;
@@ -98,12 +115,15 @@ public class script_Main_Menu_GM : MonoBehaviour {
 		cursorPosition = new Vector3(cursorXposition, ButtonBank[currentCamera].buttons[cursorIndex].transform.position.y, ButtonBank[currentCamera].buttons[cursorIndex].transform.position.z);
 		cursors[currentCamera].transform.position = cursorPosition;
 	}
-
-	public IEnumerator runMenuOption(){
+	
+	public IEnumerator runMenuOption(int cam){
 		yield return new WaitForSeconds(0.1f);
 
-		switch (currentCamera)
+		switch(cam)
 		{
+		case -1:	// Go 'back' from any screen
+			changeScreen (0);
+			break;
 		case 0:
 			if(cursorIndex==0)
 			{
@@ -159,6 +179,25 @@ public class script_Main_Menu_GM : MonoBehaviour {
 				cameras[i].camera.enabled=false;
 				cursors[i].gameObject.active=false;
 			}
+		}
+	}
+
+	void animateControllerGraphic(){
+		if(Input.GetJoystickNames().Length > 0)
+		{
+			if(timer>20){
+				scaleRate = scaleRate*-1;
+				timer=0;
+			}
+			controllerGraphic.transform.localScale = controllerGraphic.transform.localScale + (Vector3.one * scaleRate);
+			timer++;
+		}
+		
+		if(Input.GetJoystickNames().Length > 0){
+			//Use controller graphic if controller is connected
+			gamepadDetectedRenderer.sprite=gamepadDetected[0];
+		}else{
+			gamepadDetectedRenderer.sprite=gamepadDetected[1];
 		}
 	}
 }
