@@ -46,6 +46,7 @@ public class waspBehaviour : MonoBehaviour {
 	public SpriteRenderer foodSpriteRenderer;
 
 	void Start () {
+		transform.parent = GameObject.Find("cloneWasps").transform;
 		defaultSortingOrder = spriteRenderer.sortingOrder;
 		speed = 40;
 		left = true;
