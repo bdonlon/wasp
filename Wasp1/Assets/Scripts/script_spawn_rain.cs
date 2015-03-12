@@ -5,20 +5,22 @@ public class script_spawn_rain : MonoBehaviour {
 
 	public Vector3 spawnLocation;
 	public GameObject raindrop;
-	public float jitter;
+	public float jitterX,jitterY;
+	public float spawnRate;
 
 	// Use this for initialization
 	void Start ()
 	{
-		jitter=6f;
+		jitterX=10f;
+		jitterY=8f;
 		spawnLocation = new Vector3(0,0,0);
-		InvokeRepeating("Spawn", 0, 0.2f);
+		InvokeRepeating("Spawn", 0, spawnRate);
 	}
 
 	void Spawn ()
 	{
-		spawnLocation.x = transform.position.x + Random.Range(-jitter,jitter);
-		spawnLocation.y = transform.position.y + Random.Range(0,1);
+		spawnLocation.x = transform.position.x + Random.Range(-jitterX,jitterX);
+		spawnLocation.y = transform.position.y + Random.Range(-jitterY,jitterY);
 		Instantiate(raindrop, spawnLocation, transform.rotation);
 	}
 }
