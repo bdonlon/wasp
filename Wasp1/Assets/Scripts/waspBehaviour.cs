@@ -96,7 +96,7 @@ public class waspBehaviour : MonoBehaviour {
 				foodLocation= new Vector3(food.transform.position.x+foodOffset.x,food.transform.position.y+foodOffset.y,food.transform.position.z);
 				spouseLocation= spouse.transform.position;
 			
-				if(!_GM.GetComponent<Setup>().failureCondition){	//failure condition not met
+				if(!_GM.GetComponent<Setup>().getFailureCondition()){	//failure condition not met
 					if(!encounteredPlayer && distanceBetween(playerLocation,transform.position)<2.5f){
 						int rand = Random.Range(1,100);
 						if(rand>50){

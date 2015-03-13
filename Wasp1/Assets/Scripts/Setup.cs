@@ -10,6 +10,7 @@ public class Setup : MonoBehaviour {
 	public GameObject player;
 	public GameObject picnic_food;
 	public GameObject grass;
+	public GameObject storm;
 	public Animator picnicAnim;
 	public Animator spouseAnim;
 	public Animator picnicBasketAnim;
@@ -26,7 +27,8 @@ public class Setup : MonoBehaviour {
 
 	public float width,height;
 
-	public bool victoryCondition,failureCondition,foodAvailable = false;
+	public bool victoryCondition,foodAvailable = false;
+	private bool failureCondition=false;
 
 	public bool endless;
 	public int endlessSwitch;
@@ -174,6 +176,17 @@ public class Setup : MonoBehaviour {
 			return waveData[currentWave-1,1];	//currentWave-1 because when player is able to access the food, the game logic has actually already moved into the next wave. so -1 to access the food health value for the previous wave, to which it belongs.
 		}else{
 			return endlessHealth;
+		}
+	}
+
+	public bool getFailureCondition(){
+		return failureCondition;
+	}
+
+	public void setFailureCondition(bool set){
+		failureCondition=set;
+		if(failureCondition){
+			storm.gameObject.active=true;
 		}
 	}
 

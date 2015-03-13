@@ -175,7 +175,7 @@ public class playerMovement : MonoBehaviour {
 			if(health<=0){
 				deathSound.GetComponent<playSound>().play();
 				kill();
-				_GM.GetComponent<Setup>().failureCondition=true;
+				_GM.GetComponent<Setup>().setFailureCondition(true);
 				Screen.showCursor = true;
 			}
 		}

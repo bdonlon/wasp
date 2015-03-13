@@ -54,7 +54,7 @@ public class picnic_health_script : MonoBehaviour {
 			picnicHealthCurrent = picnicHealthCurrent - damage;
 
 			if(picnicHealthCurrent <= 0){
-				_GM.GetComponent<Setup>().failureCondition=true;
+				_GM.GetComponent<Setup>().setFailureCondition(true);
 			}
 		}
 	}

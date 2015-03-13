@@ -22,7 +22,7 @@ public class GUI_buttons : MonoBehaviour {
 	}
 
 	void Update(){
-		if(GM.GetComponent<Setup>().failureCondition)
+		if(GM.GetComponent<Setup>().getFailureCondition())
 		{
 			restartMenu.transform.position = new Vector3(restartMenu.transform.position.x, restartMenu.transform.position.y, menuVisible);
 		}else if(GM.GetComponent<Setup>().victoryCondition){

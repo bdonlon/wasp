@@ -5,6 +5,7 @@ TextureImporter:
     21300000: storm_0
     21300002: storm_1
     21300004: storm_2
+    21300006: storm_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -73,6 +74,16 @@ TextureImporter:
         y: 13
         width: 32
         height: 18
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: storm_3
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 15
+        width: 30
+        height: 17
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

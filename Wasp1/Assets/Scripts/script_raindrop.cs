@@ -23,8 +23,18 @@ public class script_raindrop : MonoBehaviour {
 	void Update () {
 		if(transform.position.y < (splashCoordY).y){
 			transform.parent = GameObject.Find("cloneRain").transform;
-			anim.SetTrigger("splash");
-			rigidbody.velocity = Vector3.zero;
+			int splash = Random.Range (1,3);	//(inclusive,exclusive)
+			switch(splash)
+			{
+			case 1:
+				anim.SetTrigger("splash_01");
+				break;
+			case 2:
+				anim.SetTrigger("splash_02");
+				break;
+			}
+			rigidbody.isKinematic=true;
+			//rigidbody.velocity = Vector3.zero;
 			Destroy(this.gameObject,0.1f);
 		}
 	}
