@@ -25,7 +25,7 @@ public class GUI_buttons : MonoBehaviour {
 		if(GM.GetComponent<Setup>().getFailureCondition())
 		{
 			restartMenu.transform.position = new Vector3(restartMenu.transform.position.x, restartMenu.transform.position.y, menuVisible);
-		}else if(GM.GetComponent<Setup>().victoryCondition){
+		}else if(GM.GetComponent<Setup>().getVictoryCondition()){
 			victoryMenu.transform.position = new Vector3(victoryMenu.transform.position.x, victoryMenu.transform.position.y, menuVisible);
 			restartMenu.transform.position = new Vector3(restartMenu.transform.position.x, restartMenu.transform.position.y, menuVisible);
 		}else{

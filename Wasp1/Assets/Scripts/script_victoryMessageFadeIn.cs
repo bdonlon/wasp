@@ -13,7 +13,7 @@ public class script_victoryMessageFadeIn : MonoBehaviour {
 	}
 
 	void Update(){
-		if(GM.GetComponent<Setup>().victoryCondition){
+		if(GM.GetComponent<Setup>().getVictoryCondition()){
 			if(!fadeInTriggered){
 				fadeInTriggered=true;
 				StartCoroutine(fadeIn());

@@ -27,8 +27,8 @@ public class Setup : MonoBehaviour {
 
 	public float width,height;
 
-	public bool victoryCondition,foodAvailable = false;
-	private bool failureCondition=false;
+	public bool foodAvailable = false;
+	private bool victoryCondition,failureCondition=false;
 
 	public bool endless;
 	public int endlessSwitch;
@@ -179,15 +179,31 @@ public class Setup : MonoBehaviour {
 		}
 	}
 
+	public void setFailureCondition(bool set){
+		failureCondition=set;
+		if(failureCondition){
+			StartCoroutine(startStorm(1.0f));
+		}
+	}
 	public bool getFailureCondition(){
 		return failureCondition;
 	}
 
-	public void setFailureCondition(bool set){
-		failureCondition=set;
-		if(failureCondition){
-			storm.gameObject.active=true;
+	public void setVictoryCondition(bool set){
+		victoryCondition=set;
+		if(victoryCondition){
+			StartCoroutine(startStorm(2.5f));	//Long-ish delay then storm starts when player wins :)
 		}
+	}
+
+	public bool getVictoryCondition(){
+		return victoryCondition;
+	}
+
+	private IEnumerator startStorm(float delay){
+
+		yield return new WaitForSeconds(delay);	//wait a few beats before starting the storm.
+		storm.gameObject.active=true;
 	}
 
 	void Update(){
@@ -226,7 +242,7 @@ public class Setup : MonoBehaviour {
 					spawnPhase = false;
 					if(numWasps == 0){
 						if((currentWave+1)==maxWaves){	//currentWave is indexed from 0 (eg 0-2), maxWaves is number of rows in waveData (eg 3)
-							victoryCondition = true;
+							setVictoryCondition(true);
 							foodAvailable=true;
 						}else{
 							currentWave++;
