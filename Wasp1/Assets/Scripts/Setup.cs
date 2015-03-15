@@ -11,6 +11,7 @@ public class Setup : MonoBehaviour {
 	public GameObject picnic_food;
 	public GameObject grass;
 	public GameObject storm;
+	public GameObject graphic_waveInfo;
 	public Animator picnicAnim;
 	public Animator spouseAnim;
 	public Animator picnicBasketAnim;
@@ -18,8 +19,8 @@ public class Setup : MonoBehaviour {
 	public int numWasps;
 	public int maxWasps;
 
-	public int maxWaves;
-	public int currentWave;
+	private int maxWaves;
+	private int currentWave;
 	public int waspsSpawnedThisWave;
 	
 	public bool spawnPhase;
@@ -110,8 +111,11 @@ public class Setup : MonoBehaviour {
 					i=0;	//kill the loop
 				}
 			}
+			graphic_waveInfo.GetComponent<script_GUI_wave_text>().setWaveInfo(currentWave,maxWaves);	//Render current wave info
 		}
 		foodAvailable=false;
+
+
 
 		//animate rustlling in hamper
 		spouseAnim.SetTrigger("spouse_basket_start");
@@ -194,6 +198,14 @@ public class Setup : MonoBehaviour {
 		if(victoryCondition){
 			StartCoroutine(startStorm(2.5f));	//Long-ish delay then storm starts when player wins :)
 		}
+	}
+
+	public int getMaxWaves(){
+		return maxWaves;
+	}
+
+	public int getCurrentWave(){
+		return currentWave;
 	}
 
 	public bool getVictoryCondition(){
