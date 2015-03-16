@@ -9,6 +9,7 @@ public class script_GUI_wave_text : MonoBehaviour {
 	SpriteRenderer rendWave,rendX,rendOf,rendY,rendFWF,rendFWW;
 	int currWave,maxWaves;
 	Color colour;
+	public GameObject _GM;
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +19,14 @@ public class script_GUI_wave_text : MonoBehaviour {
 		rendY=Y.GetComponent<SpriteRenderer>();
 		rendFWF=finalWaveFINAL.GetComponent<SpriteRenderer>();
 		rendFWW=finalWaveWAVE.GetComponent<SpriteRenderer>();
+
+		if(_GM.GetComponent<Setup>().getEndless()){
+			float distance = Mathf.Abs(wave.transform.position.x - X.transform.position.x);
+			Vector3 newPosition = new Vector3(0-distance/2,wave.transform.position.y,wave.transform.position.z);
+			wave.transform.position = newPosition;
+			newPosition = new Vector3(0+distance/2,X.transform.position.y,X.transform.position.z);
+			X.transform.position = newPosition;
+		}
 	}
 	
 	// Update is called once per frame
@@ -28,16 +37,22 @@ public class script_GUI_wave_text : MonoBehaviour {
 	public void setWaveInfo(int curr, int max)
 	{
 		curr++; //Value starts at 0
-		if(curr<max){
+		if(!_GM.GetComponent<Setup>().getEndless()){
+			if(curr<max){
+				wave.active=true;
+				X.active=true;
+				of.active=true;
+				Y.active=true;
+				setX(curr);
+				setY(max);
+			}else if(curr==max){
+				finalWaveFINAL.active=true;
+				finalWaveWAVE.active=true;
+			}
+		}else{
 			wave.active=true;
 			X.active=true;
-			of.active=true;
-			Y.active=true;
 			setX(curr);
-			setY(max);
-		}else if(curr==max){
-			finalWaveFINAL.active=true;
-			finalWaveWAVE.active=true;
 		}
 
 		StartCoroutine(drawWave());

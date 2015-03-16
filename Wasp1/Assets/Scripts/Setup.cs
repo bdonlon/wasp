@@ -31,7 +31,7 @@ public class Setup : MonoBehaviour {
 	public bool foodAvailable = false;
 	private bool victoryCondition,failureCondition=false;
 
-	public bool endless;
+	private bool endless;
 	public int endlessSwitch;
 	public int endlessHealth;
 
@@ -159,6 +159,10 @@ public class Setup : MonoBehaviour {
 			random = Random.Range(1, maxWaves+1);
 		}
 		return random;
+	}
+
+	public bool getEndless(){
+		return endless;
 	}
 
 	public void foodConsumed(){	//To be called by (player or food?) script when food has been eaten
