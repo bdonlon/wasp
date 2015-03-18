@@ -35,6 +35,8 @@ public class Setup : MonoBehaviour {
 	public int endlessSwitch;
 	public int endlessHealth;
 
+	private float specialAlpha;
+
 						//waveData rows = {maxWasps, healthFromFood}
 	public int[,] waveData = new int[4,2] { {5, 10},		//wave 1
 											{10, 20},		//wave 2
@@ -98,6 +100,8 @@ public class Setup : MonoBehaviour {
 	
 		StartCoroutine(setupPhase());
 		endlessHealth=10;
+
+		specialAlpha = -254;
 	}
 
 	public IEnumerator setupPhase(){
@@ -151,6 +155,14 @@ public class Setup : MonoBehaviour {
 				break;
 			}
 		}
+	}
+
+	public void setSpecialAlpha(float a){
+		specialAlpha = a;
+	}
+
+	public float getSpecialAlpha(){
+		return specialAlpha;
 	}
 
 	public int getSwitch(int lastSwitch){

@@ -9,6 +9,7 @@ public class script_storm_behaviour : MonoBehaviour {
 	public GameObject[] rainSpawners;
 	SpriteRenderer cloudSpriteRenderer;
 	private float alpha;
+	public GameObject _GM;
 
 	// Use this for initialization
 	void Start () {
@@ -48,6 +49,7 @@ public class script_storm_behaviour : MonoBehaviour {
 	IEnumerator fade(){
 		for (float i = alpha; i < 255; i++) {	//Fade clouds to full opaque
 			cloudSpriteRenderer.color = new Color(1,1,1, i/255);
+			_GM.GetComponent<Setup>().setSpecialAlpha(i/255);
 			yield return new WaitForSeconds(0.0f);
 		}
 	}
