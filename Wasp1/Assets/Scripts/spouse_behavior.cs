@@ -11,6 +11,7 @@ public class spouse_behavior : MonoBehaviour {
 	public GameObject deathSound;
 
 	public GameObject picnic;
+	private bool invulPeriod;
 
 
 	Animator anim;
@@ -21,15 +22,18 @@ public class spouse_behavior : MonoBehaviour {
 
 	public void injure(int damage)
 	{
+		if(!invulPeriod){
 			anim.SetTrigger("spouse_hurt_start");
 			picnic.GetComponent<picnic_health_script>().damagePicnicIntegrity(damage);
+			StartCoroutine(setInvulnerable());
 			hitSound.GetComponent<playSound>().play();
-			//anim.SetTrigger("spouse_hurt_end");
-//			if(health<=0){
-//				deathSound.GetComponent<playSound>().play();
-//				_GM.GetComponent<Setup>().failureCondition=true;
-//				Screen.showCursor = true;
-//			}
+		}
+	}
+
+	private IEnumerator setInvulnerable(){
+		invulPeriod=true;
+		yield return new WaitForSeconds(0.2f);
+		invulPeriod=false;
 	}
 
 	public void kill(){

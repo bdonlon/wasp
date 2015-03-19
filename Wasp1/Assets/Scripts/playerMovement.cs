@@ -26,7 +26,7 @@ public class playerMovement : MonoBehaviour {
 	public bool dead = false;
 	public bool moving;
 	public bool movingPrevious;
-	public bool hurting;
+	private bool hurting;
 
 	public float timeStung;
 	public float timeCurr;
@@ -167,7 +167,7 @@ public class playerMovement : MonoBehaviour {
 	}
 
 	public void injure(int damage){
-		if(!dead && !hurting){	//may still recieve injure instructions after death
+		if(!dead && !hurting){	//may still recieve injure instructions after death		//hurting variable gives player a window of invulnerability (WaitForSeconds(0.4f)) after each sting
 			timeStung =  Time.time;
 			health = health-damage;
 			StartCoroutine(injureAnimation());	//Play injured animation and start invulnerability timer/period
