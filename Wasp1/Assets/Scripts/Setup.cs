@@ -43,6 +43,8 @@ public class Setup : MonoBehaviour {
 											{20, 30},		//wave 3
 											{30, 40} };		//wave 4
 
+	//public int[,] waveData = new int[1,2] { {5, 10}};		//1 wave for testing
+
 	// Use this for initialization
 	void Start () {
 		endless=ApplicationModel.endless;

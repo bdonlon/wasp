@@ -178,20 +178,20 @@ TextureImporter:
     - name: menu_items_11
       rect:
         serializedVersion: 2
-        x: 431
-        y: 391
-        width: 590
-        height: 72
+        x: 282
+        y: 399
+        width: 739
+        height: 64
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_12
       rect:
         serializedVersion: 2
-        x: 483
+        x: 250
         y: 332
-        width: 434
-        height: 59
+        width: 735
+        height: 67
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
