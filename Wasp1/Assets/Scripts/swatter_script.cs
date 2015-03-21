@@ -19,6 +19,7 @@ public class swatter_script : MonoBehaviour {
 	public Vector3 rotatePoint;
 	public GameObject player;
 	public GameObject swingSound;
+	public GameObject hitSound;
 	public bool setStartSwingPositionOnce;
 	public bool setQuatOnce = true;
 	public bool interrupt=false;
@@ -262,5 +263,10 @@ public class swatter_script : MonoBehaviour {
 		if(right&&preRight){
 			right=false;
 		}
+	}
+
+	public void playSwatterHitSound()
+	{
+		hitSound.GetComponent<playSound>().play();
 	}
 }
