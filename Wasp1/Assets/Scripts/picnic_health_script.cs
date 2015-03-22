@@ -18,6 +18,7 @@ public class picnic_health_script : MonoBehaviour {
 	public SpriteRenderer SR;
 	public float xOffset;
 	public float yOffset;
+	public GameObject eatSound;
 
 	public float timeEaten;
 	public float elapsedTime;
@@ -70,6 +71,17 @@ public class picnic_health_script : MonoBehaviour {
 			hb.active=true;
 		}else{
 			hb.active=false;
+		}
+	}
+
+	public IEnumerator heal(int healValue){
+		timeEaten =  Time.time;	//Will cause healthbar to render
+		yield return new WaitForSeconds(0.3f);	//Delay will allow health increase to be apparent on the healthbar
+		eatSound.GetComponent<playSound>().play();
+		if((picnicHealthCurrent+healValue)<picnicHealthTotal){
+			picnicHealthCurrent = picnicHealthCurrent+healValue;
+		}else{
+			picnicHealthCurrent = picnicHealthTotal;
 		}
 	}
 }

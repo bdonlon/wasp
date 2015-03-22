@@ -181,7 +181,9 @@ public class playerMovement : MonoBehaviour {
 		}
 	}
 
-	public void heal(int healValue){
+	public IEnumerator heal(int healValue){
+		timeStung =  Time.time;	//Will cause healthbar to render
+		yield return new WaitForSeconds(0.3f);	//Delay will allow health increase to be apparent on the healthbar
 		//if(!dead){}
 		eatSound.GetComponent<playSound>().play();
 		if((health+healValue)<maxHealth){
@@ -190,7 +192,7 @@ public class playerMovement : MonoBehaviour {
 			health = maxHealth;
 		}
 
-		timeStung =  Time.time;	//Will cause healthbar to render
+
 	}
 
 	void drawHealthBar(){

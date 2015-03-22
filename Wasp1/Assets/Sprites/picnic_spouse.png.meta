@@ -8,6 +8,8 @@ TextureImporter:
     21300006: picnic_spouse_3
     21300008: picnic_spouse_4
     21300010: picnic_spouse_5
+    21300012: picnic_spouse_6
+    21300014: picnic_spouse_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -27,10 +29,10 @@ TextureImporter:
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 1024
   textureSettings:
-    filterMode: -1
+    filterMode: 1
     aniso: 1
     mipBias: -1
     wrapMode: 1
@@ -53,7 +55,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 223
+        y: 342
         width: 70
         height: 105
       alignment: 0
@@ -63,7 +65,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 78
-        y: 223
+        y: 342
         width: 70
         height: 105
       alignment: 0
@@ -73,7 +75,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 113
+        y: 232
         width: 70
         height: 105
       alignment: 0
@@ -83,7 +85,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 78
-        y: 113
+        y: 232
         width: 70
         height: 105
       alignment: 0
@@ -93,21 +95,41 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 4
+        y: 123
         width: 70
-        height: 100
-      alignment: 9
-      pivot: {x: .500000179, y: .529999971}
+        height: 105
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: picnic_spouse_5
       rect:
         serializedVersion: 2
         x: 75
-        y: 4
+        y: 123
         width: 73
-        height: 100
+        height: 105
       alignment: 9
-      pivot: {x: .519999981, y: .529999971}
+      pivot: {x: .519999981, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: picnic_spouse_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 7
+        width: 70
+        height: 105
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: picnic_spouse_7
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 7
+        width: 70
+        height: 105
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

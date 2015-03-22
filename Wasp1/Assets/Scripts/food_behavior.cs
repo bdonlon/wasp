@@ -53,6 +53,6 @@ public class food_behavior : MonoBehaviour {
 	}
 
 	public void healPlayer(){
-		player.GetComponent<playerMovement>().heal(_GM.GetComponent<Setup>().getPlayerHealValue());
+		StartCoroutine(player.GetComponent<playerMovement>().heal(_GM.GetComponent<Setup>().getPlayerHealValue()));
 	}
 }

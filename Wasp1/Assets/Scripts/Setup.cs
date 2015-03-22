@@ -8,6 +8,7 @@ public class Setup : MonoBehaviour {
 	public GameObject spawnerTop,spawnerBottom,spawnerLeft,spawnerRight;
 	private Vector3 spawnerPosition = new Vector3(0,0,0);
 	public GameObject player;
+	public GameObject picnic;
 	public GameObject picnic_food;
 	public GameObject grass;
 	public GameObject storm;
@@ -109,13 +110,21 @@ public class Setup : MonoBehaviour {
 	public IEnumerator setupPhase(){
 
 		if(foodAvailable){	//won't trigger on game start, but will between wasp phases
-			for(int i=5; i>0; i--)
+			for(int i=3; i>0; i--)	//Food available to player
 			{
 				if(foodAvailable){
 					yield return new WaitForSeconds(1.0f);	//wait 1 second then check again (up to max 5 seconds)
 				}else{
 					i=0;	//kill the loop
 				}
+			}
+			if(foodAvailable){	//Food not consumed by player, so add health to picnic
+				StartCoroutine(picnic.GetComponent<picnic_health_script>().heal(getPlayerHealValue()));
+				spouseAnim.SetTrigger("spouse_eat_start");
+				yield return new WaitForSeconds(0.4f);	//delay so food sprite change times well with spouse eating animation
+				foodConsumed();
+				yield return new WaitForSeconds(0.6f);
+				spouseAnim.SetTrigger("spouse_eat_end");
 			}
 			graphic_waveInfo.GetComponent<script_GUI_wave_text>().setWaveInfo(currentWave,maxWaves);	//Render current wave info
 		}
