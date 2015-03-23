@@ -44,6 +44,7 @@ public class waspBehaviour : MonoBehaviour {
 	public SpriteRenderer spriteRenderer;
 	public SpriteRenderer spouseSpriteRenderer;
 	public SpriteRenderer foodSpriteRenderer;
+	SpriteRenderer waspRenderer;
 
 	void Start () {
 		transform.parent = GameObject.Find("cloneWasps").transform;
@@ -70,6 +71,7 @@ public class waspBehaviour : MonoBehaviour {
 
 		foodSpriteRenderer = food.GetComponent<SpriteRenderer>();
 		spouseSpriteRenderer = spouse.GetComponent<SpriteRenderer>();
+		waspRenderer = this.GetComponent<SpriteRenderer>();
 
 		anim = GetComponent<Animator>();
 		shadowAnim = shadow.GetComponent<Animator>();
@@ -360,13 +362,17 @@ public class waspBehaviour : MonoBehaviour {
 		transform.position = new Vector3(transform.position.x,transform.position.y-0.3f,-0.5f);
 		shadow.transform.position = new Vector3(shadow.transform.position.x,shadow.transform.position.y+0.2f,shadow.transform.position.z);
 		shadow.transform.localScale = new Vector3(shadow.transform.localScale.x+0.15f,shadow.transform.localScale.y+0.15f,shadow.transform.localScale.z);
-		destroyWasp();
+		StartCoroutine(destroyWasp());
 		_GM.GetComponent<Setup>().numWasps--;
 	}
 
-	public void destroyWasp(){
+	IEnumerator destroyWasp(){
 		Destroy(transform.Find("passthrough").gameObject);
-		Destroy(this.gameObject,Random.Range(destroyDelay-1,destroyDelay+1));
+		yield return new WaitForSeconds(Random.Range(destroyDelay-1,destroyDelay+1));
+		for (float i = 255; i >= 0; i--) {
+			waspRenderer.color = new Color(waspRenderer.color.r, waspRenderer.color.g, waspRenderer.color.b, i/255*3);
+			yield return new WaitForSeconds(0.0f);
+		}
+		Destroy(this.gameObject);
 	}
-
 }
