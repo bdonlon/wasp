@@ -50,13 +50,12 @@ public class picnic_health_script : MonoBehaviour {
 	}
 
 	public void damagePicnicIntegrity(int damage){
+		timeEaten =  Time.time;
 		if((picnicHealthCurrent-damage)>=0){
-			timeEaten =  Time.time;
 			picnicHealthCurrent = picnicHealthCurrent - damage;
-
-			if(picnicHealthCurrent <= 0){
-				_GM.GetComponent<Setup>().setFailureCondition(true);
-			}
+		}else{
+			picnicHealthCurrent=0;
+			_GM.GetComponent<Setup>().setFailureCondition(true);
 		}
 	}
 

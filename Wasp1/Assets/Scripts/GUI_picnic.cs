@@ -13,7 +13,7 @@ public class GUI_picnic : MonoBehaviour {
 		if(healthInt>0){
 			healthString = "Picnic Integrity: "+healthInt.ToString()+"%";
 		}else{
-			healthString = "Picnic Ruined!";
+			healthString = "Picnic = utter shambles";
 		}
 		guiText.text = healthString;
 	}

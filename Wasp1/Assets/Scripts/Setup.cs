@@ -173,7 +173,18 @@ public class Setup : MonoBehaviour {
 	}
 
 	public float getSpecialAlpha(){
-		return specialAlpha;
+		if(specialAlpha==0.6666667f){
+			//I have NO FUCKING CLUE why I'm getting a value of 0.6666667 here
+			//(game end, cloud has turned totally opaque and set special alpha to something like 0.998...)
+			//(then have player take damage, and value that is retrieved here is .66!!
+			//(Even though inspector is displaying correct value
+			//(and the update function is reading the correct value SIMULTANEOUSLY!!!
+			//	fuck my life.
+			//	gross hack.
+			return 1.0f;
+		}else{
+			return specialAlpha;
+		}
 	}
 
 	public int getSwitch(int lastSwitch){
@@ -246,7 +257,6 @@ public class Setup : MonoBehaviour {
 	}
 
 	void Update(){
-
 		if((Input.GetKeyDown(KeyCode.Escape)) || (Input.GetButtonDown("360_Start"))){
 			pauseGame = !pauseGame;
 			Screen.showCursor = true;

@@ -65,7 +65,7 @@ public class script_Main_Menu_GM : MonoBehaviour {
 			cursors[currentCamera].gameObject.GetComponent<Animator>().SetTrigger("wasp_death");
 			killSound.GetComponent<playSound>().play();
 			StartCoroutine(runMenuOption(currentCamera));
-		}else if(Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("360_B")){	// 'Back' in menu
+		}else if(currentCamera!=0 && (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("360_B"))){	// 'Back' in menu
 			cursors[currentCamera].gameObject.GetComponent<Animator>().SetTrigger("wasp_death");
 			killSound.GetComponent<playSound>().play();
 			StartCoroutine(runMenuOption(-1));
