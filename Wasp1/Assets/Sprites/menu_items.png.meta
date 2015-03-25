@@ -69,39 +69,39 @@ TextureImporter:
     - name: menu_items_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 755
-        width: 253
-        height: 95
+        x: 6
+        y: 758
+        width: 244
+        height: 85
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 676
-        width: 196
-        height: 73
+        x: 8
+        y: 677
+        width: 183
+        height: 76
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 593
-        width: 232
-        height: 73
+        x: 5
+        y: 594
+        width: 219
+        height: 63
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_3
       rect:
         serializedVersion: 2
-        x: 0
+        x: 6
         y: 504
-        width: 335
+        width: 329
         height: 89
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -109,9 +109,9 @@ TextureImporter:
     - name: menu_items_4
       rect:
         serializedVersion: 2
-        x: 3
+        x: 6
         y: 415
-        width: 156
+        width: 153
         height: 86
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -119,50 +119,50 @@ TextureImporter:
     - name: menu_items_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 347
+        x: 3
+        y: 337
         width: 204
-        height: 68
+        height: 70
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 291
+        x: 8
+        y: 272
         width: 141
-        height: 56
+        height: 57
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_7
       rect:
         serializedVersion: 2
-        x: 0
-        y: 217
-        width: 541
-        height: 75
+        x: 1416
+        y: 208
+        width: 536
+        height: 76
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_8
       rect:
         serializedVersion: 2
-        x: 10
+        x: 9
         y: 16
         width: 166
-        height: 162
+        height: 163
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_9
       rect:
         serializedVersion: 2
-        x: 412
-        y: 479
-        width: 567
-        height: 345
+        x: 427
+        y: 475
+        width: 549
+        height: 349
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,9 +180,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 279
-        y: 402
+        y: 404
         width: 728
-        height: 70
+        height: 66
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,7 +202,7 @@ TextureImporter:
         x: 399
         y: 14
         width: 172
-        height: 162
+        height: 164
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,60 +229,60 @@ TextureImporter:
     - name: menu_items_16
       rect:
         serializedVersion: 2
-        x: 1228
-        y: 703
-        width: 174
-        height: 138
+        x: 1239
+        y: 712
+        width: 156
+        height: 121
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_17
       rect:
         serializedVersion: 2
-        x: 1135
-        y: 574
-        width: 278
-        height: 63
+        x: 1129
+        y: 554
+        width: 290
+        height: 75
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_18
       rect:
         serializedVersion: 2
-        x: 1136
-        y: 637
-        width: 278
-        height: 63
+        x: 1158
+        y: 638
+        width: 226
+        height: 56
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_19
       rect:
         serializedVersion: 2
-        x: 566
-        y: 218
-        width: 398
-        height: 73
+        x: 570
+        y: 215
+        width: 382
+        height: 80
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_20
       rect:
         serializedVersion: 2
-        x: 986
-        y: 207
-        width: 331
-        height: 91
+        x: 995
+        y: 205
+        width: 303
+        height: 90
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: menu_items_21
       rect:
         serializedVersion: 2
-        x: 1037
-        y: 309
-        width: 766
-        height: 159
+        x: 1033
+        y: 308
+        width: 763
+        height: 157
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

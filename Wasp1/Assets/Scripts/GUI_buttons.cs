@@ -8,6 +8,7 @@ public class GUI_buttons : MonoBehaviour {
 	public GameObject pauseMenu;
 	public GameObject restartMenu;
 	public GameObject victoryMenu;
+	public GameObject failureMessage;
 	Animator cursorAnimator;
 	//public GameObject killSound;
 	//public GameObject hitSound;
@@ -25,12 +26,14 @@ public class GUI_buttons : MonoBehaviour {
 		if(GM.GetComponent<Setup>().getFailureCondition())
 		{
 			restartMenu.transform.position = new Vector3(restartMenu.transform.position.x, restartMenu.transform.position.y, menuVisible);
+			failureMessage.transform.position = new Vector3(failureMessage.transform.position.x, failureMessage.transform.position.y, menuVisible);
 		}else if(GM.GetComponent<Setup>().getVictoryCondition()){
 			victoryMenu.transform.position = new Vector3(victoryMenu.transform.position.x, victoryMenu.transform.position.y, menuVisible);
 			restartMenu.transform.position = new Vector3(restartMenu.transform.position.x, restartMenu.transform.position.y, menuVisible);
 		}else{
 			restartMenu.transform.position = new Vector3(restartMenu.transform.position.x, restartMenu.transform.position.y, menuHidden);
 			victoryMenu.transform.position = new Vector3(victoryMenu.transform.position.x, victoryMenu.transform.position.y, menuHidden);
+			failureMessage.transform.position = new Vector3(failureMessage.transform.position.x, failureMessage.transform.position.y, menuHidden);
 		}
 
 		if (GM.GetComponent<Setup>().pauseGame) {
