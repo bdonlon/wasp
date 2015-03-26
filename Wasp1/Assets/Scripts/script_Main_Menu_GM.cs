@@ -53,6 +53,14 @@ public class script_Main_Menu_GM : MonoBehaviour {
 
 		gamepadDetectedRenderer=gamepadText.GetComponent<SpriteRenderer>();
 
+		if(ApplicationModel.equalityMode){	// For when player exits from game to menu, having previously set equality mode on/off
+			box_checked.gameObject.active=true;
+			box_unchecked.gameObject.active=false;
+		}else if(!ApplicationModel.equalityMode){
+			box_checked.gameObject.active=false;
+			box_unchecked.gameObject.active=true;
+		}
+
 	}
 
 	void Update () {
