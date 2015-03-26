@@ -33,8 +33,10 @@ public class Setup : MonoBehaviour {
 	private bool victoryCondition,failureCondition=false;
 
 	private bool endless;
+	public bool equalityMode;
 	public int endlessSwitch;
 	public int endlessHealth;
+
 
 	private float specialAlpha;
 
@@ -50,6 +52,7 @@ public class Setup : MonoBehaviour {
 	void Start () {
 		endless=ApplicationModel.endless;
 		endlessSwitch=0;
+		equalityMode=ApplicationModel.equalityMode;
 		pauseGame=false;
 		Time.timeScale = 1.0f;
 		AudioListener.pause = false;

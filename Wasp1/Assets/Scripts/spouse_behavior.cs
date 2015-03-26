@@ -9,6 +9,7 @@ public class spouse_behavior : MonoBehaviour {
 
 	public GameObject hitSound;
 	public GameObject deathSound;
+	public RuntimeAnimatorController[] AnimationControllers;
 
 	public GameObject picnic;
 	private bool invulPeriod;
@@ -18,6 +19,16 @@ public class spouse_behavior : MonoBehaviour {
 
 	void Start(){
 		anim = GetComponent<Animator>();
+		if(!ApplicationModel.equalityMode){
+			anim.runtimeAnimatorController=AnimationControllers[0];
+		}else if(ApplicationModel.equalityMode){
+			anim.runtimeAnimatorController=AnimationControllers[1];
+		}
+
+		//Weird hack. This shouldn't be required, but when I switch the animation
+		//controller from it's default (female), the basket animation breaks
+		//unless I trigger it here, then it works fine. No idea why.
+		anim.SetTrigger("spouse_basket_start");
 	}
 
 	public void injure(int damage)

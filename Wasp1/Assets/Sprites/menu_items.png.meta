@@ -25,6 +25,9 @@ TextureImporter:
     21300040: menu_items_20
     21300042: menu_items_21
     21300044: menu_items_22
+    21300046: menu_items_23
+    21300048: menu_items_24
+    21300050: menu_items_25
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -271,7 +274,7 @@ TextureImporter:
         serializedVersion: 2
         x: 995
         y: 205
-        width: 303
+        width: 304
         height: 90
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -293,6 +296,36 @@ TextureImporter:
         y: 69
         width: 481
         height: 108
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: menu_items_23
+      rect:
+        serializedVersion: 2
+        x: 1552
+        y: 124
+        width: 391
+        height: 54
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: menu_items_24
+      rect:
+        serializedVersion: 2
+        x: 1598
+        y: 57
+        width: 59
+        height: 56
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: menu_items_25
+      rect:
+        serializedVersion: 2
+        x: 1685
+        y: 58
+        width: 59
+        height: 55
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

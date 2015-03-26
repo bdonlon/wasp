@@ -5,6 +5,7 @@ using System.Collections;
 public class ApplicationModel : MonoBehaviour
 {
 	static public bool endless = false;
+	static public bool equalityMode = false;
 }
 
 public class script_Main_Menu_GM : MonoBehaviour {
@@ -30,6 +31,8 @@ public class script_Main_Menu_GM : MonoBehaviour {
 	public GameObject gamepadText;
 	public Sprite[] gamepadDetected;
 	public GameObject controllerGraphic;
+	public GameObject box_checked;
+	public GameObject box_unchecked;
 	SpriteRenderer gamepadDetectedRenderer;
 	private int timer;
 	private float scaleRate;
@@ -62,7 +65,9 @@ public class script_Main_Menu_GM : MonoBehaviour {
 
 		if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("360_A"))
 		{	
-			cursors[currentCamera].gameObject.GetComponent<Animator>().SetTrigger("wasp_death");
+			if(!(currentCamera==1 && cursorIndex==2)){
+				cursors[currentCamera].gameObject.GetComponent<Animator>().SetTrigger("wasp_death");
+			}
 			killSound.GetComponent<playSound>().play();
 			StartCoroutine(runMenuOption(currentCamera));
 		}else if(currentCamera!=0 && (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("360_B"))){	// 'Back' in menu
@@ -152,6 +157,19 @@ public class script_Main_Menu_GM : MonoBehaviour {
 				ApplicationModel.endless = true;
 			}
 			else if(cursorIndex==2)
+			{
+				if(ApplicationModel.equalityMode){
+					box_checked.gameObject.active=false;
+					box_unchecked.gameObject.active=true;
+					ApplicationModel.equalityMode=false;
+				}else if(!ApplicationModel.equalityMode){
+					box_checked.gameObject.active=true;
+					box_unchecked.gameObject.active=false;
+					ApplicationModel.equalityMode=true;
+				}
+				break;
+			}
+			else if(cursorIndex==3)
 			{
 				changeScreen(0);
 			}
