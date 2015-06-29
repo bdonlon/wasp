@@ -6,6 +6,7 @@ public class ApplicationModel : MonoBehaviour
 {
 	static public bool endless = false;
 	static public bool equalityMode = false;
+	static public bool autoSwing = true;
 }
 
 public class script_Main_Menu_GM : MonoBehaviour {
@@ -155,13 +156,13 @@ public class script_Main_Menu_GM : MonoBehaviour {
 			if(cursorIndex==0)
 			{
 				//Waves
-				Application.LoadLevel("wasp1");
+				changeScreen(3);
 				ApplicationModel.endless = false;
 			}
 			else if(cursorIndex==1)
 			{
 				//Endless
-				Application.LoadLevel("wasp1");
+				changeScreen(3);
 				ApplicationModel.endless = true;
 			}
 			else if(cursorIndex==2)
@@ -188,6 +189,24 @@ public class script_Main_Menu_GM : MonoBehaviour {
 				changeScreen(0);
 				creditsGraphic.rigidbody2D.velocity = Vector3.zero;
 				creditsGraphic.transform.position=creditsInitialPosition;
+			}
+			break;
+		case 3:
+			if(cursorIndex==0)
+			{
+				//Easy Mode
+				Application.LoadLevel("wasp1");
+				ApplicationModel.autoSwing = true;
+			}
+			else if(cursorIndex==1)
+			{
+				//Hard Mode
+				Application.LoadLevel("wasp1");
+				ApplicationModel.autoSwing = false;
+			}
+			else if(cursorIndex==2)
+			{
+				changeScreen(1);
 			}
 			break;
 		}
