@@ -28,12 +28,14 @@ public class script_Main_Menu_GM : MonoBehaviour {
 	public Vector3 cursorPosition;
 	public Vector3 creditsForce = new Vector3(0,1,0);
 	private Vector3 creditsInitialPosition;
+	private Vector3 rainbowStartPosition;
 	public GameObject creditsGraphic;
 	public GameObject gamepadText;
 	public Sprite[] gamepadDetected;
 	public GameObject controllerGraphic;
 	public GameObject box_checked;
 	public GameObject box_unchecked;
+	public GameObject rainbow;
 	SpriteRenderer gamepadDetectedRenderer;
 	private int timer;
 	private float scaleRate;
@@ -62,6 +64,7 @@ public class script_Main_Menu_GM : MonoBehaviour {
 			box_unchecked.gameObject.active=true;
 		}
 
+		rainbowStartPosition = rainbow.transform.position;
 	}
 
 	void Update () {
@@ -74,7 +77,7 @@ public class script_Main_Menu_GM : MonoBehaviour {
 
 		if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("360_A"))
 		{	
-			if(!(currentCamera==1 && cursorIndex==2)){
+			if(!(currentCamera==4 && cursorIndex==0)){
 				cursors[currentCamera].gameObject.GetComponent<Animator>().SetTrigger("wasp_death");
 			}
 			killSound.GetComponent<playSound>().play();
@@ -141,46 +144,37 @@ public class script_Main_Menu_GM : MonoBehaviour {
 		case 0:
 			if(cursorIndex==0)
 			{
-				changeScreen(1);
+				changeScreen(3);	//Difficulty
 			}
 			else if(cursorIndex==1)
 			{
-				changeScreen(2);
+				changeScreen(4);	//Options
 			}
 			else if(cursorIndex==2)
 			{
-				Application.Quit();
+				changeScreen(2);	//Credits
+			}
+			else if(cursorIndex==3)
+			{
+				Application.Quit();	//Quit
 			}
 			break;
-		case 1:
+		case 1:	//Game mode/type
 			if(cursorIndex==0)
 			{
 				//Waves
-				changeScreen(3);
 				ApplicationModel.endless = false;
+				Application.LoadLevel("wasp1");
 			}
 			else if(cursorIndex==1)
 			{
 				//Endless
-				changeScreen(3);
 				ApplicationModel.endless = true;
+				Application.LoadLevel("wasp1");
 			}
 			else if(cursorIndex==2)
 			{
-				if(ApplicationModel.equalityMode){
-					box_checked.gameObject.active=false;
-					box_unchecked.gameObject.active=true;
-					ApplicationModel.equalityMode=false;
-				}else if(!ApplicationModel.equalityMode){
-					box_checked.gameObject.active=true;
-					box_unchecked.gameObject.active=false;
-					ApplicationModel.equalityMode=true;
-				}
-				break;
-			}
-			else if(cursorIndex==3)
-			{
-				changeScreen(0);
+				changeScreen(3);
 			}
 			break;
 		case 2:
@@ -191,22 +185,42 @@ public class script_Main_Menu_GM : MonoBehaviour {
 				creditsGraphic.transform.position=creditsInitialPosition;
 			}
 			break;
-		case 3:
+		case 3:	//Difficulty
 			if(cursorIndex==0)
 			{
 				//Easy Mode
-				Application.LoadLevel("wasp1");
 				ApplicationModel.autoSwing = true;
+				changeScreen(1);
 			}
 			else if(cursorIndex==1)
 			{
 				//Hard Mode
-				Application.LoadLevel("wasp1");
 				ApplicationModel.autoSwing = false;
+				changeScreen(1);
 			}
 			else if(cursorIndex==2)
 			{
-				changeScreen(1);
+				changeScreen(0);
+			}
+			break;
+		case 4:
+			if(cursorIndex==0)
+			{
+				if(ApplicationModel.equalityMode){
+					box_checked.gameObject.active=false;
+					box_unchecked.gameObject.active=true;
+					ApplicationModel.equalityMode=false;
+				}else if(!ApplicationModel.equalityMode){
+					box_checked.gameObject.active=true;
+					box_unchecked.gameObject.active=false;
+					ApplicationModel.equalityMode=true;
+					StartCoroutine(rollRainbow());
+				}
+				break;
+			}
+			else if(cursorIndex==1)
+			{
+				changeScreen(0);
 			}
 			break;
 		}
@@ -244,5 +258,15 @@ public class script_Main_Menu_GM : MonoBehaviour {
 		}else{
 			gamepadDetectedRenderer.sprite=gamepadDetected[1];
 		}
+	}
+
+	IEnumerator rollRainbow(){
+		rainbow.transform.position = rainbowStartPosition;
+		for(int i=0; i<50; i++){
+			Vector3 temp = new Vector3(0,1.0f,0);
+			rainbow.transform.position += temp;
+			yield return new WaitForSeconds(0.0f);
+		}
+		rainbow.transform.position = rainbowStartPosition;
 	}
 }
