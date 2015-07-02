@@ -23,6 +23,7 @@ public class script_Main_Menu_GM : MonoBehaviour {
 	public GameObject hitSound;
 	public bool LSUp,LSDown,DUp,DDown,padUp,padDown=false;
 	public bool padCurrentUp, padCurrentDown, padPreviousUp, padPreviousDown;
+	public bool touchButtonPress;
 	public float LSY,DY;
 	public float cursorXposition;
 	public Vector3 cursorPosition;
@@ -47,6 +48,7 @@ public class script_Main_Menu_GM : MonoBehaviour {
 	}
 
 	void Start () {
+		touchButtonPress=false;
 		scaleRate = 0.004f;
 		timer = 0;
 		cursorIndex=0;
@@ -69,14 +71,47 @@ public class script_Main_Menu_GM : MonoBehaviour {
 
 	void Update () {
 
+		if (Input.GetMouseButtonDown (0)) {
+			//Debug.Log ("Clicked");
+			Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+			RaycastHit2D hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
+			// RaycastHit2D can be either true or null, but has an implicit conversion to bool, so we can use it like this
+			if(hitInfo)
+			{
+				//Debug.Log( hitInfo.transform.gameObject.name );
+				if(hitInfo.transform.gameObject.name.Equals("button_start")){cursorIndex=0;}
+				if(hitInfo.transform.gameObject.name.Equals("button_options")){cursorIndex=1;}
+				if(hitInfo.transform.gameObject.name.Equals("button_credits")){cursorIndex=2;}
+				if(hitInfo.transform.gameObject.name.Equals("button_exit")){cursorIndex=3;}
+
+				if(hitInfo.transform.gameObject.name.Equals("button_easy")){cursorIndex=0;}
+				if(hitInfo.transform.gameObject.name.Equals("button_hard")){cursorIndex=1;}
+				if(hitInfo.transform.gameObject.name.Equals("button_difficulty_back")){cursorIndex=2;}
+
+				if(hitInfo.transform.gameObject.name.Equals("button_set_waves")){cursorIndex=0;}
+				if(hitInfo.transform.gameObject.name.Equals("button_endless")){cursorIndex=1;}
+				if(hitInfo.transform.gameObject.name.Equals("button_mode_back")){cursorIndex=2;}
+
+				if(hitInfo.transform.gameObject.name.Equals("box_checked")){cursorIndex=0;}
+				if(hitInfo.transform.gameObject.name.Equals("box_unchecked")){cursorIndex=0;}
+				if(hitInfo.transform.gameObject.name.Equals("button_options_back")){cursorIndex=1;}
+
+				if(hitInfo.transform.gameObject.name.Equals("button_credits_back")){cursorIndex=0;}
+
+
+				touchButtonPress=true;
+			}
+		}
+
 		animateControllerGraphic();
 
 		if(currentCamera==2){
 			creditsGraphic.rigidbody2D.AddForce(creditsForce);
 		}
 
-		if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("360_A"))
+		if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("360_A") || touchButtonPress)
 		{	
+			touchButtonPress=false;
 			if(!(currentCamera==4 && cursorIndex==0)){
 				cursors[currentCamera].gameObject.GetComponent<Animator>().SetTrigger("wasp_death");
 			}
