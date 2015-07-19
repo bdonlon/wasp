@@ -40,8 +40,9 @@ public class GUI_buttons : MonoBehaviour {
 			//pauseMenu.SetActive(true);
 			pauseMenu.transform.position = new Vector3(pauseMenu.transform.position.x, pauseMenu.transform.position.y, menuVisible);
 			 
-			if((Input.GetKeyDown(KeyCode.Return)) || (Input.GetButtonDown("360_A")))
+			if((Input.GetKeyDown(KeyCode.Return)) || (Input.GetButtonDown("360_A")) || pauseMenu.GetComponent<script_MenuButtons>().touchOrClickButtonPress)
 			{	
+				pauseMenu.GetComponent<script_MenuButtons>().touchOrClickButtonPress=false;
 				runMenuOption();
 			}
 		

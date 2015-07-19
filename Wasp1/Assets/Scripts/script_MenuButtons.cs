@@ -9,6 +9,7 @@ public class script_MenuButtons : MonoBehaviour {
 	public GameObject hitSound;
 	public Vector3 cursorPosition;
 	public int cursorIndex;
+	public bool touchOrClickButtonPress;
 	public float cursorXposition;
 	public float cursorXoffset;
 	public float LSY,DY;
@@ -20,6 +21,7 @@ public class script_MenuButtons : MonoBehaviour {
 
 	void Start(){
 		Screen.showCursor = false;
+		touchOrClickButtonPress=false;
 
 		cursorAnimator = cursor.GetComponent<Animator>();
 		cursorAudioSource = cursor.GetComponent<AudioSource>();
@@ -32,6 +34,14 @@ public class script_MenuButtons : MonoBehaviour {
 	}
 
 	void Update(){
+		//Finger touching button...
+		for (var i = 0; i < Input.touchCount; ++i) {
+			if (Input.GetTouch(i).phase == TouchPhase.Began) {
+				RaycastHit2D hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(i).position), Vector2.zero);
+				touchOrClickButtonPress = clickedOrTouched(hitInfo);
+			}
+		}
+
 		if(Application.loadedLevelName.Equals("menu") || _GM.GetComponent<Setup>().pauseGame)	//In game menu needs to be paused (variable via GM object). Title menu has no GM object.
 		{
 			padPreviousUp = padCurrentUp;
@@ -83,5 +93,19 @@ public class script_MenuButtons : MonoBehaviour {
 				killSound.GetComponent<playSound>().play();
 			}
 		}
+	}
+
+	public bool clickedOrTouched(RaycastHit2D hitInfo){
+		bool hit = false;
+		if(hitInfo)
+		{
+			//Debug.Log( hitInfo.transform.gameObject.name );
+			if(hitInfo.transform.gameObject.name.Equals("button_resume")){cursorIndex=0;}
+			if(hitInfo.transform.gameObject.name.Equals("button_menu")){cursorIndex=1;}
+			if(hitInfo.transform.gameObject.name.Equals("button_quit")){cursorIndex=2;}
+			
+			hit=true;
+		}
+		return hit;
 	}
 }
