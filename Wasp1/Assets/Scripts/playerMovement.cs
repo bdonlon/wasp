@@ -10,15 +10,18 @@ public class playerMovement : MonoBehaviour {
 	public int score = 0;
 	public GameObject _GM;
 	public GameObject swatter;
+	public GameObject UI;
 
 	public bool LSUp,keyUp,LSDown,keyDown,LSLeft,keyLeft,LSRight,keyRight,DUp,DDown,DLeft,DRight = false;
 	public bool keykeyup,keykeydown,keykeyleft,keykeyright = false;
+	public GameObject VirtualJoystick;
 	public bool up,down,left,right = false;
 	public bool diagonal;
 
 	public GameObject hitSound;
 	public GameObject deathSound;
 	public GameObject eatSound;
+
 
 	public SpriteRenderer spriteRenderer;
 	public SpriteRenderer swatterSpriteRenderer;
@@ -32,7 +35,7 @@ public class playerMovement : MonoBehaviour {
 	public float timeCurr;
 	public float elapsedTime;
 
-	public float LSY,LSX,DX,DY;
+	public float LSY,LSX,VLSY,VLSX,DX,DY;
 
 	Animator anim;
 
@@ -48,7 +51,6 @@ public class playerMovement : MonoBehaviour {
 	void Update () {
 		drawHealthBar();
 		movingPrevious=moving;
-		
 		spriteRenderer.sortingOrder = (int)Camera.main.WorldToScreenPoint (spriteRenderer.bounds.min).y * -1;
 		swatterSpriteRenderer.sortingOrder = spriteRenderer.sortingOrder;
 
@@ -58,7 +60,26 @@ public class playerMovement : MonoBehaviour {
 			LSX=Input.GetAxis ("360_LeftStickX");
 			DY=Input.GetAxis ("360_DY");
 			DX=Input.GetAxis ("360_DX");
-					
+			VLSX=VirtualJoystick.GetComponent<Joystick>().position.x;
+			VLSY=(VirtualJoystick.GetComponent<Joystick>().position.y*-1);
+			if((VLSY<0.0001) && (VLSY>-0.001)){
+				VLSY=0;
+			}
+			if((VLSX<0.0001) && (VLSX>-0.001)){
+				VLSX=0;
+			}
+			if((VLSY!=0) || (VLSX!=0)){
+				Vector2 v = new Vector2(VirtualJoystick.GetComponent<Joystick>().position.x,VirtualJoystick.GetComponent<Joystick>().position.y*-1);
+				v = Vector2.ClampMagnitude(v,1);
+				LSX = v.x;
+				LSY = v.y;
+			}
+
+			//Usefull code for debugging virtual joystick values when testing with android emulator
+				//Debug.Log ("x:"+LSX+" y:"+LSY);
+				//UI.GetComponent<GUIscript_score>().x=LSX;
+				//UI.GetComponent<GUIscript_score>().y=LSY;
+							
 			if(Input.GetKeyDown(KeyCode.W))			{	keykeyup=true;		}
 			if(Input.GetKeyUp(KeyCode.W))			{	keykeyup=false;		}
 			if(LSY<-0.1)							{	LSUp=true;			}
