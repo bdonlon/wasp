@@ -13,6 +13,7 @@ public class Setup : MonoBehaviour {
 	public GameObject grass;
 	public GameObject storm;
 	public GameObject graphic_waveInfo;
+	public GameObject VirtualJoyStick;
 	public Animator picnicAnim;
 	public Animator spouseAnim;
 	public Animator picnicBasketAnim;
@@ -50,6 +51,7 @@ public class Setup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(!ApplicationModel.touchScreen){VirtualJoyStick.gameObject.active=false;}	//Disable VirtualJoyStick if we are not running in a touchscreen enviornment
 		endless=ApplicationModel.endless;
 		endlessSwitch=0;
 		equalityMode=ApplicationModel.equalityMode;

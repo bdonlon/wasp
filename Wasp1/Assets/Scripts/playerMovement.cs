@@ -4,7 +4,7 @@ using System.Collections;
 public class playerMovement : MonoBehaviour {
 		
 	private float speed = 10;
-	private Vector3 velocity;
+	public Vector3 velocity;
 	public int health;
 	private int maxHealth;
 	public int score = 0;
@@ -149,11 +149,11 @@ public class playerMovement : MonoBehaviour {
 		velocity.x=0;
 		velocity.y=0;
 
+		speed=9;
+
 		if(LSY==0 && LSX==0){	//skip if we are receiving L Stick input
-			if(!diagonal){	
-				speed=10;
-			}else{
-					speed=6.8f;
+			if(diagonal){
+				speed=speed*0.68f;
 			}
 
 			if(up){
@@ -169,8 +169,8 @@ public class playerMovement : MonoBehaviour {
 				velocity.x = speed;
 			}
 		}else{
-			velocity.y = -LSY*10;
-			velocity.x = LSX*10;
+			velocity.y = -LSY*speed;
+			velocity.x = LSX*speed;
 		}
 
 		rigidbody2D.velocity=velocity;

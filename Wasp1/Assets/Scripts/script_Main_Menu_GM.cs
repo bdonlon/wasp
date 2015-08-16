@@ -6,7 +6,8 @@ public class ApplicationModel : MonoBehaviour
 {
 	static public bool endless = false;
 	static public bool equalityMode = false;
-	static public bool autoSwing = true;
+	static public bool touchScreen = false;
+	static public bool autoSwing = false;
 }
 
 public class script_Main_Menu_GM : MonoBehaviour {
@@ -48,6 +49,7 @@ public class script_Main_Menu_GM : MonoBehaviour {
 	}
 
 	void Start () {
+		if (Application.platform == RuntimePlatform.Android){ApplicationModel.touchScreen=true;}	//Check if using a touchscreen
 		touchOrClickButtonPress=false;
 		scaleRate = 0.004f;
 		timer = 0;
@@ -162,7 +164,13 @@ public class script_Main_Menu_GM : MonoBehaviour {
 		case 0:
 			if(cursorIndex==0)
 			{
-				changeScreen(3);	//Difficulty
+				if(ApplicationModel.touchScreen){	//If touchscreen, force easy mode
+					//Easy Mode
+					ApplicationModel.autoSwing = true;
+					changeScreen(1);
+				}else{								//else, allow choice
+					changeScreen(3);	//Difficulty
+				}
 			}
 			else if(cursorIndex==1)
 			{
@@ -192,7 +200,11 @@ public class script_Main_Menu_GM : MonoBehaviour {
 			}
 			else if(cursorIndex==2)
 			{
-				changeScreen(3);
+				if(ApplicationModel.touchScreen){	//If touchscreen, do not show difficulty screen
+					changeScreen(0);
+				}else{								//if not, go to difficulty screen
+					changeScreen(3);
+				}
 			}
 			break;
 		case 2:
