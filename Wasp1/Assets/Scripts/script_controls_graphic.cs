@@ -5,6 +5,8 @@ public class script_controls_graphic : MonoBehaviour {
 
 	public GameObject graphic_move;
 	public GameObject graphic_swing;
+	public GameObject VirtualJoyStick;
+	public Vector3 VJSPos;
 	public Sprite[] Controls;
 	SpriteRenderer rend1;
 	SpriteRenderer rend2;
@@ -24,6 +26,11 @@ public class script_controls_graphic : MonoBehaviour {
 			//No swing controlls when easy mode enabled
 			rend2.sprite=Controls[2];
 			rend2.transform.localScale = new Vector2(1.5f,1.5f);
+
+			rend1.sprite=Controls[3];
+			VJSPos = Camera.main.ScreenToWorldPoint(new Vector3(VirtualJoyStick.GetComponent<Joystick>().guiCenter.x,VirtualJoyStick.GetComponent<Joystick>().guiCenter.y,100));
+			rend1.transform.position = VJSPos;
+
 		}
 		StartCoroutine(fadeOut());
 	}

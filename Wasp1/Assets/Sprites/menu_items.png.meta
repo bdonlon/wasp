@@ -34,6 +34,7 @@ TextureImporter:
     21300058: menu_items_29
     21300060: menu_items_30
     21300062: menu_items_31
+    21300064: menu_items_32
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -394,6 +395,16 @@ TextureImporter:
         height: 152
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: menu_items_32
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 114
+        width: 176
+        height: 217
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

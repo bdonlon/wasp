@@ -49,7 +49,7 @@ public class Joystick : MonoBehaviour
 	/* Offset to apply to touch input */
 	private Vector2 guiTouchOffset;
 	/* Center of joystick */
-	private Vector2 guiCenter;
+	public Vector2 guiCenter;
 	
 	public bool isFingerDown
 	{
