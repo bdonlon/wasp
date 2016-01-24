@@ -6,7 +6,7 @@ public class ApplicationModel : MonoBehaviour
 {
 	static public bool endless = false;
 	static public bool equalityMode = false;
-	static public bool touchScreen = false;
+	static public bool touchScreen = true;
 	static public bool autoSwing = false;
 }
 
@@ -23,7 +23,7 @@ public class script_Main_Menu_GM : MonoBehaviour {
 	public GameObject killSound;
 	public GameObject hitSound;
 	public bool LSUp,LSDown,DUp,DDown,padUp,padDown=false;
-	public bool padCurrentUp, padCurrentDown, padPreviousUp, padPreviousDown;
+	public bool padCurrentUp, padCurrentDown, padPreviousUp, padPreviousDown, backButton;
 	public bool touchOrClickButtonPress;
 	public float LSY,DY;
 	public float cursorXposition;
@@ -51,6 +51,7 @@ public class script_Main_Menu_GM : MonoBehaviour {
 	void Start () {
 		if (Application.platform == RuntimePlatform.Android){ApplicationModel.touchScreen=true;}	//Check if using a touchscreen
 		touchOrClickButtonPress=false;
+		backButton=false;
 		scaleRate = 0.004f;
 		timer = 0;
 		cursorIndex=0;
@@ -103,9 +104,10 @@ public class script_Main_Menu_GM : MonoBehaviour {
 			killSound.GetComponent<playSound>().play();
 			StartCoroutine(runMenuOption(currentCamera));
 		}else if(currentCamera!=0 && (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("360_B"))){	// 'Back' in menu
+			backButton=true;
 			cursors[currentCamera].gameObject.GetComponent<Animator>().SetTrigger("wasp_death");
 			killSound.GetComponent<playSound>().play();
-			StartCoroutine(runMenuOption(-1));
+			StartCoroutine(runMenuOption(currentCamera));
 		}
 
 		padPreviousUp = padCurrentUp;
@@ -186,7 +188,16 @@ public class script_Main_Menu_GM : MonoBehaviour {
 			}
 			break;
 		case 1:	//Game mode/type
-			if(cursorIndex==0)
+			if(backButton || cursorIndex==2)
+			{
+				backButton=false;
+				if(ApplicationModel.touchScreen){	//If touchscreen, do not show difficulty screen
+					changeScreen(0);
+				}else{								//if not, go to difficulty screen
+					changeScreen(3);
+				}
+			}
+			else if(cursorIndex==0)
 			{
 				//Waves
 				ApplicationModel.endless = false;
@@ -198,14 +209,6 @@ public class script_Main_Menu_GM : MonoBehaviour {
 				ApplicationModel.endless = true;
 				Application.LoadLevel("wasp1");
 			}
-			else if(cursorIndex==2)
-			{
-				if(ApplicationModel.touchScreen){	//If touchscreen, do not show difficulty screen
-					changeScreen(0);
-				}else{								//if not, go to difficulty screen
-					changeScreen(3);
-				}
-			}
 			break;
 		case 2:
 			if(cursorIndex==0)
@@ -216,7 +219,12 @@ public class script_Main_Menu_GM : MonoBehaviour {
 			}
 			break;
 		case 3:	//Difficulty
-			if(cursorIndex==0)
+			if(backButton || cursorIndex==2)
+			{
+				backButton=false;
+				changeScreen(0);
+			}
+			else if(cursorIndex==0)
 			{
 				//Easy Mode
 				ApplicationModel.autoSwing = true;
@@ -228,13 +236,14 @@ public class script_Main_Menu_GM : MonoBehaviour {
 				ApplicationModel.autoSwing = false;
 				changeScreen(1);
 			}
-			else if(cursorIndex==2)
-			{
-				changeScreen(0);
-			}
 			break;
 		case 4:
-			if(cursorIndex==0)
+			if(backButton || cursorIndex==1)
+			{
+				backButton=false;
+				changeScreen(0);
+			}
+			else if(cursorIndex==0)
 			{
 				if(ApplicationModel.equalityMode){
 					box_checked.gameObject.active=false;
@@ -247,10 +256,6 @@ public class script_Main_Menu_GM : MonoBehaviour {
 					StartCoroutine(rollRainbow());
 				}
 				break;
-			}
-			else if(cursorIndex==1)
-			{
-				changeScreen(0);
 			}
 			break;
 		}

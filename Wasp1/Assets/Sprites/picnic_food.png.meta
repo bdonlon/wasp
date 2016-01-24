@@ -57,7 +57,7 @@ TextureImporter:
         x: 95
         y: 37
         width: 34
-        height: 22
+        height: 24
       alignment: 7
       pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -107,7 +107,7 @@ TextureImporter:
         x: 95
         y: 7
         width: 34
-        height: 22
+        height: 24
       alignment: 7
       pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

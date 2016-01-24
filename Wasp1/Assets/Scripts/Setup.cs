@@ -213,8 +213,7 @@ public class Setup : MonoBehaviour {
 	}
 
 	public void changeMusic(int i){
-		//change music track from mid game to end game. Placeholder code to just stop for now.
-		//musicPlayer.Stop();
+		//change music track from mid game to end game.
 		musicPlayer.clip = audioClips[i];
 		musicPlayer.Play();
 	}
