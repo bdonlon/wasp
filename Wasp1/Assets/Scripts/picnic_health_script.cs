@@ -55,7 +55,9 @@ public class picnic_health_script : MonoBehaviour {
 			picnicHealthCurrent = picnicHealthCurrent - damage;
 		}else{
 			picnicHealthCurrent=0;
-			_GM.GetComponent<Setup>().setFailureCondition(true);
+			if(!_GM.GetComponent<Setup>().getFailureCondition()){	//might already have failure condition due to player death
+				_GM.GetComponent<Setup>().setFailureCondition(true);
+			}
 		}
 	}
 
@@ -71,6 +73,10 @@ public class picnic_health_script : MonoBehaviour {
 		}else{
 			hb.active=false;
 		}
+	}
+
+	public void forceDrawHealthBar(){
+		timeEaten = Time.time;
 	}
 
 	public IEnumerator heal(int healValue){

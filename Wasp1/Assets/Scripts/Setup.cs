@@ -18,6 +18,8 @@ public class Setup : MonoBehaviour {
 	public Animator spouseAnim;
 	public Animator picnicBasketAnim;
 
+	public AudioSource musicPlayer;
+
 	public int numWasps;
 	public int maxWasps;
 
@@ -40,6 +42,8 @@ public class Setup : MonoBehaviour {
 
 
 	private float specialAlpha;
+
+	public AudioClip[] audioClips;
 
 						//waveData rows = {maxWasps, healthFromFood}
 	public int[,] waveData = new int[4,2] { {5, 10},		//wave 1
@@ -117,6 +121,8 @@ public class Setup : MonoBehaviour {
 		if(foodAvailable){	//won't trigger on game start, but will between wasp phases
 			for(int i=3; i>0; i--)	//Food available to player
 			{
+				player.GetComponent<playerMovement>().forceDrawHealthBar();
+				picnic.GetComponent<picnic_health_script>().forceDrawHealthBar();
 				if(foodAvailable){
 					yield return new WaitForSeconds(1.0f);	//wait 1 second then check again (up to max 5 seconds)
 				}else{
@@ -127,6 +133,8 @@ public class Setup : MonoBehaviour {
 				StartCoroutine(picnic.GetComponent<picnic_health_script>().heal(getPlayerHealValue()));
 				spouseAnim.SetTrigger("spouse_eat_start");
 				yield return new WaitForSeconds(0.4f);	//delay so food sprite change times well with spouse eating animation
+				player.GetComponent<playerMovement>().forceDrawHealthBar();			//To synchronise health bars
+				picnic.GetComponent<picnic_health_script>().forceDrawHealthBar();	//disappearing after setup phase
 				foodConsumed();
 				yield return new WaitForSeconds(0.6f);
 				spouseAnim.SetTrigger("spouse_eat_end");
@@ -204,6 +212,13 @@ public class Setup : MonoBehaviour {
 		return endless;
 	}
 
+	public void changeMusic(int i){
+		//change music track from mid game to end game. Placeholder code to just stop for now.
+		//musicPlayer.Stop();
+		musicPlayer.clip = audioClips[i];
+		musicPlayer.Play();
+	}
+
 	public void foodConsumed(){	//To be called by (player or food?) script when food has been eaten
 		picnicAnim.SetTrigger("eatFood");
 		foodAvailable=false;
@@ -228,6 +243,8 @@ public class Setup : MonoBehaviour {
 
 	public void setFailureCondition(bool set){
 		failureCondition=set;
+		changeMusic(2);
+		musicPlayer.volume=1.0f;
 		if(failureCondition){
 			StartCoroutine(startStorm(1.0f));
 		}
@@ -238,6 +255,8 @@ public class Setup : MonoBehaviour {
 
 	public void setVictoryCondition(bool set){
 		victoryCondition=set;
+		changeMusic(1);
+		musicPlayer.loop=false;
 		if(victoryCondition){
 			StartCoroutine(startStorm(2.5f));	//Long-ish delay then storm starts when player wins :)
 		}

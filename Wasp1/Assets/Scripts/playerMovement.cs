@@ -196,7 +196,9 @@ public class playerMovement : MonoBehaviour {
 			if(health<=0){
 				deathSound.GetComponent<playSound>().play();
 				kill();
-				_GM.GetComponent<Setup>().setFailureCondition(true);
+				if(!_GM.GetComponent<Setup>().getFailureCondition()){	//might already have failure condition due to picnic death
+					_GM.GetComponent<Setup>().setFailureCondition(true);
+				}
 				Screen.showCursor = true;
 			}
 		}
@@ -223,6 +225,10 @@ public class playerMovement : MonoBehaviour {
 		}else{
 			this.transform.Find("healthBar(Clone)").active=false;
 		}
+	}
+
+	public void forceDrawHealthBar(){
+		timeStung = Time.time;
 	}
 
 	public IEnumerator injureAnimation(){
