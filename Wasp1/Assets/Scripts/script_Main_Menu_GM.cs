@@ -6,7 +6,7 @@ public class ApplicationModel : MonoBehaviour
 {
 	static public bool endless = false;
 	static public bool equalityMode = false;
-	static public bool touchScreen = true;
+	static public bool touchScreen = false;
 	static public bool autoSwing = false;
 }
 

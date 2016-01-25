@@ -29,8 +29,10 @@ public class swatter_script : MonoBehaviour {
 	public bool up,down,left,right = false;
 	public bool preUp,preDown,preLeft,preRight = false;
 
-	private float swingDuration = 0.15f;
-	private float swingSpeed = 10;
+	//private float swingDuration = 0.15f;
+	//private float swingSpeed = 10;
+	private float swingDuration = 0.2f;
+	private float swingSpeed = 15;
 	
 	private float swingTimer = 0f;
 	public bool swinging = false;
@@ -63,8 +65,9 @@ public class swatter_script : MonoBehaviour {
 
 		if(ApplicationModel.autoSwing)
 		{
-			swatter.GetComponent<BoxCollider2D>().center=new Vector2(-0.3f, 0.0f);
-			swatter.GetComponent<BoxCollider2D>().size=new Vector2(0.84f, 0.33f);
+			//easy mode, much larger swatter hitbox
+			swatter.GetComponent<BoxCollider2D>().center=new Vector2(-0.15f, 0.0f);
+			swatter.GetComponent<BoxCollider2D>().size=new Vector2(1.3f, 0.5f);
 		}
 
 		//trail.renderer.sortingLayerName="Ground objects";
@@ -74,6 +77,7 @@ public class swatter_script : MonoBehaviour {
 	public IEnumerator setDead(){
 		dead=true;
 		Destroy(trail);
+		swatter.GetComponent<BoxCollider2D>().enabled=false;	//Prevent the swatter killing wasps when after it has been dropped
 		swatter.GetComponent<swatter_script>().rigidbody2D.isKinematic=false;
 
 		if(down)	{yield return new WaitForSeconds(0.2f);}
@@ -121,7 +125,10 @@ public class swatter_script : MonoBehaviour {
 			}
 
 			//decide which direction to swing (for changes midswing)
-			analyseInput();
+			if(!ApplicationModel.autoSwing)		//If autoswing is enabled, we are not concerned about midswing changes
+			{
+				analyseInput();
+			}
 
 			//weapon swing checks
 			checkSwinging();
@@ -217,19 +224,28 @@ public class swatter_script : MonoBehaviour {
 	public void setStartSwingPosition(){
 		float dx=0;
 		float dy=0;
-		if(up){
+		if(up&&left){
+			dx=-1;
+			dy=0;
+		}else if(up&&right){
+			dx=0;
+			dy=1;
+		}else if(down&&left){
+			dx=0;
+			dy=-1;
+		}else if(down&&right){
+			dx=1;
+			dy=0;
+		}else if(up){
 			dx=-0.86f;
 			dy=0.86f;
-		}
-		if(down){
+		}else if(down){
 			dx=0.86f;
 			dy=-0.86f;
-		}
-		if(left){
+		}else if(left){
 			dx=-0.86f;
 			dy=-0.86f;
-		}
-		if(right){
+		}else if(right){
 			dx=0.86f;
 			dy=0.86f;
 		}
