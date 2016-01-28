@@ -28,11 +28,9 @@ public class swatter_script : MonoBehaviour {
 
 	public bool up,down,left,right = false;
 	public bool preUp,preDown,preLeft,preRight = false;
-
-	//private float swingDuration = 0.15f;
-	//private float swingSpeed = 10;
-	private float swingDuration = 0.2f;
-	private float swingSpeed = 15;
+	
+	private float swingDuration = 0.15f;
+	private float swingSpeed = 20;
 	
 	private float swingTimer = 0f;
 	public bool swinging = false;
@@ -40,8 +38,6 @@ public class swatter_script : MonoBehaviour {
 	public bool dead;
 
 	public bool unpauseBuffer=false;
-
-	//private Vector3 startRot;
 
 	public Vector3 startSwingPosition;
 	public Vector3 playerPosition;
@@ -66,12 +62,12 @@ public class swatter_script : MonoBehaviour {
 		if(ApplicationModel.autoSwing)
 		{
 			//easy mode, much larger swatter hitbox
-			swatter.GetComponent<BoxCollider2D>().center=new Vector2(-0.15f, 0.0f);
-			swatter.GetComponent<BoxCollider2D>().size=new Vector2(1.3f, 0.5f);
+			//swatter.GetComponent<BoxCollider2D>().center=new Vector2(-0.15f, 0.0f);
+			//swatter.GetComponent<BoxCollider2D>().size=new Vector2(1.3f, 0.5f);	//too easy I think
+			swatter.GetComponent<BoxCollider2D>().center=new Vector2(-0.04f, 0.0f);
+			swatter.GetComponent<BoxCollider2D>().size=new Vector2(0.5f, 0.5f);
 		}
 
-		//trail.renderer.sortingLayerName="Ground objects";
-		//trail.renderer.sortingOrder=10;
 	}
 
 	public IEnumerator setDead(){
@@ -136,7 +132,6 @@ public class swatter_script : MonoBehaviour {
 
 			//weapon idle wobble
 			if(idle){
-				//trail.GetComponent<TrailRenderer>().enabled=false;
 				if(timer>20){
 					wobble = wobble*-1;
 					timer=0;
@@ -152,21 +147,13 @@ public class swatter_script : MonoBehaviour {
 
 				if(setStartSwingPositionOnce){
 					Destroy(trail);
-					//trail.GetComponent<TrailRenderer>().enabled=false;
 					trail = (GameObject)Instantiate(trail);
-
 					trail.transform.parent = GameObject.Find("swatter").transform;
 					trail.transform.position = GameObject.Find("swatter").transform.position;
 					trail.GetComponent<TrailRenderer>().time = trailTime;
-
-					//print (trail.transform.position + " " + GameObject.Find("swatter").transform.position);
-					//StartCoroutine(resetTrail());
 					swingSound.GetComponent<playSound>().play();	//start of swing, play sound.
 					setStartSwingPositionOnce=false;
 					transform.position = startSwingPosition;
-				//	trail.GetComponent<TrailRenderer>().enabled=false;
-				//	trail.GetComponent<TrailRenderer>().enabled=true;
-
 				}
 
 				Vector3 vectorToTarget = playerPosition - transform.position;
@@ -208,12 +195,6 @@ public class swatter_script : MonoBehaviour {
 		}
 	}
 
-//	IEnumerator resetTrail(){
-//		trail.GetComponent<TrailRenderer>().time=-1;
-//		yield return new WaitForSeconds(0.01f);
-//		trail.GetComponent<TrailRenderer>().time=trailTime;
-//	}
-
 	public void savePreviousInputState(){
 		preUp=up;
 		preDown=down;
@@ -222,32 +203,38 @@ public class swatter_script : MonoBehaviour {
 	}
 
 	public void setStartSwingPosition(){
+
+		//Probably better to use proper cicrle algebra in future, rather than hardcoded xy values...
+		//The coordinates of a point (px,py) on the circle (cx,cy) are:
+		//px = cx + (r * sine(angle))
+	    //py = cy + (r * cosine(angle))
+
 		float dx=0;
 		float dy=0;
 		if(up&&left){
+			dx=-0.86f;
+			dy=-0.86f;
+		}else if(up&&right){
+			dx=-0.86f;
+			dy=0.86f;
+		}else if(down&&left){
+			dx=0.86f;
+			dy=-0.86f;
+		}else if(down&&right){
+			dx=0.86f;
+			dy=0.86f;
+		}else if(up){
 			dx=-1;
 			dy=0;
-		}else if(up&&right){
-			dx=0;
-			dy=1;
-		}else if(down&&left){
-			dx=0;
-			dy=-1;
-		}else if(down&&right){
+		}else if(down){
 			dx=1;
 			dy=0;
-		}else if(up){
-			dx=-0.86f;
-			dy=0.86f;
-		}else if(down){
-			dx=0.86f;
-			dy=-0.86f;
 		}else if(left){
-			dx=-0.86f;
-			dy=-0.86f;
+			dx=0;
+			dy=-1;
 		}else if(right){
-			dx=0.86f;
-			dy=0.86f;
+			dx=0;
+			dy=1;
 		}
 
 		startSwingPosition = new Vector3(player.transform.position.x+dx,player.transform.position.y+dy,0);
