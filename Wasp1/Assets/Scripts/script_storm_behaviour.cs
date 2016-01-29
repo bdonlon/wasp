@@ -10,9 +10,12 @@ public class script_storm_behaviour : MonoBehaviour {
 	SpriteRenderer cloudSpriteRenderer;
 	private float alpha;
 	public GameObject _GM;
+//	public int currChildCount,maxChildCount;
 
 	// Use this for initialization
 	void Start () {
+//		currChildCount=0;
+//		maxChildCount=0;
 		timer=0;
 		delay=80;
 		cloudsForce = new Vector3(0,-3,0);
@@ -22,6 +25,13 @@ public class script_storm_behaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//Usefull to get an idea of how many raindrops are spawning
+//		currChildCount=transform.childCount;
+//		if(currChildCount>maxChildCount){
+//			maxChildCount=currChildCount;
+//			print(currChildCount);
+//		}
+
 		if(timer>delay){
 			graphic_clouds.gameObject.active=true;
 			rain();

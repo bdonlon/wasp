@@ -11,6 +11,10 @@ public class script_spawn_rain : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+		spawnRate=0.005f;
+		if(ApplicationModel.touchScreen){
+			spawnRate=0.02f;
+		}
 		jitterX=10f;
 		jitterY=8f;
 		spawnLocation = new Vector3(0,0,0);

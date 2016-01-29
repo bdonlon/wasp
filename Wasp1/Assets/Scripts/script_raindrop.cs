@@ -15,7 +15,7 @@ public class script_raindrop : MonoBehaviour {
 		transform.parent = GameObject.Find("Storm").transform;
 		anim = GetComponent<Animator>();
 		rigidbody = GetComponent<Rigidbody2D>();
-		splashCoordY = new Vector2(0,storm.transform.position.y - Random.Range(0,200)*0.1f);
+		splashCoordY = new Vector2(0,storm.transform.position.y - Random.Range(100,200)*0.1f);
 		spriteRenderer.sortingOrder = (int)Camera.main.WorldToScreenPoint (splashCoordY).y * -1;
 	}
 	
