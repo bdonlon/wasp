@@ -15,6 +15,7 @@ TextureImporter:
     21300020: wave_text_10
     21300022: wave_text_11
     21300024: wave_text_12
+    21300026: wave_text_13
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -183,6 +184,16 @@ TextureImporter:
         y: 1
         width: 63
         height: 61
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: wave_text_13
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 241
+        width: 332
+        height: 153
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

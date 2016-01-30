@@ -328,6 +328,7 @@ public class Setup : MonoBehaviour {
 			}
 		}else{
 			if(failureCondition){
+				graphic_waveInfo.GetComponent<script_GUI_wave_text>().drawFinalWave();	//Render current wave info
 				spouseAnim.SetTrigger("spouse_cry_start");
 				if(Input.GetKeyDown(KeyCode.R) || ((Input.GetButton("360_L1"))&&(Input.GetButton("360_R1")))){
 					Application.LoadLevel("wasp1");
