@@ -11,9 +11,7 @@ public class ApplicationModel : MonoBehaviour
 }
 
 public class script_Main_Menu_GM : MonoBehaviour {
-
-	public Camera cam1;
-	public Camera cam2;
+	
 	public GameObject[] cameras;
 	public GameObject[] cursors;
 	public float[] cursorXoffset;
@@ -201,13 +199,13 @@ public class script_Main_Menu_GM : MonoBehaviour {
 			{
 				//Waves
 				ApplicationModel.endless = false;
-				Application.LoadLevel("wasp1");
+				Application.LoadLevel("tutorial");
 			}
 			else if(cursorIndex==1)
 			{
 				//Endless
 				ApplicationModel.endless = true;
-				Application.LoadLevel("wasp1");
+				Application.LoadLevel("tutorial");
 			}
 			break;
 		case 2:
