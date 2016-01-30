@@ -6,17 +6,30 @@ public class script_raindrop : MonoBehaviour {
 	Animator anim;
 	Rigidbody2D rigidbody;
 	public Vector2 splashCoordY;
+	public Vector3 spawnLocation;
 	public SpriteRenderer spriteRenderer;
 	public GameObject storm;
+	public float jitterX,jitterY;
 
 	// Use this for initialization
 	void Start () {
+	}
+
+	void OnEnable(){
+		jitterX=10f;
+		jitterY=8f;
+
+		anim = GetComponent<Animator>();
 		storm = GameObject.Find("Storm");
 		transform.parent = GameObject.Find("Storm").transform;
-		anim = GetComponent<Animator>();
+		spawnLocation.x = storm.transform.position.x + Random.Range(-jitterX,jitterX);
+		spawnLocation.y = storm.transform.position.y + Random.Range(-jitterY,jitterY);
+		transform.position = spawnLocation;
 		rigidbody = GetComponent<Rigidbody2D>();
-		splashCoordY = new Vector2(0,storm.transform.position.y - Random.Range(100,200)*0.1f);
 		spriteRenderer.sortingOrder = (int)Camera.main.WorldToScreenPoint (splashCoordY).y * -1;
+		rigidbody.isKinematic=false;
+		splashCoordY = new Vector2(0,storm.transform.position.y - Random.Range(100,200)*0.1f);
+		//print (transform.position+" "+splashCoordY);
 	}
 	
 	// Update is called once per frame
@@ -34,8 +47,15 @@ public class script_raindrop : MonoBehaviour {
 				break;
 			}
 			rigidbody.isKinematic=true;
-			//rigidbody.velocity = Vector3.zero;
-			Destroy(this.gameObject,0.1f);
+			StartCoroutine(Destroy());
+
 		}
+	}
+
+	IEnumerator Destroy()
+	{
+		yield return new WaitForSeconds(0.05f);
+		anim.SetTrigger("reset");
+		gameObject.SetActive(false);
 	}
 }
