@@ -48,37 +48,38 @@ public class script_GUI_wave_text : MonoBehaviour {
 	public void setWaveInfo(int curr, int max)
 	{
 		curr++; //Value starts at 0
+		currWave=curr;
 		if(!_GM.GetComponent<Setup>().getEndless()){
 			if(curr<max){
-				wave.active=true;
-				X1.active=true;
-				of.active=true;
-				Y1.active=true;
+				wave.SetActive(true);
+				X1.SetActive(true);
+				of.SetActive(true);
+				Y1.SetActive(true);
 				setX(curr);
 				setY(max);
 			}else if(curr==max){
-				finalWaveFINAL.active=true;
-				finalWaveWAVE.active=true;
+				finalWaveFINAL.SetActive(true);
+				finalWaveWAVE.SetActive(true);
 			}
 		}else{
-			wave.active=true;
-			X1.active=true;
+			wave.SetActive(true);
+			X1.SetActive(true);
 			setX(curr);
 		}
 		StartCoroutine(drawWave());
 	}
 	
 	void deactiveateAll(){
-		wave.active=false;
-		X1.active=false;
-		X10.active=false;
-		X100.active=false;
-		of.active=false;
-		Y1.active=false;
-		Y10.active=false;
-		Y100.active=false;
-		finalWaveFINAL.active=false;
-		finalWaveWAVE.active=false;
+		wave.SetActive(false);
+		X1.SetActive(false);
+		X10.SetActive(false);
+		X100.SetActive(false);
+		of.SetActive(false);
+		Y1.SetActive(false);
+		Y10.SetActive(false);
+		Y100.SetActive(false);
+		finalWaveFINAL.SetActive(false);
+		finalWaveWAVE.SetActive(false);
 	}
 	
 	void setX(int x){
@@ -87,13 +88,13 @@ public class script_GUI_wave_text : MonoBehaviour {
 		}else if(x>=10 && x<100){
 			rendX1.sprite=Numbers[int.Parse(x.ToString().Substring(0, 1))];
 			rendX10.sprite=Numbers[int.Parse(x.ToString().Substring(1, 1))];
-			X10.active=true;
+			X10.SetActive(true);
 		}else if(x>=100 && x<999){
 			rendX1.sprite=Numbers[int.Parse(x.ToString().Substring(0, 1))];
 			rendX10.sprite=Numbers[int.Parse(x.ToString().Substring(1, 1))];
 			rendX100.sprite=Numbers[int.Parse(x.ToString().Substring(2, 1))];
-			X10.active=true;
-			X100.active=true;
+			X10.SetActive(true);
+			X100.SetActive(true);
 		}
 	}
 	
@@ -127,11 +128,11 @@ public class script_GUI_wave_text : MonoBehaviour {
 				rendFailureText.color = colour;
 				yield return new WaitForSeconds(0.0f);
 			}
-			youReached.active=true;
-			wave.active=true;
-			if(currWave<10){X1.active=true;}
-			if(currWave>=10){X10.active=true;}
-			if(currWave>=100){X100.active=true;}
+			youReached.SetActive(true);
+			wave.SetActive(true);
+			if(currWave<10){X1.SetActive(true);}
+			if(currWave>=10){X10.SetActive(true);}
+			if(currWave>=100){X100.SetActive(true);}
 		}
 
 		for (float i = 0; i < 90; i++) {	//Fade in

@@ -22,9 +22,6 @@ public class script_spawn_rain : MonoBehaviour {
 		}
 
 		spawnRate=0.02f;
-//		if(ApplicationModel.touchScreen){
-//			spawnRate=0.02f;
-//		}
 		InvokeRepeating("Spawn", 0, spawnRate);
 	}
 

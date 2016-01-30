@@ -62,11 +62,11 @@ public class script_Main_Menu_GM : MonoBehaviour {
 		gamepadDetectedRenderer=gamepadText.GetComponent<SpriteRenderer>();
 
 		if(ApplicationModel.equalityMode){	// For when player exits from game to menu, having previously set equality mode on/off
-			box_checked.gameObject.active=true;
-			box_unchecked.gameObject.active=false;
+			box_checked.gameObject.SetActive(true);
+			box_unchecked.gameObject.SetActive(false);
 		}else if(!ApplicationModel.equalityMode){
-			box_checked.gameObject.active=false;
-			box_unchecked.gameObject.active=true;
+			box_checked.gameObject.SetActive(false);
+			box_unchecked.gameObject.SetActive(true);
 		}
 
 		rainbowStartPosition = rainbow.transform.position;
@@ -246,12 +246,12 @@ public class script_Main_Menu_GM : MonoBehaviour {
 			else if(cursorIndex==0)
 			{
 				if(ApplicationModel.equalityMode){
-					box_checked.gameObject.active=false;
-					box_unchecked.gameObject.active=true;
+					box_checked.gameObject.SetActive(false);
+					box_unchecked.gameObject.SetActive(true);
 					ApplicationModel.equalityMode=false;
 				}else if(!ApplicationModel.equalityMode){
-					box_checked.gameObject.active=true;
-					box_unchecked.gameObject.active=false;
+					box_checked.gameObject.SetActive(true);
+					box_unchecked.gameObject.SetActive(false);
 					ApplicationModel.equalityMode=true;
 					StartCoroutine(rollRainbow());
 				}
@@ -297,10 +297,10 @@ public class script_Main_Menu_GM : MonoBehaviour {
 		{
 			if(i==currentCamera){
 				cameras[i].camera.enabled=true;
-				cursors[i].gameObject.active=true;
+				cursors[i].gameObject.SetActive(true);
 			}else{
 				cameras[i].camera.enabled=false;
-				cursors[i].gameObject.active=false;
+				cursors[i].gameObject.SetActive(false);
 			}
 		}
 	}

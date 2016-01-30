@@ -69,9 +69,9 @@ public class picnic_health_script : MonoBehaviour {
 	void drawHealthBar(){
 		elapsedTime =  Time.time - timeEaten;
 		if(elapsedTime<1.5f){
-			hb.active=true;
+			hb.SetActive(true);
 		}else{
-			hb.active=false;
+			hb.SetActive(false);
 		}
 	}
 

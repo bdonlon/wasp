@@ -4,7 +4,7 @@ using System.Collections;
 public class script_raindrop : MonoBehaviour {
 	
 	Animator anim;
-	Rigidbody2D rigidbody;
+	Rigidbody2D rb;
 	public Vector2 splashCoordY;
 	public Vector3 spawnLocation;
 	public SpriteRenderer spriteRenderer;
@@ -25,11 +25,10 @@ public class script_raindrop : MonoBehaviour {
 		spawnLocation.x = storm.transform.position.x + Random.Range(-jitterX,jitterX);
 		spawnLocation.y = storm.transform.position.y + Random.Range(-jitterY,jitterY);
 		transform.position = spawnLocation;
-		rigidbody = GetComponent<Rigidbody2D>();
+		rb = GetComponent<Rigidbody2D>();
 		spriteRenderer.sortingOrder = (int)Camera.main.WorldToScreenPoint (splashCoordY).y * -1;
-		rigidbody.isKinematic=false;
+		rb.isKinematic=false;
 		splashCoordY = new Vector2(0,storm.transform.position.y - Random.Range(100,200)*0.1f);
-		//print (transform.position+" "+splashCoordY);
 	}
 	
 	// Update is called once per frame
@@ -46,7 +45,7 @@ public class script_raindrop : MonoBehaviour {
 				anim.SetTrigger("splash_02");
 				break;
 			}
-			rigidbody.isKinematic=true;
+			rb.isKinematic=true;
 			StartCoroutine(Destroy());
 
 		}

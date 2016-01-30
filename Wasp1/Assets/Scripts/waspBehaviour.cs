@@ -39,7 +39,7 @@ public class waspBehaviour : MonoBehaviour {
 	public GameObject spouse;
 
 	Animator anim;
-	Animator shadowAnim;
+	//Animator shadowAnim;
 	public GameObject shadow;
 	public SpriteRenderer spriteRenderer;
 	public SpriteRenderer spouseSpriteRenderer;
@@ -74,7 +74,7 @@ public class waspBehaviour : MonoBehaviour {
 		waspRenderer = this.GetComponent<SpriteRenderer>();
 
 		anim = GetComponent<Animator>();
-		shadowAnim = shadow.GetComponent<Animator>();
+		//shadowAnim = shadow.GetComponent<Animator>();
 
 		flySound.GetComponent<playSound>().playLooped();
 
@@ -358,7 +358,7 @@ public class waspBehaviour : MonoBehaviour {
 		dead=true;
 		giveScore();
 		anim.SetTrigger("wasp_death");
-		shadowAnim.SetTrigger ("wasp_death");
+		//shadowAnim.SetTrigger ("wasp_death");
 		transform.position = new Vector3(transform.position.x,transform.position.y-0.3f,-0.5f);
 		shadow.transform.position = new Vector3(shadow.transform.position.x,shadow.transform.position.y+0.2f,shadow.transform.position.z);
 		shadow.transform.localScale = new Vector3(shadow.transform.localScale.x+0.15f,shadow.transform.localScale.y+0.15f,shadow.transform.localScale.z);

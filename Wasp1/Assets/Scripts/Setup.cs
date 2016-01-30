@@ -55,7 +55,7 @@ public class Setup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if(!ApplicationModel.touchScreen){VirtualJoyStick.gameObject.active=false;}	//Disable VirtualJoyStick if we are not running in a touchscreen enviornment
+		if(!ApplicationModel.touchScreen){VirtualJoyStick.gameObject.SetActive(false);}	//Disable VirtualJoyStick if we are not running in a touchscreen enviornment
 		endless=ApplicationModel.endless;
 		endlessSwitch=0;
 		equalityMode=ApplicationModel.equalityMode;
@@ -277,7 +277,7 @@ public class Setup : MonoBehaviour {
 	private IEnumerator startStorm(float delay){
 
 		yield return new WaitForSeconds(delay);	//wait a few beats before starting the storm.
-		storm.gameObject.active=true;
+		storm.gameObject.SetActive(true);
 	}
 
 	void Update(){

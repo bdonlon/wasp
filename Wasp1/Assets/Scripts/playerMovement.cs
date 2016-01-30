@@ -221,9 +221,9 @@ public class playerMovement : MonoBehaviour {
 	void drawHealthBar(){
 		elapsedTime =  Time.time - timeStung;
 		if(elapsedTime<1.5f){
-			this.transform.Find("healthBar(Clone)").active=true;
+			this.transform.Find("healthBar(Clone)").gameObject.SetActive(true);
 		}else{
-			this.transform.Find("healthBar(Clone)").active=false;
+			this.transform.Find("healthBar(Clone)").gameObject.SetActive(false);
 		}
 	}
 

@@ -108,7 +108,7 @@ public class Joystick : MonoBehaviour
 		if (gui.texture == null)
 		{
 			Debug.LogError("Joystick object requires a valid texture!");
-			gameObject.active = false;
+			gameObject.SetActive(false);
 			return;
 		}
 		

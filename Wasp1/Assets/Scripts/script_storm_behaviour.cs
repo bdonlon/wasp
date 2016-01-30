@@ -33,7 +33,7 @@ public class script_storm_behaviour : MonoBehaviour {
 //		}
 
 		if(timer>delay){
-			graphic_clouds.gameObject.active=true;
+			graphic_clouds.gameObject.SetActive (true);
 			rain();
 			rollClouds();
 		}else{
@@ -52,7 +52,7 @@ public class script_storm_behaviour : MonoBehaviour {
 
 	private void rain(){
 		for(int i=0; i < rainSpawners.Length; i++){
-			rainSpawners[i].gameObject.active=true;
+			rainSpawners[i].gameObject.SetActive(true);
 		}
 	}
 
