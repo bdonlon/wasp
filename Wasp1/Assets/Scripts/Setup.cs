@@ -130,6 +130,7 @@ public class Setup : MonoBehaviour {
 				}
 			}
 			if(foodAvailable){	//Food not consumed by player, so add health to picnic
+				foodAvailable=false;	//This should prevent the player from consuming the food at the same time
 				StartCoroutine(picnic.GetComponent<picnic_health_script>().heal(getPlayerHealValue()));
 				spouseAnim.SetTrigger("spouse_eat_start");
 				yield return new WaitForSeconds(0.4f);	//delay so food sprite change times well with spouse eating animation
