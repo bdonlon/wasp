@@ -157,6 +157,11 @@ public class waspBehaviour : MonoBehaviour {
 							}
 						}
 					}
+
+					if(ApplicationModel.touchScreen){
+						// Sad music is too quiet/ wasps are too loud, on android - Apparently?
+						flySound.GetComponent<AudioSource>().volume=0.5;
+					}
 				}
 			}
 		}

@@ -36,6 +36,11 @@ public class food_behavior : MonoBehaviour {
 		}else{
 			transform.localScale = defaultSize;
 		}
+
+		if(_GM.GetComponent<Setup>().getFailureCondition() && ApplicationModel.touchScreen){
+			// Sad music is too quiet/ wasps are too loud, on android - Apparently?
+			hitSound.GetComponent<playSound>().audioSource.volume=0.5f;
+		}
 	}
 	
 	public void injure(int damage){

@@ -5,8 +5,7 @@ public class playSound : MonoBehaviour {
 
 	public AudioClip sound;
 	public AudioSource audioSource;
-
-	public float audio1Volume = 1.0f;
+	
 	public float audio2Volume = 0.0f;
 
 	public float soundTime;

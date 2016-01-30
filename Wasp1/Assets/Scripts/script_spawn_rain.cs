@@ -14,14 +14,19 @@ public class script_spawn_rain : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		pooledRain=120;
+		if(ApplicationModel.touchScreen){
+			pooledRain=50;
+			spawnRate=0.02f;
+		}else{
+			pooledRain=500;
+			spawnRate=0.005f;
+		}
 		for(int i=0; i<pooledRain; i++){
 			GameObject obj = (GameObject)Instantiate(raindrop);
 			obj.SetActive(false);
 			raindrops.Add(obj);
 		}
 
-		spawnRate=0.02f;
 		InvokeRepeating("Spawn", 0, spawnRate);
 	}
 
