@@ -15,8 +15,8 @@ public class script_spawn_rain : MonoBehaviour {
 	void Start ()
 	{
 		if(ApplicationModel.touchScreen){
-			pooledRain=50;
-			spawnRate=0.02f;
+			pooledRain=60;
+			spawnRate=0.04f;
 		}else{
 			pooledRain=500;
 			spawnRate=0.005f;
